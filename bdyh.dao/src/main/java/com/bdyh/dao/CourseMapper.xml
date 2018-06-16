@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdyh.dao.CourseMapper" >
+  <resultMap id="BaseResultMap" type="com.bdyh.entity.Course" >
+    <constructor >
+      <idArg column="course_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="teacher_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="lession_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="course_level" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="course_price" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="course_desc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="course_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="course_intro" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="course_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="course_recommend" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="course_difficulty" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="course_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="district_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="collect_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="flow_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="benefit" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="agent_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    course_id, teacher_id, lession_num, course_level, course_price, course_desc, course_img, 
+    course_intro, course_name, course_recommend, course_difficulty, course_type, district_id, 
+    status, collect_number, flow_number, benefit, agent_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bdyh.entity.CourseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from course
+    where course_id = #{courseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from course
+    where course_id = #{courseId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bdyh.entity.CourseExample" >
+    delete from course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bdyh.entity.Course" >
+    insert into course (course_id, teacher_id, lession_num, 
+      course_level, course_price, course_desc, 
+      course_img, course_intro, course_name, 
+      course_recommend, course_difficulty, course_type, 
+      district_id, status, collect_number, 
+      flow_number, benefit, agent_id
+      )
+    values (#{courseId,jdbcType=INTEGER}, #{teacherId,jdbcType=INTEGER}, #{lessionNum,jdbcType=INTEGER}, 
+      #{courseLevel,jdbcType=INTEGER}, #{coursePrice,jdbcType=DOUBLE}, #{courseDesc,jdbcType=VARCHAR}, 
+      #{courseImg,jdbcType=VARCHAR}, #{courseIntro,jdbcType=VARCHAR}, #{courseName,jdbcType=VARCHAR}, 
+      #{courseRecommend,jdbcType=INTEGER}, #{courseDifficulty,jdbcType=INTEGER}, #{courseType,jdbcType=VARCHAR}, 
+      #{districtId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{collectNumber,jdbcType=INTEGER}, 
+      #{flowNumber,jdbcType=INTEGER}, #{benefit,jdbcType=DOUBLE}, #{agentId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bdyh.entity.Course" >
+    insert into course
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="courseId != null" >
+        course_id,
+      </if>
+      <if test="teacherId != null" >
+        teacher_id,
+      </if>
+      <if test="lessionNum != null" >
+        lession_num,
+      </if>
+      <if test="courseLevel != null" >
+        course_level,
+      </if>
+      <if test="coursePrice != null" >
+        course_price,
+      </if>
+      <if test="courseDesc != null" >
+        course_desc,
+      </if>
+      <if test="courseImg != null" >
+        course_img,
+      </if>
+      <if test="courseIntro != null" >
+        course_intro,
+      </if>
+      <if test="courseName != null" >
+        course_name,
+      </if>
+      <if test="courseRecommend != null" >
+        course_recommend,
+      </if>
+      <if test="courseDifficulty != null" >
+        course_difficulty,
+      </if>
+      <if test="courseType != null" >
+        course_type,
+      </if>
+      <if test="districtId != null" >
+        district_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="collectNumber != null" >
+        collect_number,
+      </if>
+      <if test="flowNumber != null" >
+        flow_number,
+      </if>
+      <if test="benefit != null" >
+        benefit,
+      </if>
+      <if test="agentId != null" >
+        agent_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="courseId != null" >
+        #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="lessionNum != null" >
+        #{lessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="courseLevel != null" >
+        #{courseLevel,jdbcType=INTEGER},
+      </if>
+      <if test="coursePrice != null" >
+        #{coursePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="courseDesc != null" >
+        #{courseDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="courseImg != null" >
+        #{courseImg,jdbcType=VARCHAR},
+      </if>
+      <if test="courseIntro != null" >
+        #{courseIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="courseName != null" >
+        #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="courseRecommend != null" >
+        #{courseRecommend,jdbcType=INTEGER},
+      </if>
+      <if test="courseDifficulty != null" >
+        #{courseDifficulty,jdbcType=INTEGER},
+      </if>
+      <if test="courseType != null" >
+        #{courseType,jdbcType=VARCHAR},
+      </if>
+      <if test="districtId != null" >
+        #{districtId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="collectNumber != null" >
+        #{collectNumber,jdbcType=INTEGER},
+      </if>
+      <if test="flowNumber != null" >
+        #{flowNumber,jdbcType=INTEGER},
+      </if>
+      <if test="benefit != null" >
+        #{benefit,jdbcType=DOUBLE},
+      </if>
+      <if test="agentId != null" >
+        #{agentId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bdyh.entity.CourseExample" resultType="java.lang.Integer" >
+    select count(*) from course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update course
+    <set >
+      <if test="record.courseId != null" >
+        course_id = #{record.courseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.teacherId != null" >
+        teacher_id = #{record.teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lessionNum != null" >
+        lession_num = #{record.lessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.courseLevel != null" >
+        course_level = #{record.courseLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.coursePrice != null" >
+        course_price = #{record.coursePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.courseDesc != null" >
+        course_desc = #{record.courseDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseImg != null" >
+        course_img = #{record.courseImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseIntro != null" >
+        course_intro = #{record.courseIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseName != null" >
+        course_name = #{record.courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseRecommend != null" >
+        course_recommend = #{record.courseRecommend,jdbcType=INTEGER},
+      </if>
+      <if test="record.courseDifficulty != null" >
+        course_difficulty = #{record.courseDifficulty,jdbcType=INTEGER},
+      </if>
+      <if test="record.courseType != null" >
+        course_type = #{record.courseType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.districtId != null" >
+        district_id = #{record.districtId,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.collectNumber != null" >
+        collect_number = #{record.collectNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.flowNumber != null" >
+        flow_number = #{record.flowNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.benefit != null" >
+        benefit = #{record.benefit,jdbcType=DOUBLE},
+      </if>
+      <if test="record.agentId != null" >
+        agent_id = #{record.agentId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update course
+    set course_id = #{record.courseId,jdbcType=INTEGER},
+      teacher_id = #{record.teacherId,jdbcType=INTEGER},
+      lession_num = #{record.lessionNum,jdbcType=INTEGER},
+      course_level = #{record.courseLevel,jdbcType=INTEGER},
+      course_price = #{record.coursePrice,jdbcType=DOUBLE},
+      course_desc = #{record.courseDesc,jdbcType=VARCHAR},
+      course_img = #{record.courseImg,jdbcType=VARCHAR},
+      course_intro = #{record.courseIntro,jdbcType=VARCHAR},
+      course_name = #{record.courseName,jdbcType=VARCHAR},
+      course_recommend = #{record.courseRecommend,jdbcType=INTEGER},
+      course_difficulty = #{record.courseDifficulty,jdbcType=INTEGER},
+      course_type = #{record.courseType,jdbcType=VARCHAR},
+      district_id = #{record.districtId,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      collect_number = #{record.collectNumber,jdbcType=INTEGER},
+      flow_number = #{record.flowNumber,jdbcType=INTEGER},
+      benefit = #{record.benefit,jdbcType=DOUBLE},
+      agent_id = #{record.agentId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdyh.entity.Course" >
+    update course
+    <set >
+      <if test="teacherId != null" >
+        teacher_id = #{teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="lessionNum != null" >
+        lession_num = #{lessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="courseLevel != null" >
+        course_level = #{courseLevel,jdbcType=INTEGER},
+      </if>
+      <if test="coursePrice != null" >
+        course_price = #{coursePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="courseDesc != null" >
+        course_desc = #{courseDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="courseImg != null" >
+        course_img = #{courseImg,jdbcType=VARCHAR},
+      </if>
+      <if test="courseIntro != null" >
+        course_intro = #{courseIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="courseName != null" >
+        course_name = #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="courseRecommend != null" >
+        course_recommend = #{courseRecommend,jdbcType=INTEGER},
+      </if>
+      <if test="courseDifficulty != null" >
+        course_difficulty = #{courseDifficulty,jdbcType=INTEGER},
+      </if>
+      <if test="courseType != null" >
+        course_type = #{courseType,jdbcType=VARCHAR},
+      </if>
+      <if test="districtId != null" >
+        district_id = #{districtId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="collectNumber != null" >
+        collect_number = #{collectNumber,jdbcType=INTEGER},
+      </if>
+      <if test="flowNumber != null" >
+        flow_number = #{flowNumber,jdbcType=INTEGER},
+      </if>
+      <if test="benefit != null" >
+        benefit = #{benefit,jdbcType=DOUBLE},
+      </if>
+      <if test="agentId != null" >
+        agent_id = #{agentId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where course_id = #{courseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bdyh.entity.Course" >
+    update course
+    set teacher_id = #{teacherId,jdbcType=INTEGER},
+      lession_num = #{lessionNum,jdbcType=INTEGER},
+      course_level = #{courseLevel,jdbcType=INTEGER},
+      course_price = #{coursePrice,jdbcType=DOUBLE},
+      course_desc = #{courseDesc,jdbcType=VARCHAR},
+      course_img = #{courseImg,jdbcType=VARCHAR},
+      course_intro = #{courseIntro,jdbcType=VARCHAR},
+      course_name = #{courseName,jdbcType=VARCHAR},
+      course_recommend = #{courseRecommend,jdbcType=INTEGER},
+      course_difficulty = #{courseDifficulty,jdbcType=INTEGER},
+      course_type = #{courseType,jdbcType=VARCHAR},
+      district_id = #{districtId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      collect_number = #{collectNumber,jdbcType=INTEGER},
+      flow_number = #{flowNumber,jdbcType=INTEGER},
+      benefit = #{benefit,jdbcType=DOUBLE},
+      agent_id = #{agentId,jdbcType=INTEGER}
+    where course_id = #{courseId,jdbcType=INTEGER}
+  </update>
+</mapper>

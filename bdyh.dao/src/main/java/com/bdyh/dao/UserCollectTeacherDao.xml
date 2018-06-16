@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdyh.dao.UserCollectTeacherDao" >
+  <resultMap id="BaseResultMap" type="com.bdyh.entity.UserCollectTeacherVo" >
+    <id column="uctid" property="uctid" jdbcType="INTEGER" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+  	
+  		<!-- 教师对像 -->
+	    <association property="teacher" javaType="com.bdyh.entity.Teacher">
+			<id column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+		    <result column="username" property="username" jdbcType="VARCHAR" />
+		    <result column="password" property="password" jdbcType="VARCHAR" />
+		    <result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+		    <result column="teacher_img" property="teacherImg" jdbcType="VARCHAR" />
+		    <result column="teacher_intro" property="teacherIntro" jdbcType="VARCHAR" />
+		    <result column="sex" property="sex" jdbcType="INTEGER" />
+		    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+		    <result column="email" property="email" jdbcType="VARCHAR" />
+		    <result column="join_time" property="joinTime" jdbcType="VARCHAR" />
+		    <result column="major" property="major" jdbcType="VARCHAR" />
+		    <result column="login_time" property="loginTime" jdbcType="VARCHAR" />
+		    <result column="login_number" property="loginNumber" jdbcType="INTEGER" />
+		    <result column="status" property="status" jdbcType="INTEGER" />
+		    <result column="district_id" property="districtId" jdbcType="INTEGER" />
+		    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+		    <result column="collect_number" property="collectNumber" jdbcType="INTEGER" />
+		</association>
+  	
+  </resultMap>
+  
+  <resultMap id="BaseResultMap2" type="com.bdyh.entity.UserCollectTeacherVo" >
+    <id column="uctid" property="uctid" jdbcType="INTEGER" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+  	
+  		<!-- 教师对像 -->
+	    <association property="teacher" javaType="com.bdyh.entity.Teacher">
+			<id column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+		    <result column="username" property="username" jdbcType="VARCHAR" />
+		    <result column="password" property="password" jdbcType="VARCHAR" />
+		    <result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+		    <result column="teacher_img" property="teacherImg" jdbcType="VARCHAR" />
+		    <result column="teacher_intro" property="teacherIntro" jdbcType="VARCHAR" />
+		    <result column="sex" property="sex" jdbcType="INTEGER" />
+		    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+		    <result column="email" property="email" jdbcType="VARCHAR" />
+		    <result column="join_time" property="joinTime" jdbcType="VARCHAR" />
+		    <result column="major" property="major" jdbcType="VARCHAR" />
+		    <result column="login_time" property="loginTime" jdbcType="VARCHAR" />
+		    <result column="login_number" property="loginNumber" jdbcType="INTEGER" />
+		    <result column="status" property="status" jdbcType="INTEGER" />
+		    <result column="district_id" property="districtId" jdbcType="INTEGER" />
+		    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+		    <result column="collect_number" property="collectNumber" jdbcType="INTEGER" />
+		</association>
+  		<!-- 微信用户对象 -->
+    	<association property="userWechat" javaType="com.bdyh.entity.UserWechat">
+			<id column="openid" property="openid" jdbcType="VARCHAR" />
+		    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+		    <result column="sex" property="sex" jdbcType="INTEGER" />
+		    <result column="language" property="language" jdbcType="VARCHAR" />
+		    <result column="city" property="city" jdbcType="VARCHAR" />
+		    <result column="province" property="province" jdbcType="VARCHAR" />
+		    <result column="country" property="country" jdbcType="VARCHAR" />
+		    <result column="headimgurl" property="headimgurl" jdbcType="VARCHAR" />
+		    <result column="register_time" property="registerTime" jdbcType="VARCHAR" />
+		    <result column="status" property="status" jdbcType="INTEGER" />
+		    <result column="vip" property="vip" jdbcType="INTEGER" />
+		    <result column="balance" property="balance" jdbcType="DOUBLE" />
+		</association>
+  </resultMap>
+  <!-- 微信端模块start -->
+  <sql id="Base_Column_List" >
+  	u.uctid,u.openid,t.*
+  </sql>
+  
+  <select id="findCollectTeacherOfUser" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select
+	<include refid="Base_Column_List"/>
+	from (select * from user_collect_teacher where openid=#{openid}) u,teacher t
+	<where>
+		u.teacher_id=t.teacher_id
+	</where>
+  </select>
+  <!-- 微信端模块end -->
+  
+  <!-- 当数据量非常大的时候查询速度会变慢,后面想办法优化 -->
+  <!-- 后台模块start -->
+  <sql id="Base_Column_List2" >
+  	uct.*,t.*,uw.*
+  </sql>
+  
+  <select id="findAllUserCollectTeacher" resultMap="BaseResultMap2">
+  	select
+	<include refid="Base_Column_List2"/>
+	from user_collect_teacher uct,teacher t,user_wechat uw
+	<where>
+		uct.openid=uw.openid and uct.teacher_id=t.teacher_id
+	</where>
+  </select>
+  <!-- 后台模块end -->
+</mapper>

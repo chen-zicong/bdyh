@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdyh.dao.VideoMapper" >
+  <resultMap id="BaseResultMap" type="com.bdyh.entity.Video" >
+    <id column="video_id" property="videoId" jdbcType="INTEGER" />
+    <result column="video_name" property="videoName" jdbcType="VARCHAR" />
+    <result column="course_id" property="courseId" jdbcType="INTEGER" />
+    <result column="video_img" property="videoImg" jdbcType="VARCHAR" />
+    <result column="video_path" property="videoPath" jdbcType="VARCHAR" />
+    <result column="video_price" property="videoPrice" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    video_id, video_name, course_id, video_img, video_path, video_price
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bdyh.entity.VideoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from video
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from video
+    where video_id = #{videoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from video
+    where video_id = #{videoId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bdyh.entity.VideoExample" >
+    delete from video
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bdyh.entity.Video" >
+    insert into video (video_id, video_name, course_id, 
+      video_img, video_path, video_price
+      )
+    values (#{videoId,jdbcType=INTEGER}, #{videoName,jdbcType=VARCHAR}, #{courseId,jdbcType=INTEGER}, 
+      #{videoImg,jdbcType=VARCHAR}, #{videoPath,jdbcType=VARCHAR}, #{videoPrice,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bdyh.entity.Video" >
+    insert into video
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="videoId != null" >
+        video_id,
+      </if>
+      <if test="videoName != null" >
+        video_name,
+      </if>
+      <if test="courseId != null" >
+        course_id,
+      </if>
+      <if test="videoImg != null" >
+        video_img,
+      </if>
+      <if test="videoPath != null" >
+        video_path,
+      </if>
+      <if test="videoPrice != null" >
+        video_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="videoId != null" >
+        #{videoId,jdbcType=INTEGER},
+      </if>
+      <if test="videoName != null" >
+        #{videoName,jdbcType=VARCHAR},
+      </if>
+      <if test="courseId != null" >
+        #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="videoImg != null" >
+        #{videoImg,jdbcType=VARCHAR},
+      </if>
+      <if test="videoPath != null" >
+        #{videoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="videoPrice != null" >
+        #{videoPrice,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bdyh.entity.VideoExample" resultType="java.lang.Integer" >
+    select count(*) from video
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update video
+    <set >
+      <if test="record.videoId != null" >
+        video_id = #{record.videoId,jdbcType=INTEGER},
+      </if>
+      <if test="record.videoName != null" >
+        video_name = #{record.videoName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseId != null" >
+        course_id = #{record.courseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.videoImg != null" >
+        video_img = #{record.videoImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.videoPath != null" >
+        video_path = #{record.videoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.videoPrice != null" >
+        video_price = #{record.videoPrice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update video
+    set video_id = #{record.videoId,jdbcType=INTEGER},
+      video_name = #{record.videoName,jdbcType=VARCHAR},
+      course_id = #{record.courseId,jdbcType=INTEGER},
+      video_img = #{record.videoImg,jdbcType=VARCHAR},
+      video_path = #{record.videoPath,jdbcType=VARCHAR},
+      video_price = #{record.videoPrice,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdyh.entity.Video" >
+    update video
+    <set >
+      <if test="videoName != null" >
+        video_name = #{videoName,jdbcType=VARCHAR},
+      </if>
+      <if test="courseId != null" >
+        course_id = #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="videoImg != null" >
+        video_img = #{videoImg,jdbcType=VARCHAR},
+      </if>
+      <if test="videoPath != null" >
+        video_path = #{videoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="videoPrice != null" >
+        video_price = #{videoPrice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where video_id = #{videoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bdyh.entity.Video" >
+    update video
+    set video_name = #{videoName,jdbcType=VARCHAR},
+      course_id = #{courseId,jdbcType=INTEGER},
+      video_img = #{videoImg,jdbcType=VARCHAR},
+      video_path = #{videoPath,jdbcType=VARCHAR},
+      video_price = #{videoPrice,jdbcType=DOUBLE}
+    where video_id = #{videoId,jdbcType=INTEGER}
+  </update>
+</mapper>

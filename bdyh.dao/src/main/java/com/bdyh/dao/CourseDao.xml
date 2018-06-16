@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdyh.dao.CourseDao" >
+  <resultMap id="BaseResultMap" type="com.bdyh.entity.Course" >
+    <id column="course_id" property="courseId" jdbcType="INTEGER" />
+    <result column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+    <result column="lession_num" property="lessionNum" jdbcType="INTEGER" />
+    <result column="course_level" property="courseLevel" jdbcType="INTEGER" />
+    <result column="course_price" property="coursePrice" jdbcType="DOUBLE" />
+    <result column="course_desc" property="courseDesc" jdbcType="VARCHAR" />
+    <result column="course_img" property="courseImg" jdbcType="VARCHAR" />
+    <result column="course_intro" property="courseIntro" jdbcType="VARCHAR" />
+    <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+    <result column="course_recommend" property="courseRecommend" jdbcType="INTEGER" />
+    <result column="course_difficulty" property="courseDifficulty" jdbcType="INTEGER" />
+    <result column="course_type" property="courseType" jdbcType="VARCHAR" />
+    <result column="district_id" property="districtId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="collect_number" property="collectNumber" jdbcType="INTEGER" />
+    <result column="flow_number" property="flowNumber" jdbcType="INTEGER" />
+    <result column="benefit" property="benefit" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+  	*
+  </sql>
+  
+  <select id="searchCourseByExample" resultMap="BaseResultMap" parameterType="com.bdyh.entity.Course">
+	select
+	<include refid="Base_Column_List"/>
+	from course
+	<where>
+		<!-- 该课程是已发布的课程 -->
+		status=2
+		<if test="courseName != null and courseName != ''">
+			and course_name like concat('%',#{courseName},'%')
+		</if>
+		<if test="courseType != null and courseType != ''">
+			and course_type=#{courseType}
+		</if>
+		<if test="courseLevel != null">
+			and course_level=#{courseLevel}
+		</if>
+		<if test="districtId != null">
+			and district_id=#{districtId}
+		</if>
+	</where>
+  </select>
+</mapper>

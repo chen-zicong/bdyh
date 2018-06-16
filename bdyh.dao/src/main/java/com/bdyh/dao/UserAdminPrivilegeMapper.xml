@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdyh.dao.UserAdminPrivilegeMapper" >
+  <resultMap id="BaseResultMap" type="com.bdyh.entity.UserAdminPrivilege" >
+    <id column="privilege_id" property="privilegeId" jdbcType="INTEGER" />
+    <result column="module" property="module" jdbcType="VARCHAR" />
+    <result column="oprator" property="oprator" jdbcType="VARCHAR" />
+    <result column="privilege_name" property="privilegeName" jdbcType="VARCHAR" />
+    <result column="privilege_desc" property="privilegeDesc" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    privilege_id, module, oprator, privilege_name, privilege_desc, pid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bdyh.entity.UserAdminPrivilegeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_admin_privilege
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_admin_privilege
+    where privilege_id = #{privilegeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_admin_privilege
+    where privilege_id = #{privilegeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bdyh.entity.UserAdminPrivilegeExample" >
+    delete from user_admin_privilege
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bdyh.entity.UserAdminPrivilege" >
+    insert into user_admin_privilege (privilege_id, module, oprator, 
+      privilege_name, privilege_desc, pid
+      )
+    values (#{privilegeId,jdbcType=INTEGER}, #{module,jdbcType=VARCHAR}, #{oprator,jdbcType=VARCHAR}, 
+      #{privilegeName,jdbcType=VARCHAR}, #{privilegeDesc,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bdyh.entity.UserAdminPrivilege" >
+    insert into user_admin_privilege
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="privilegeId != null" >
+        privilege_id,
+      </if>
+      <if test="module != null" >
+        module,
+      </if>
+      <if test="oprator != null" >
+        oprator,
+      </if>
+      <if test="privilegeName != null" >
+        privilege_name,
+      </if>
+      <if test="privilegeDesc != null" >
+        privilege_desc,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="privilegeId != null" >
+        #{privilegeId,jdbcType=INTEGER},
+      </if>
+      <if test="module != null" >
+        #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="oprator != null" >
+        #{oprator,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeName != null" >
+        #{privilegeName,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeDesc != null" >
+        #{privilegeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bdyh.entity.UserAdminPrivilegeExample" resultType="java.lang.Integer" >
+    select count(*) from user_admin_privilege
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_admin_privilege
+    <set >
+      <if test="record.privilegeId != null" >
+        privilege_id = #{record.privilegeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.module != null" >
+        module = #{record.module,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oprator != null" >
+        oprator = #{record.oprator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privilegeName != null" >
+        privilege_name = #{record.privilegeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privilegeDesc != null" >
+        privilege_desc = #{record.privilegeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pid != null" >
+        pid = #{record.pid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_admin_privilege
+    set privilege_id = #{record.privilegeId,jdbcType=INTEGER},
+      module = #{record.module,jdbcType=VARCHAR},
+      oprator = #{record.oprator,jdbcType=VARCHAR},
+      privilege_name = #{record.privilegeName,jdbcType=VARCHAR},
+      privilege_desc = #{record.privilegeDesc,jdbcType=VARCHAR},
+      pid = #{record.pid,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdyh.entity.UserAdminPrivilege" >
+    update user_admin_privilege
+    <set >
+      <if test="module != null" >
+        module = #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="oprator != null" >
+        oprator = #{oprator,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeName != null" >
+        privilege_name = #{privilegeName,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeDesc != null" >
+        privilege_desc = #{privilegeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where privilege_id = #{privilegeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bdyh.entity.UserAdminPrivilege" >
+    update user_admin_privilege
+    set module = #{module,jdbcType=VARCHAR},
+      oprator = #{oprator,jdbcType=VARCHAR},
+      privilege_name = #{privilegeName,jdbcType=VARCHAR},
+      privilege_desc = #{privilegeDesc,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=INTEGER}
+    where privilege_id = #{privilegeId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdyh.dao.IncomeDao">
+    <resultMap id="BaseResultMap" type="com.bdyh.entity.IncomeStatisticsVo">
+        <result column="course_id" property="courseId" jdbcType="INTEGER"/>
+        <result column="course_level" property="courseLevel" jdbcType="INTEGER"/>
+        <result column="course_type" property="courseType" jdbcType="VARCHAR"/>
+        <result column="course_name" property="courseName" jdbcType="VARCHAR"/>
+        <result column="course_img" property="courseImg" jdbcType="VARCHAR"/>
+        <result column="course_desc" property="courseDesc" jdbcType="VARCHAR"/>
+        <result column="count" property="count" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="course_price" property="coursePrice" jdbcType="DOUBLE"/>
+        <result column="income" property="income" jdbcType="FLOAT"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+
+    </sql>
+
+    <select id="selectByTeacherId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+          course.course_id,course_level,course_type,course_name,course_img,course_desc,count,status,course_price,income
+          FROM  course, teacher_income
+           WHERE   course.teacher_id = #{id ,jdbcType=INTEGER}
+                and teacher_income.teacher_id = #{id ,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectIncomeByTeacherId" parameterType="java.lang.Integer"
+            resultType="java.lang.Float">
+        SELECT  sum(income) FROM  teacher_income WHERE
+                    teacher_id =#{id,jdbcType=INTEGER}
+
+    </select>
+
+    <select id="selectByAgentId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+          course.course_id,course_level,course_type,course_name,course_img,course_desc,count,status,course_price,income
+          FROM  course, teacher_income
+           WHERE   course.teacher_id =  teacher_income.teacher_id  and  course.agent_id =#{agentId ,jdbcType=INTEGER}
+
+    </select>
+</mapper>
