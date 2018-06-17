@@ -21,9 +21,9 @@
         <!--jdbc的数据库连接 -->
         <jdbcConnection
                 driverClass="com.mysql.jdbc.Driver"
-                connectionURL="jdbc:mysql://localhost:3306/bdyh"
+                connectionURL="jdbc:mysql://120.79.11.168:3306/bdyh"
                 userId="root"
-                password="root">
+                password="642496">
         </jdbcConnection>
 
 

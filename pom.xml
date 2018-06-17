@@ -407,6 +407,17 @@
 		<module>bdyh.service</module>
 		<module>bdyh.web</module>
 		<module>bdyh.wechat.pay</module>
-    	<module>bdyh.ali.pay</module>
+
   </modules>
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	</build>
 </project>

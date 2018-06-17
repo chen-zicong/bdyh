@@ -10,7 +10,7 @@
     default-lazy-init="true">
     <description>Shiro Configuration</description>
     <!-- <bean id="accessControllerFilter" class="com.zeng.ezsh.filter.ShiroInterceptor" /> -->
-    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">  
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 	    <!-- 装配 securityManager -->  
 	    <property name="securityManager" ref="securityManager"/>  
 	    <!-- 配置登陆页面 -->  

@@ -35,8 +35,8 @@
 				<tr class="text-c">
 					<th>省份ID</th>
 					<th>省份</th>
-					<th>所属城市</th>
 					<th>状态</th>
+					<th >操作</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -44,13 +44,28 @@
 					<tr class="text-c">
 						<td>${province.provinceId }</td>
 						<td>${province.name }</td>
-						<td>
-							<%-- <span class="label label-success radius"><a href="${pageContext.request.contextPath}/subject/subjectList/${clazz.clazzId }">查看所有科目</a></span> --%>
-							<span class="label label-success radius"><a style="text-decoration:none" class="ml-5" onClick="member_edit('查看所有城市','${pageContext.request.contextPath}/district/cityList/${province.provinceId }','${province.provinceId }')" href="javascript:;" title="所有城市">查看所有城市</a></span>
-						</td>
 						<td class="td-status">
-							<span class="label label-success radius">已开放</span>
+							<c:choose>
+								<c:when test="${province.status eq 1 }">
+									<span class="label label-success radius">已发布</span>
+								</c:when>
+								<c:otherwise>
+									<span class="label label-defaunt radius">已下架</span>
+								</c:otherwise>
+							</c:choose>
 						</td>
+						<c:choose>
+							<c:when test="${province.status eq 1 }">
+								<td class="td-manage">
+									<a style="text-decoration:none" onClick="province_stop(this,'${province.provinceId }')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>
+								</td>
+							</c:when>
+							<c:otherwise>
+								<td class="td-manage">
+									<a style="text-decoration:none" onClick="province_start(this,'${province.provinceId }')" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>
+								</td>
+							</c:otherwise>
+						</c:choose>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -80,64 +95,62 @@ $(function(){
 	});
 
 });
-/*用户-添加*/
-function member_add(title,url,w,h){
-	layer_show(title,url,w,h);
-}
-/*用户-查看*/
-function member_show(title,url,id,w,h){
-	layer_show(title,url,w,h);
-}
-/*用户-停用*/
-function member_stop(obj,id){
-	layer.confirm('确认要停用吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
-		$(obj).remove();
-		layer.msg('已停用!',{icon: 5,time:1000});
-	});
-}
-
-/*用户-启用*/
-function member_start(obj,id){
-	layer.confirm('确认要启用吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
-		$(obj).remove();
-		layer.msg('已启用!',{icon: 6,time:1000});
-	});
-}
-/*用户-编辑*/
-function member_edit(title,url,id,w,h){
-	layer_show(title,url,w,h);
-}
-/*密码-修改*/
-function change_password(title,url,id,w,h){
-	layer_show(title,url,w,h);	
-}
 
 
 
 /*------------------------------------------------------------------------------------------start-----------------------------------------------------------------------------*/
-/*用户-删除*/
-function opinion_del(obj,id){
-	layer.confirm('确认要删除吗？',function(index){
-		$.ajax({
-			   type: "GET",
-			   url: "${pageContext.request.contextPath}/userOpinion/userOpinionDelete",
-			   data: {
-				   uoid:id,
-			   },
-			   success: function(data){
-					var data = eval('(' + data + ')');
-					if (data.status==1){
-						location.href="${pageContext.request.contextPath}/userOpinion/opinionList";
-					}else{
-						alert("发生错误!请重新操作");
-					}
-			   }
-		});	
-	});
+
+
+
+/*图片-下架*/
+function province_stop(obj,id){
+
+
+    //根据courseId下架课程
+    $.ajax({
+        type: "GET",
+        url: "${pageContext.request.contextPath}/district/provinceDown",
+        data: {
+            provinceId:id,
+        },
+        success: function(data){
+				console.log(data)
+            if (data.code=='success'){
+                layer.confirm('确认要下架吗？',function(index){
+                    $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="province_start(this,'+id+')" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>');
+                    $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已下架</span>');
+                    $(obj).remove();
+                    layer.msg('已下架!',{icon: 5,time:1000});
+                });
+            }else{
+                alert("发生错误!请重新操作");
+            }
+        }
+    });
+
+}
+
+/*图片-发布*/
+function province_start(obj,id){
+
+    $.ajax({
+        type: "GET",
+        url: "${pageContext.request.contextPath}/district/provinceStart",
+        data: {
+            provinceId:id,
+        },
+        success: function(data){
+            console.log(data);
+            if (data.code=='success'){
+                $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="province_stop(this,'+id+')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>');
+                $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
+                $(obj).remove();
+                layer.msg('已发布!',{icon: 6,time:1000});
+            }else{
+                alert("发生错误!请重新操作");
+            }
+        }
+    });
 }
 
 

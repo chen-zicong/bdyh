@@ -4,6 +4,7 @@ import com.bdyh.entity.Province;
 import com.bdyh.entity.ProvinceExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 public interface ProvinceMapper {
     int countByExample(ProvinceExample example);
@@ -27,4 +28,6 @@ public interface ProvinceMapper {
     int updateByPrimaryKeySelective(Province record);
 
     int updateByPrimaryKey(Province record);
+    @Update("update province set status=#{status} where province_id=#{provinceId}")
+    int updateProvinceStatus(@Param("provinceId") int provinceId,@Param("status") int status);
 }
