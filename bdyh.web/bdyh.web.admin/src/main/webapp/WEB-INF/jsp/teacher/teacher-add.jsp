@@ -79,7 +79,7 @@
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>邮箱：</label>
+			<label class="form-label col-xs-4 col-sm-2">邮箱：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<input type="text" class="input-text" placeholder="@" name="email" id="email">
 			</div>
@@ -168,10 +168,6 @@ $(function(){
 			telephone:{
 				required:true,
 				isMobile:true,
-			},
-			email:{
-				required:true,
-				email:true,
 			},
 			major:{
 				required:true,
