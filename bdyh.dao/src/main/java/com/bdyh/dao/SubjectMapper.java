@@ -4,6 +4,7 @@ import com.bdyh.entity.Subject;
 import com.bdyh.entity.SubjectExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 public interface SubjectMapper {
     int countByExample(SubjectExample example);
@@ -27,4 +28,6 @@ public interface SubjectMapper {
     int updateByPrimaryKeySelective(Subject record);
 
     int updateByPrimaryKey(Subject record);
+    @Select("select * from  subject ")
+    List<Subject> findAll();
 }

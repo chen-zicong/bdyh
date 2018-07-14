@@ -4,15 +4,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import com.bdyh.common.APIResponse;
 import com.bdyh.entity.HomePicture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bdyh.entity.Clazz;
 import com.bdyh.service.ClazzService;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,7 +49,7 @@ public class ClazzAction {
         try {
             PrintWriter out = response.getWriter();
 
-                out.write("{\"status\":1}");
+            out.write("{\"status\":1}");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -68,5 +71,33 @@ public class ClazzAction {
         }
     }
 
+    @GetMapping(value = "clazzAddPage")
+    public String clazzAddPage(Model model) {
+
+        return "clazz/clazz-add";
+    }
+
+    @RequestMapping("clazzAdd")
+    @ResponseBody
+    public APIResponse clazzAdd(Clazz clazz) {
+
+
+            if (clazz != null) {
+                clazz.setStatus(1);
+                clazz.setWeight(1);
+                int i = clazzService.insertClazz(clazz);
+                if (i == 1) {
+                    //添加成功
+                    return APIResponse.success();
+                } else {
+                    //添加失败
+                    return APIResponse.fail("该课程名已经被添加");
+                }
+            }else {
+                return APIResponse.fail("参数为空");
+            }
+
+
+    }
 
 }

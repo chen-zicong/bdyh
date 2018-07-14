@@ -10,4 +10,6 @@ public interface ClazzService {
 	public Clazz findClazzById(Integer id);
 	public int updateClazz(Clazz clazz);
 
+	public int insertClazz(Clazz clazz);
+
 }

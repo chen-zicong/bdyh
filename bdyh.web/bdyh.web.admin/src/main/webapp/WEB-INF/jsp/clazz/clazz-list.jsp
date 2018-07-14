@@ -28,7 +28,8 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 年级管理 <span class="c-gray en">&gt;</span> 年级列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-primary radius"><!-- <i class="Hui-iconfont">&#xe6e2;</i> --> 默认开通</a> </span> <span class="r">共有数据：<strong>${clazzList.size() }</strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a href="javascript:;" onclick="member_add('添加用户','${pageContext.request.contextPath}/clazz/clazzAddPage','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加年级</a></span> <span class="r">共有数据：<strong>${clazzList.size() }</strong> 条</span> </div>
+
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-hover table-bg table-sort">
 			<thead>
@@ -205,7 +206,14 @@ function clazz_start(obj,id){
         }
     });
 }
-
+/*用户-添加*/
+function member_add(title,url,w,h){
+    layer_show(title,url,w,h);
+}
+/*用户-查看*/
+function member_show(title,url,id,w,h){
+    layer_show(title,url,w,h);
+}
 /*------------------------------------------------------------------------------------------end--------------------------------------------------------------------------------*/
 </script>
 </body>

@@ -51,6 +51,10 @@ public class TeacherAction {
     @Autowired
     private ProvinceService provinceService;
 
+
+    @Autowired
+    private SubjectService subjectService;
+
     /**
      * 查询所有教师
      *
@@ -102,7 +106,11 @@ public class TeacherAction {
      * @return
      */
     @GetMapping(value = "teacherAddPage")
-    public String teacherAddPage() {
+    public String teacherAddPage(Model model) {
+        Teacher teacher = (Teacher)AdminUtil.getShiroSessionByKey("userTeacher");
+        model.addAttribute("teacher",teacher);
+        List<Subject> all = subjectService.findAll();
+        model.addAttribute("subjects",all);
         return "teacher/teacher-add";
     }
 
