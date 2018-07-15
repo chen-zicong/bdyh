@@ -28,7 +28,7 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 科目管理 <span class="c-gray en">&gt;</span> 科目列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-primary radius"><!-- <i class="Hui-iconfont">&#xe6e2;</i> --> 默认开通</a> </span> <span class="r">共有数据：<strong>${subjectList.size() }</strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="addsubject('添加课程','${pageContext.request.contextPath}/subject/addSubjectPage/${clazzId}','400','250')" class="btn btn-primary radius"><!-- <i class="Hui-iconfont">&#xe6e2;</i> --> 添加课程</a> </span> <span class="r">共有数据：<strong>${subjectList.size() }</strong> 条</span> </div>
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-hover table-bg table-sort">
 			<thead>
@@ -37,6 +37,7 @@
 					<!-- <th>年级</th> -->
 					<th>科目</th>
 					<th>状态</th>
+					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -45,11 +46,28 @@
 						<td>${subject.subjectId }</td>
 						<%-- <td>${clazzId }年级</td> --%>
 						<td>
-							<span class="label label-success radius">${subject.subject }</span>
+							<span class="label label-success radius">${subject.subject}</span>
 						</td>
 						<td class="td-status">
+							<c:if test="${subject.status eq 1}">
 							<span class="label label-success radius">已开放</span>
+							</c:if>
+							<c:if test="${subject.status eq 0}">
+								<span class="label label-defaunt radius">未开放</span>
+							</c:if>
 						</td>
+						<c:if test="${subject.status eq 1}">
+							<td class="td-manage">
+								<a style="text-decoration:none" onClick="subject_stop(this,'${subject.subjectId}')"
+								   href="javascript:;" title="关闭"><i class="Hui-iconfont">&#xe6de;</i></a>
+							</td>
+						</c:if>
+						<c:if test="${subject.status eq 0}">
+							<td class="td-manage">
+								<a style="text-decoration:none" onClick="subject_start(this,'${subject.subjectId }')"
+								   href="javascript:;" title="开放"><i class="Hui-iconfont">&#xe603;</i></a>
+							</td>
+						</c:if>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -141,6 +159,56 @@ function opinion_del(obj,id){
 
 
 /*------------------------------------------------------------------------------------------end--------------------------------------------------------------------------------*/
+/*科目关闭*/
+function subject_stop(obj,id) {
+    $.ajax({
+		type:'POST',
+		url:"${pageContext.request.contextPath}/subject/subjectDown",
+		data:{
+            subjectId:id
+        },
+		success:function (data) {
+		    if(data.code=="success"){
+                $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="subject_start(this,' + id + ')" href="javascript:;" title=""><i class="Hui-iconfont">&#xe603;</i></a>');
+                $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已关闭</span>');
+                $(obj).remove();
+                layer.msg('已关闭!', {icon: 5, time: 1000});
+			}
+			else {
+                alert("发生错误!请重新操作");
+			}
+        }
+
+	});
+
+}
+
+/*科目开放*/
+function subject_start(obj,id) {
+    $.ajax({
+        type:'POST',
+        url:"${pageContext.request.contextPath}/subject/subjectStart",
+        data:{
+            subjectId:id
+        },
+        success:function (data) {
+            if(data.code=="success"){
+                $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="subject_stop(this,' + id + ')" href="javascript:;" title=""><i class="Hui-iconfont">&#xe6de;</i></a>');
+                $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已开放</span>');
+                $(obj).remove();
+                layer.msg('已开放!', {icon: 6, time: 1000});
+            }
+            else {
+                alert("发生错误!请重新操作");
+            }
+        }
+
+    });
+}
+/*课程添加*/
+function addsubject(title,url,w,h) {
+    layer_show(title, url, w, h);
+}
 </script>
 </body>
 </html>

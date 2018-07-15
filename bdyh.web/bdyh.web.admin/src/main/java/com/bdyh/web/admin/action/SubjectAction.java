@@ -86,8 +86,11 @@ public class SubjectAction {
 
     }
 
-    @RequestMapping("addSubjectPage")
-    public String addSubjectPage() {
+    @RequestMapping("addSubjectPage/{clazzId}")
+
+    public String addSubjectPage(@PathVariable("clazzId") Integer clazzId,Model mode)
+    {
+        mode.addAttribute("clazzId",clazzId);
         return "subject/subject-add";
     }
 }

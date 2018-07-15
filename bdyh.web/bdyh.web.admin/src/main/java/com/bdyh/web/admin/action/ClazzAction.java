@@ -79,7 +79,7 @@ public class ClazzAction {
 
     @RequestMapping("clazzAdd")
     @ResponseBody
-    public APIResponse clazzAdd(Clazz clazz) {
+    public APIResponse clazzAdd( Clazz clazz) {
 
 
             if (clazz != null) {

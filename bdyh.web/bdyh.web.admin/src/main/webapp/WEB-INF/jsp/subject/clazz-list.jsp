@@ -36,7 +36,6 @@
 					<th>年级ID</th>
 					<th>年级</th>
 					<th>科目状态</th>
-					<th>状态</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -48,9 +47,7 @@
 							<%-- <span class="label label-success radius"><a href="${pageContext.request.contextPath}/subject/subjectList/${clazz.clazzId }">查看所有科目</a></span> --%>
 							<span class="label label-success radius"><a style="text-decoration:none" class="ml-5" onClick="member_edit('查看所有科目','${pageContext.request.contextPath}/subject/subjectList/${clazz.clazzId }','${clazz.clazzId }')" href="javascript:;" title="编辑">查看所有科目</a></span>
 						</td>
-						<td class="td-status">
-							<span class="label label-success radius">已开放</span>
-						</td>
+
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -75,7 +72,7 @@ $(function(){
 		"bStateSave": true,//状态保存
 		"aoColumnDefs": [
 		  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-		  {"orderable":false,"aTargets":[1,2,3]}// 制定列不参与排序
+		  {"orderable":false,"aTargets":[1,2]}// 制定列不参与排序
 		]
 	});
 
@@ -142,6 +139,8 @@ function opinion_del(obj,id){
 
 
 /*------------------------------------------------------------------------------------------end--------------------------------------------------------------------------------*/
+
+
 </script>
 </body>
 </html>

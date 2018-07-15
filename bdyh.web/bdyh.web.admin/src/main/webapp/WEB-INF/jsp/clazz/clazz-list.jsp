@@ -36,7 +36,7 @@
         class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
     <div class="cl pd-5 bg-1 bk-gray mt-20"><span class="l"> <a href="javascript:;"
-                                                                onclick="member_add('添加用户','${pageContext.request.contextPath}/clazz/clazzAddPage','','510')"
+                                                                onclick="member_add('添加年级','${pageContext.request.contextPath}/clazz/clazzAddPage','400','250')"
                                                                 class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加年级</a></span>
         <span class="r">共有数据：<strong>${clazzList.size() }</strong> 条</span></div>
 
@@ -56,29 +56,27 @@
                     <td>${clazz.clazzId }</td>
                     <td>${clazz.clazz }</td>
                     <td class="td-status">
-                        <c:choose>
-                            <c:when test="${clazz.status eq 1 }">
+
+                            <c:if test="${clazz.status eq 1 }">
                                 <span class="label label-success radius">已发布</span>
-                            </c:when>
-                            <c:otherwise>
+                            </c:if>
+                            <c:if test="${clazz.status eq 0 }">
                                 <span class="label label-defaunt radius">已下架</span>
-                            </c:otherwise>
-                        </c:choose>
+                            </c:if>
+
                     </td>
-                    <c:choose>
-                        <c:when test="${clazz.status eq 1 }">
+                        <c:if test="${clazz.status eq 1 }">
                             <td class="td-manage">
                                 <a style="text-decoration:none" onClick="clazz_stop(this,'${clazz.clazzId }')"
                                    href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>
                             </td>
-                        </c:when>
-                        <c:otherwise>
+                        </c:if>
+                        <c:if test="${clazz.status eq 0 }">
                             <td class="td-manage">
                                 <a style="text-decoration:none" onClick="clazz_start(this,'${clazz.clazzId }')"
                                    href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>
                             </td>
-                        </c:otherwise>
-                    </c:choose>
+                        </c:if>
                 </tr>
             </c:forEach>
             </tbody>
@@ -188,7 +186,7 @@
                 var data = eval('(' + data + ')');
                 if (data.status === 1) {
                     layer.confirm('确认要下架吗？', function (index) {
-                        $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="clazz_	start(this,' + id + ')" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>');
+                        $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="clazz_start(this,' + id + ')" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>');
                         $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已下架</span>');
                         $(obj).remove();
                         layer.msg('已下架!', {icon: 5, time: 1000});
@@ -212,6 +210,7 @@
             },
             success: function (data) {
                 var data = eval('(' + data + ')');
+                console.log(data);
                 if (data.status === 1) {
                     $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="clazz_stop(this,' + id + ')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>');
                     $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');

@@ -50,18 +50,17 @@
         });
     </script>
 
-    <title>添加年级</title>
+    <title>添加课程</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 </head>
 <body>
 <article class="page-container">
-    <form action="${pageContext.request.contextPath}/teacher/teacherAdd" class="form form-horizontal"
-          id="form-grade-add" method="POST">
+    <form class="form form-horizontal" id="form-subject-add" method="POST">
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>年级：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>课程：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="" id="gradename" name="gradename">
+                <input type="text" class="input-text" value="" placeholder="" id="subjectname" name="subjectname">
             </div>
         </div>
         <div class="row cl">
@@ -92,8 +91,7 @@
 <script type="text/javascript"
         src="http://bdpak.cn:8080/bdyhAdmin/admin/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 
-
-<script type="text/javascript">
+<script>
     $(function () {
         $('.skin-minimal input').iCheck({
             checkboxClass: 'icheckbox-blue',
@@ -101,9 +99,9 @@
             increaseArea: '20%'
         });
 
-        $("#form-grade-add").validate({
+        $("#form-subject-add").validate({
             rules: {
-                gradename: {
+                subjectname: {
                     required: true,
                 },
 
@@ -113,20 +111,23 @@
             success: "valid",
             submitHandler: function (form) {
                 //这里使用异步提交是为了验证区域存不存在,验证成功后
-                var newgrade=$('#gradename').val();
+                var subjectname=$('#subjectname').val();
+                var  id="${clazzId}";
+                alert(id);
                 $.ajax({
-                    url: "${pageContext.request.contextPath}/clazz/clazzAdd",
+                    url: "${pageContext.request.contextPath}/subject/addSubject",
                     type: "post",
                     data: {
-                          clazz:newgrade
-                        },
+                        subject:subjectname,
+                        clazzId:id
+                    },
                     dataType: "json",
-             /*       processData: false, // 告诉jQuery不要去处理发送的数据
-                    contentType: false, // 告诉jQuery不要去设置Content-Type请求头*/
+                    /*       processData: false, // 告诉jQuery不要去处理发送的数据
+                           contentType: false, // 告诉jQuery不要去设置Content-Type请求头*/
                     success: function (data) {
                         console.log(data);
                         if (data.code=="success") {
-                            alert("添加年级成功");
+                            alert("添加课程成功");
                             window.parent.location.reload();
                             var index = parent.layer.getFrameIndex(window.name);
                             parent.layer.close(index);//刷新父页面并且关闭窗口
@@ -140,6 +141,5 @@
         });
     });
 </script>
-<!--/请在上方写此页面业务相关的脚本-->
 </body>
 </html>
