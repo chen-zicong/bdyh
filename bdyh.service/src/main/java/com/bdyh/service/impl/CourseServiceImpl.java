@@ -22,6 +22,9 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private CourseMapper courseMapper;
 
+    @Autowired
+    private  UserOrderMapper userOrderMapper;
+
     /**
      * CourseDao为自定义的dao层接口
      */
@@ -301,6 +304,13 @@ public class CourseServiceImpl implements CourseService {
         List<IncomeStatisticsVo> incomeStatisticsVos = incomeDao.selectByAgentId(agentId);
         return incomeStatisticsVos;
     }
+
+    @Override
+    public int addOrder(UserOrder userOrder) {
+        return userOrderMapper.insert(userOrder);
+
+    }
+
     @Override
     public List<Course> findCollectedCourseOfTeacher(Integer teacherId) {
         CourseExample courseExample = new CourseExample();

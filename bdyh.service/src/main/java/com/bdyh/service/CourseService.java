@@ -75,6 +75,9 @@ public interface CourseService {
     public Float benefitOfTeacher(Integer id);
 
     public List<Course> findFlowedCourseOfAgent(Integer agentId);
+
     public List<IncomeStatisticsVo> findSoldCourseOfAgent(Integer agentId);
+
+    public int addOrder(UserOrder userOrder);
 
 }

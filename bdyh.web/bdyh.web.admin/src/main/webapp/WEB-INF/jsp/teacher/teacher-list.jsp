@@ -83,6 +83,7 @@
 	</table>
 	</div>
 </div>
+
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="http://bdpak.cn:8080/bdyhAdmin/admin/lib/jquery/1.9.1/jquery.min.js"></script> 
 <script type="text/javascript" src="http://bdpak.cn:8080/bdyhAdmin/admin/lib/layer/2.4/layer.js"></script>

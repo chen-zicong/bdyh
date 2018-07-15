@@ -78,6 +78,7 @@ public class UserAction {
 	public ModelAndView getAccess_token(HttpSession session,String code,String state) throws Exception{
 		ModelAndView modelAndView=new ModelAndView();
 		String returnString="wechat/home";
+
 		String url=GET_ACCESS_TOKEN_URL.replace("APPID",WechatUtil.APPID).replace("SECRET", WechatUtil.APPSECRET).replace("CODE", code);
 		JSONObject jsonObject=WechatUtil.doGetStr(url);
 		if(jsonObject!=null&&!jsonObject.has("errcode")){

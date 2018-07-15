@@ -112,6 +112,7 @@ public class WechatUtil {
 		AccessToken token=new AccessToken();
 		String url=ACCESS_TOKEN_URL.replace("APPID", APPID).replace("APPSECRET", APPSECRET);
 		JSONObject jsonObject=doGetStr(url);
+		System.out.println(jsonObject);
 		if(jsonObject!=null){
 			token.setToken(jsonObject.getString("access_token"));
 			token.setExpiresIn(jsonObject.getInt("expires_in"));
@@ -225,7 +226,7 @@ public class WechatUtil {
 		button21.setType("view");
 		String url=URLEncoder.encode(URL,"utf-8");
 		String StringURL=MessageUtil.GET_CODE_URL.replace("APPID", WechatUtil.APPID).replace("REDIRECT_URI", url).replace("SCOPE", "snsapi_userinfo");
-		
+		System.out.println(StringURL);
 		button21.setUrl(StringURL);
 		
 		ClickButton button31 = new ClickButton();

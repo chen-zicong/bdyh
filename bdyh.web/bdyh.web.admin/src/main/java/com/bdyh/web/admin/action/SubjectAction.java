@@ -85,4 +85,9 @@ public class SubjectAction {
         return subjectService.addSubject(subject);
 
     }
+
+    @RequestMapping("addSubjectPage")
+    public String addSubjectPage() {
+        return "subject/subject-add";
+    }
 }

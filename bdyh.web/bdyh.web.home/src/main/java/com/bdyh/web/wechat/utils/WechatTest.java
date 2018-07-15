@@ -1,6 +1,7 @@
 package com.bdyh.web.wechat.utils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import org.apache.http.ParseException;
 
@@ -13,7 +14,7 @@ import net.sf.json.JSONObject;
  * @author cxs
  */
 public class WechatTest {
-	public static void main(String[] args) throws ParseException, IOException {
+	public static void main2(String[] args) throws ParseException, IOException {
 		
 		AccessToken token=WechatUtil.getAccessToken();
 		/*
@@ -39,5 +40,13 @@ public class WechatTest {
 		String mediaId=WeixinUtil.upload(path, WeixinUtil.getAccessToken().getToken(), "thumb");
 		System.out.println(mediaId);*/
 		
+	}
+
+	public static void main(String[] args) {
+		try {
+			WechatUtil.initMenu();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 }
