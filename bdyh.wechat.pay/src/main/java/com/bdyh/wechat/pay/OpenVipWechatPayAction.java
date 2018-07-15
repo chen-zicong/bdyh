@@ -61,12 +61,21 @@ public class OpenVipWechatPayAction {
         return reqMap;
     }
 
-
+    /**
+     *  微信支付后的回调
+     *  支付成功后微信会访问这个url
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws DocumentException
+     */
     @RequestMapping(value = "wechatPayRes")
     public void wechatPayRes(HttpServletRequest request, HttpServletResponse response) throws IOException, DocumentException {
         Map<String, String> map = WXPayUtil.xmlToMapByWechat(request);
         TeacherIncome teacherIncome;
+        //获取微信回调给我的参数中的openid还有订单号 查找数据库是否存在这一条订单
         UserCourse userCourse = courseService.findUserCourseByOpenIdAndCourseId(map.get("openid"), map.get("out_trade_no"));
+
         if (userCourse.getPay() == 1) {
             return;
         }

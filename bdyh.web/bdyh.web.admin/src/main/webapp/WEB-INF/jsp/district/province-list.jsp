@@ -114,7 +114,6 @@ function province_stop(obj,id){
             provinceId:id,
         },
         success: function(data){
-				console.log(data)
             if (data.code=='success'){
                 layer.confirm('确认要下架吗？',function(index){
                     $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="province_start(this,'+id+')" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>');

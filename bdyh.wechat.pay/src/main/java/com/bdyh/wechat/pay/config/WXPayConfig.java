@@ -15,6 +15,8 @@ public class WXPayConfig {
 	public static final String PARTNERID = "1499391742";
 
 	public static final String KEY = "acsac6s654c56as44as5c4sac45a465x";
+	//微信支付完成后的回调地址
+	public static final String THECALLBACKADDRESS = "http://bdpak.cn/bdyh.web.home/vipPay/wechatPayRes/";
 
 	public enum SignType {
 		MD5, HMACSHA256
