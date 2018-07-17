@@ -1,6 +1,8 @@
 package com.bdyh.entity;
 
-public class Course {
+import java.io.Serializable;
+
+public class Course  implements Serializable {
     private Integer courseId;
 
     private Integer teacherId;

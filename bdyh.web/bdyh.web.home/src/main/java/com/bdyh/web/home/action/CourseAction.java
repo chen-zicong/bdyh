@@ -401,26 +401,4 @@ public class CourseAction {
     }
 
 
-    @RequestMapping("buyCourse")
-    public void buyCourse(int[] videosId, HttpSession session, int courseId) {
-        UserWechat user = (UserWechat) session.getAttribute("user");
-        UserOrder userOrder;
-        int price = 0;
-        for (int videoId : videosId) {
-
-            userOrder = new UserOrder();
-            //暂未支付
-            userOrder.setPay(0);
-            userOrder.setOpenId(user.getOpenid());
-            userOrder.setCcourseId(courseId);
-            userOrder.setVideoId(videoId);
-            Video video = videoService.findVideoById(videoId);
-            price += video.getVideoPrice();
-            courseService.addOrder(userOrder);
-        }
-
-
-
-
-    }
 }

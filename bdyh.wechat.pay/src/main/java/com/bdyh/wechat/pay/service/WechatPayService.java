@@ -21,5 +21,5 @@ public interface WechatPayService {
      * @param paramMap
      * @return Map<String , String>
      */
-    public Map<String, String> gtVipPay(Map<String, String> paramMap, UserWechat user, int coursePrice, String randeNo);
+    public Map<String, String> gtVipPay(Map<String, String> paramMap, String orderId);
 }

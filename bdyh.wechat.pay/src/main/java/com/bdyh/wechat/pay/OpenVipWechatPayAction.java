@@ -10,11 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.bdyh.entity.Course;
-import com.bdyh.entity.TeacherIncome;
-import com.bdyh.entity.UserCourse;
-import com.bdyh.entity.UserWechat;
+import com.bdyh.entity.*;
 import com.bdyh.service.CourseService;
+import com.bdyh.service.OrderService;
 import com.bdyh.service.TeacherService;
 import com.bdyh.wechat.pay.utils.WXPayUtil;
 import org.dom4j.DocumentException;
@@ -42,6 +40,9 @@ public class OpenVipWechatPayAction {
     @Autowired
     TeacherService teacherService;
 
+    @Autowired
+    OrderService orderService;
+
     /**
      * @param request
      * @return Map<String       String>
@@ -49,16 +50,23 @@ public class OpenVipWechatPayAction {
      * @auhtor qwc 2018年2月22日 下午5:10:33
      */
     @RequestMapping(value = "wechatPay")
-    public Map<String, String> vipPayReq(HttpServletRequest request, HttpSession session, int coursePrice, String tradeNo) throws IOException {
+    public Map<String, String> vipPayReq(HttpServletRequest request,String orderId) throws IOException {
 
-        //从session范围中取出用户信息
-        UserWechat user = (UserWechat) session.getAttribute("user");
+
         Map<String, String> paramMap = new HashMap<String, String>();
         // 获取客户端Ip地址，考虑到需要req ， 就在外面获取了。
         paramMap.put("ipAddr", GetIpAdrr.getIpAddr(request));
-        Map<String, String> reqMap = wechatPayService.gtVipPay(paramMap, user, coursePrice, tradeNo);
+        Map<String, String> reqMap = wechatPayService.gtVipPay(paramMap, orderId);
 
         return reqMap;
+    }
+
+    /**
+     * 使用微信支付SDK
+     */
+    @RequestMapping("/pay")
+    public void  Pay(){
+
     }
 
     /**
@@ -75,6 +83,11 @@ public class OpenVipWechatPayAction {
         TeacherIncome teacherIncome;
         //获取微信回调给我的参数中的openid还有订单号 查找数据库是否存在这一条订单
         UserCourse userCourse = courseService.findUserCourseByOpenIdAndCourseId(map.get("openid"), map.get("out_trade_no"));
+        UserOrder order = orderService.findByOpenIdAndOrderId(map.get("openid"), map.get("out_trade_no"));
+        if(order!=null){
+            order.setPay(1);
+
+        }
 
         if (userCourse.getPay() == 1) {
             return;

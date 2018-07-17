@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdyh.dao.AgentDivideMapper" >
+  <resultMap id="BaseResultMap" type="com.bdyh.entity.AgentDivide" >
+    <constructor >
+      <idArg column="agent_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="teacher_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="teacher_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="agent_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="divide" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    agent_id, teacher_id, teacher_name, agent_name, divide
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bdyh.entity.AgentDivideExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from agent_divide
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from agent_divide
+    where agent_id = #{agentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from agent_divide
+    where agent_id = #{agentId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bdyh.entity.AgentDivideExample" >
+    delete from agent_divide
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bdyh.entity.AgentDivide" >
+    insert into agent_divide (agent_id, teacher_id, teacher_name, 
+      agent_name, divide)
+    values (#{agentId,jdbcType=INTEGER}, #{teacherId,jdbcType=INTEGER}, #{teacherName,jdbcType=VARCHAR}, 
+      #{agentName,jdbcType=VARCHAR}, #{divide,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bdyh.entity.AgentDivide" >
+    insert into agent_divide
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="agentId != null" >
+        agent_id,
+      </if>
+      <if test="teacherId != null" >
+        teacher_id,
+      </if>
+      <if test="teacherName != null" >
+        teacher_name,
+      </if>
+      <if test="agentName != null" >
+        agent_name,
+      </if>
+      <if test="divide != null" >
+        divide,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="agentId != null" >
+        #{agentId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherName != null" >
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="agentName != null" >
+        #{agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="divide != null" >
+        #{divide,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bdyh.entity.AgentDivideExample" resultType="java.lang.Integer" >
+    select count(*) from agent_divide
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update agent_divide
+    <set >
+      <if test="record.agentId != null" >
+        agent_id = #{record.agentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.teacherId != null" >
+        teacher_id = #{record.teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="record.teacherName != null" >
+        teacher_name = #{record.teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agentName != null" >
+        agent_name = #{record.agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.divide != null" >
+        divide = #{record.divide,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update agent_divide
+    set agent_id = #{record.agentId,jdbcType=INTEGER},
+      teacher_id = #{record.teacherId,jdbcType=INTEGER},
+      teacher_name = #{record.teacherName,jdbcType=VARCHAR},
+      agent_name = #{record.agentName,jdbcType=VARCHAR},
+      divide = #{record.divide,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdyh.entity.AgentDivide" >
+    update agent_divide
+    <set >
+      <if test="teacherId != null" >
+        teacher_id = #{teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherName != null" >
+        teacher_name = #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="agentName != null" >
+        agent_name = #{agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="divide != null" >
+        divide = #{divide,jdbcType=INTEGER},
+      </if>
+    </set>
+    where agent_id = #{agentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bdyh.entity.AgentDivide" >
+    update agent_divide
+    set teacher_id = #{teacherId,jdbcType=INTEGER},
+      teacher_name = #{teacherName,jdbcType=VARCHAR},
+      agent_name = #{agentName,jdbcType=VARCHAR},
+      divide = #{divide,jdbcType=INTEGER}
+    where agent_id = #{agentId,jdbcType=INTEGER}
+  </update>
+</mapper>

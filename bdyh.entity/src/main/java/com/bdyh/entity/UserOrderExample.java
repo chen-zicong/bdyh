@@ -1,5 +1,6 @@
 package com.bdyh.entity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -105,6 +106,76 @@ public class UserOrderExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
+        public Criteria andOrderIdIsNull() {
+            addCriterion("order_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdIsNotNull() {
+            addCriterion("order_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdEqualTo(String value) {
+            addCriterion("order_id =", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdNotEqualTo(String value) {
+            addCriterion("order_id <>", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdGreaterThan(String value) {
+            addCriterion("order_id >", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdGreaterThanOrEqualTo(String value) {
+            addCriterion("order_id >=", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdLessThan(String value) {
+            addCriterion("order_id <", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdLessThanOrEqualTo(String value) {
+            addCriterion("order_id <=", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdLike(String value) {
+            addCriterion("order_id like", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdNotLike(String value) {
+            addCriterion("order_id not like", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdIn(List<String> values) {
+            addCriterion("order_id in", values, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdNotIn(List<String> values) {
+            addCriterion("order_id not in", values, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdBetween(String value1, String value2) {
+            addCriterion("order_id between", value1, value2, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdNotBetween(String value1, String value2) {
+            addCriterion("order_id not between", value1, value2, "orderId");
+            return (Criteria) this;
+        }
+
         public Criteria andOpenIdIsNull() {
             addCriterion("open_id is null");
             return (Criteria) this;
@@ -175,123 +246,63 @@ public class UserOrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andCcourseIdIsNull() {
-            addCriterion("ccourse_id is null");
+        public Criteria andPriceIsNull() {
+            addCriterion("price is null");
             return (Criteria) this;
         }
 
-        public Criteria andCcourseIdIsNotNull() {
-            addCriterion("ccourse_id is not null");
+        public Criteria andPriceIsNotNull() {
+            addCriterion("price is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCcourseIdEqualTo(Integer value) {
-            addCriterion("ccourse_id =", value, "ccourseId");
+        public Criteria andPriceEqualTo(BigDecimal value) {
+            addCriterion("price =", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andCcourseIdNotEqualTo(Integer value) {
-            addCriterion("ccourse_id <>", value, "ccourseId");
+        public Criteria andPriceNotEqualTo(BigDecimal value) {
+            addCriterion("price <>", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andCcourseIdGreaterThan(Integer value) {
-            addCriterion("ccourse_id >", value, "ccourseId");
+        public Criteria andPriceGreaterThan(BigDecimal value) {
+            addCriterion("price >", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andCcourseIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("ccourse_id >=", value, "ccourseId");
+        public Criteria andPriceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("price >=", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andCcourseIdLessThan(Integer value) {
-            addCriterion("ccourse_id <", value, "ccourseId");
+        public Criteria andPriceLessThan(BigDecimal value) {
+            addCriterion("price <", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andCcourseIdLessThanOrEqualTo(Integer value) {
-            addCriterion("ccourse_id <=", value, "ccourseId");
+        public Criteria andPriceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("price <=", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andCcourseIdIn(List<Integer> values) {
-            addCriterion("ccourse_id in", values, "ccourseId");
+        public Criteria andPriceIn(List<BigDecimal> values) {
+            addCriterion("price in", values, "price");
             return (Criteria) this;
         }
 
-        public Criteria andCcourseIdNotIn(List<Integer> values) {
-            addCriterion("ccourse_id not in", values, "ccourseId");
+        public Criteria andPriceNotIn(List<BigDecimal> values) {
+            addCriterion("price not in", values, "price");
             return (Criteria) this;
         }
 
-        public Criteria andCcourseIdBetween(Integer value1, Integer value2) {
-            addCriterion("ccourse_id between", value1, value2, "ccourseId");
+        public Criteria andPriceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("price between", value1, value2, "price");
             return (Criteria) this;
         }
 
-        public Criteria andCcourseIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("ccourse_id not between", value1, value2, "ccourseId");
-            return (Criteria) this;
-        }
-
-        public Criteria andVideoIdIsNull() {
-            addCriterion("video_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andVideoIdIsNotNull() {
-            addCriterion("video_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andVideoIdEqualTo(Integer value) {
-            addCriterion("video_id =", value, "videoId");
-            return (Criteria) this;
-        }
-
-        public Criteria andVideoIdNotEqualTo(Integer value) {
-            addCriterion("video_id <>", value, "videoId");
-            return (Criteria) this;
-        }
-
-        public Criteria andVideoIdGreaterThan(Integer value) {
-            addCriterion("video_id >", value, "videoId");
-            return (Criteria) this;
-        }
-
-        public Criteria andVideoIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("video_id >=", value, "videoId");
-            return (Criteria) this;
-        }
-
-        public Criteria andVideoIdLessThan(Integer value) {
-            addCriterion("video_id <", value, "videoId");
-            return (Criteria) this;
-        }
-
-        public Criteria andVideoIdLessThanOrEqualTo(Integer value) {
-            addCriterion("video_id <=", value, "videoId");
-            return (Criteria) this;
-        }
-
-        public Criteria andVideoIdIn(List<Integer> values) {
-            addCriterion("video_id in", values, "videoId");
-            return (Criteria) this;
-        }
-
-        public Criteria andVideoIdNotIn(List<Integer> values) {
-            addCriterion("video_id not in", values, "videoId");
-            return (Criteria) this;
-        }
-
-        public Criteria andVideoIdBetween(Integer value1, Integer value2) {
-            addCriterion("video_id between", value1, value2, "videoId");
-            return (Criteria) this;
-        }
-
-        public Criteria andVideoIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("video_id not between", value1, value2, "videoId");
+        public Criteria andPriceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("price not between", value1, value2, "price");
             return (Criteria) this;
         }
 

@@ -1,28 +1,37 @@
 package com.bdyh.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class UserOrder {
+    private String orderId;
+
     private String openId;
 
-    private Integer ccourseId;
-
-    private Integer videoId;
+    private BigDecimal price;
 
     private Integer pay;
 
     private Date date;
 
-    public UserOrder(String openId, Integer ccourseId, Integer videoId, Integer pay, Date date) {
+    public UserOrder(String orderId, String openId, BigDecimal price, Integer pay, Date date) {
+        this.orderId = orderId;
         this.openId = openId;
-        this.ccourseId = ccourseId;
-        this.videoId = videoId;
+        this.price = price;
         this.pay = pay;
         this.date = date;
     }
 
     public UserOrder() {
         super();
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId == null ? null : orderId.trim();
     }
 
     public String getOpenId() {
@@ -33,20 +42,12 @@ public class UserOrder {
         this.openId = openId == null ? null : openId.trim();
     }
 
-    public Integer getCcourseId() {
-        return ccourseId;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setCcourseId(Integer ccourseId) {
-        this.ccourseId = ccourseId;
-    }
-
-    public Integer getVideoId() {
-        return videoId;
-    }
-
-    public void setVideoId(Integer videoId) {
-        this.videoId = videoId;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public Integer getPay() {
