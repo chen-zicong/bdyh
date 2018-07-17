@@ -24,7 +24,7 @@
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>小科斗微课堂</title>
+<title>这是小科斗微课堂</title>
 <meta name="keywords" content="">
 <meta name="description" content="">
 <script type="text/javascript">
