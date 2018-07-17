@@ -124,7 +124,13 @@ public class AgentServiceImpl implements AgentService {
             return  APIResponse.success();
         }
         divide.setDivide(divideNum);
+        int i = agentDivideMapper.updateDivideNum(agent.getAgentId(), teacherId, divideNum);
+        if(i==1){
         return APIResponse.success();
+
+        }else {
+            return  APIResponse.fail("修改错误");
+        }
 
     }
 

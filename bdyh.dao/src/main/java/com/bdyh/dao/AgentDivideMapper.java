@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 public interface AgentDivideMapper {
     int countByExample(AgentDivideExample example);
@@ -33,4 +34,7 @@ public interface AgentDivideMapper {
 
     @Select("select * from agent_divide where agent_id = #{agentId} and teacher_id=#{teacherId}")
     AgentDivide findOne(@Param("agentId") int agentId, @Param("teacherId") int teacherId);
+
+    @Update("update agent_divide set divide = #{divideNum} where agent_id =#{agentId} and teacher_id = #{teacherId}")
+    int updateDivideNum(@Param("agentId") int agentId, @Param("teacherId") int teacherId, @Param("divideNum") int divideNum);
 }

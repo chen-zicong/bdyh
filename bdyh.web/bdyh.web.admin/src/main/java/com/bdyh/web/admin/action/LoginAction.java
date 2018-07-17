@@ -197,10 +197,10 @@ public class LoginAction {
 
 
         boolean checkCode=VerifyCodeUtil(request);//验证码校验
-        if(!checkCode){
-        	out.write("{\"status\":2}");
-        	return;
-        }
+//        if(!checkCode){
+//        	out.write("{\"status\":2}");
+//        	return;
+//        }
         if (StringUtils.isBlank(activeUser.getUsername())) {
             throw new RuntimeException("用户名不能为空");
         }

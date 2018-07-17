@@ -17,7 +17,7 @@
     <title>Bootstrap 101 Template</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <%--<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/angular.min.js" type="text/javascript" charset="utf-8"></script>--%>
 
@@ -49,8 +49,8 @@
         <tr>
             <th scope="row">${teacher.teacherId}</th>
             <td>${teacher.teacherName}</td>
-            <td><input class="text-center" type="number" value="${teacher.divide}" min="0" max="1" step="0.1"/></td>
-            <td><button type="button" class="btn btn-danger btn-sm" onclick="commit_change()">确定修改</button></td>
+            <td><input class="text-center" type="number" value="${teacher.divide}" min="0" max="100" step="10"/></td>
+            <td><button type="button" class="btn btn-danger btn-sm" >确定修改</button></td>
         </tr>
     </c:forEach>
 
@@ -68,22 +68,28 @@
     <%--</tr>--%>
     </tbody>
 </table>
-<script src="node_modules/jquery/dist/jquery.min.js"></script>
-<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script>
     $(function () {
         /*提交修改的ajax请求*/
         $("button").on("click",function () {
                 $.ajax({
-                    url:"${pageContext.request.contextPath}/a.txt",
+                    url:"${pageContext.request.contextPath}/agent/setDivide",
                     type:'get',
 
-                    data:{"teacher_id":$(this).parent().siblings('th').text(),
-                        "teacher_benefit":$(this).parent().prev().children("input").val()
+                    data:{"teacherId":$(this).parent().siblings('th').text(),
+                        "divideNum":$(this).parent().prev().children("input").val()
                     },
                     dataType:'json',
                     success:function(data){
-                        alert(data[0].pwd)
+                        if(data.code==="success"){
+                            alert("修改成功")
+                        }else {
+                            alert(data.msg);
+                        }
+
                     }
                 })
                 return false;

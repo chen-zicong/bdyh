@@ -43,6 +43,8 @@ public class AgentAction {
     @ResponseBody
     public APIResponse setDivide(int teacherId, int divideNum) {
         Agent agent = (Agent) AdminUtil.getShiroSessionByKey("userAgent");
-        return agentService.setDivide(teacherId, agent, divideNum);
+      return agentService.setDivide(teacherId, agent, divideNum);
+
+
     }
 }
