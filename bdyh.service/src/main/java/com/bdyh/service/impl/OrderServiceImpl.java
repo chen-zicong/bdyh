@@ -2,6 +2,7 @@ package com.bdyh.service.impl;
 
 import com.bdyh.common.APIResponse;
 import com.bdyh.common.Util;
+import com.bdyh.dao.AlreadyBoughtMapper;
 import com.bdyh.dao.OrderDetailMapper;
 import com.bdyh.dao.UserOrderMapper;
 import com.bdyh.entity.*;
@@ -13,6 +14,7 @@ import com.bdyh.common.exception.BdyhException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.registry.infomodel.User;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
@@ -32,6 +34,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderDetailMapper orderDetailMapper;
+
+    @Autowired
+    private AlreadyBoughtMapper alreadyBoughtMapper;
 
     @Override
     public APIResponse createOrder(Integer courseId, Integer[] videosId ,UserWechat userWechat) {
@@ -78,7 +83,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public APIResponse finish(String orderId) {
+    public APIResponse finish(UserOrder order) {
+        order.setPay(1);
+
         return null;
     }
 
