@@ -48,6 +48,7 @@ public class RouteAction {
     @RequestMapping("Goto/{one}/{tow}")
     public String route(@PathVariable("one") String one, @PathVariable("tow") String tow) {
         return "wechat/"+one+"/"+tow+"";
+
     }
 
     /**
