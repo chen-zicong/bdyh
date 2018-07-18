@@ -84,8 +84,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public APIResponse finish(UserOrder order) {
-        order.setPay(1);
 
+        AlreadyBoughtKey alreadyBoughtKey ;
+        order.setPay(1);
+        userOrderMapper.updateByPrimaryKeySelective(order);
+//        List<OrderDetail> orderDetails = orderDetailMapper.selectByOrderId(order.getOrderId());
+//        for(OrderDetail orderDetail : orderDetails){
+//           alreadyBoughtKey = new AlreadyBoughtKey(order.getOpenId(),order.getOrderId(),orderDetail.getVideoId())
+//        }
+//        alreadyBoughtKey.setCourseId();
         return null;
     }
 

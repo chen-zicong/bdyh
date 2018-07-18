@@ -114,52 +114,62 @@ public class AlreadyBoughtExample {
             return (Criteria) this;
         }
 
-        public Criteria andOpenIdEqualTo(byte[] value) {
+        public Criteria andOpenIdEqualTo(String value) {
             addCriterion("open_id =", value, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andOpenIdNotEqualTo(byte[] value) {
+        public Criteria andOpenIdNotEqualTo(String value) {
             addCriterion("open_id <>", value, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andOpenIdGreaterThan(byte[] value) {
+        public Criteria andOpenIdGreaterThan(String value) {
             addCriterion("open_id >", value, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andOpenIdGreaterThanOrEqualTo(byte[] value) {
+        public Criteria andOpenIdGreaterThanOrEqualTo(String value) {
             addCriterion("open_id >=", value, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andOpenIdLessThan(byte[] value) {
+        public Criteria andOpenIdLessThan(String value) {
             addCriterion("open_id <", value, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andOpenIdLessThanOrEqualTo(byte[] value) {
+        public Criteria andOpenIdLessThanOrEqualTo(String value) {
             addCriterion("open_id <=", value, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andOpenIdIn(List<byte[]> values) {
+        public Criteria andOpenIdLike(String value) {
+            addCriterion("open_id like", value, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdNotLike(String value) {
+            addCriterion("open_id not like", value, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdIn(List<String> values) {
             addCriterion("open_id in", values, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andOpenIdNotIn(List<byte[]> values) {
+        public Criteria andOpenIdNotIn(List<String> values) {
             addCriterion("open_id not in", values, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andOpenIdBetween(byte[] value1, byte[] value2) {
+        public Criteria andOpenIdBetween(String value1, String value2) {
             addCriterion("open_id between", value1, value2, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andOpenIdNotBetween(byte[] value1, byte[] value2) {
+        public Criteria andOpenIdNotBetween(String value1, String value2) {
             addCriterion("open_id not between", value1, value2, "openId");
             return (Criteria) this;
         }

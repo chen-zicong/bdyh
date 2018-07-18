@@ -2,8 +2,11 @@ package com.bdyh.dao;
 
 import com.bdyh.entity.OrderDetail;
 import com.bdyh.entity.OrderDetailExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 public interface OrderDetailMapper {
     int countByExample(OrderDetailExample example);
@@ -19,4 +22,6 @@ public interface OrderDetailMapper {
     int updateByExampleSelective(@Param("record") OrderDetail record, @Param("example") OrderDetailExample example);
 
     int updateByExample(@Param("record") OrderDetail record, @Param("example") OrderDetailExample example);
+
+
 }
