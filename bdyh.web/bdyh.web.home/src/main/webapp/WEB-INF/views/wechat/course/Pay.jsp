@@ -89,8 +89,8 @@
                         </div>
 
                         <div class=" am-u-sm-8 am-list-main">
-                            <h3 class="am-list-item-hd"><span style="">三年级数学</span><span style="float:right">￥200.00</span></h3>
-                            <div class="am-list-item-text" style="margin-top: 8%">规格 : 共计20个视频</div>
+                            <h3 class="am-list-item-hd"><span style="">${order.course.courseName}</span><span style="float:right">￥${order.price}</span></h3>
+                            <div class="am-list-item-text" style="margin-top: 8%">规格 : 共计${order.}个视频</div>
 
                         </div>
                     </li>

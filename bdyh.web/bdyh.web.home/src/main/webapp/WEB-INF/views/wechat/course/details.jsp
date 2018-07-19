@@ -719,12 +719,8 @@
 				    courseId:courseid,
 					videosId:IdList
 				},
-				success:function (data) {
-				    if(data.code=="success"){
-					window.location.href="${pageContext.request.contextPath}/routeW/Goto/course/Pay";
-				    }else{
-				        alert(data.msg);
-					}
+				success:function () {
+				  console.log("操作成功");
 				}
 
 			});
