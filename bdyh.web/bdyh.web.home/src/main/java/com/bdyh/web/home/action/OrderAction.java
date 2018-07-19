@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -25,7 +26,7 @@ public class OrderAction {
     @RequestMapping("createOrder")
     @ResponseBody
     @Transactional
-    public APIResponse CreateOrder(@Param("courseId") Integer courseId, @Param("videosId") Integer[] videosId, HttpSession session) {
+    public String CreateOrder(@Param("courseId") Integer courseId, @Param("videosId") Integer[] videosId, HttpSession session, Model model) {
         UserWechat userWechat = (UserWechat) session.getAttribute("user");
         if (userWechat == null) {
             throw new BdyhException(ResultEnum.USER_NOT_EXIST);
@@ -33,7 +34,15 @@ public class OrderAction {
         if (courseId == null || videosId == null) {
             throw new BdyhException(ResultEnum.PROPERTY_ERROR);
         }
-        return orderService.createOrder(courseId, videosId, userWechat);
+
+
+        OrderVo order = orderService.createOrder(courseId, videosId, userWechat);
+        if (order != null) {
+            model.addAttribute("order", order);
+            return "/course/Pay";
+        } else {
+            return "/error";
+        }
 
     }
 

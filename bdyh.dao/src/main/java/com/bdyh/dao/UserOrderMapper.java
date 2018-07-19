@@ -31,6 +31,14 @@ public interface UserOrderMapper {
 
     int updateByPrimaryKey(UserOrder record);
 
-    @Select("select * from user_order where open_id =#{openId} and orderId = #{order_id}")
-    UserOrder selectByOpenIdAndOrderId(@Param("openId") String openId, @Param("orderId") String orderId);
+    @Select("select * from user_order  where open_id = #{openId} and order_id = #{orderId}")
+    UserOrder selectByOpenIdAndOrderId(@Param("openId") String openId, @Param("orderId") String orderID);
+
+    @Select("select * from user_order where  open_id = #{openId} and pay= 1 and course_id = #{courseId}")
+    List<UserOrder> findBoughtByOpenIdandCourseId(@Param("openId") String openId, @Param("courseId") int courseId);
+
+    @Select("select * from user_order where  open_id = #{openId} and pay= 0 and course_id = #{courseId}")
+    List<UserOrder> findUnBoughtByOpenIdAndCourseId(@Param("openId") String openId, @Param("courseId") int courseId);
+
+
 }

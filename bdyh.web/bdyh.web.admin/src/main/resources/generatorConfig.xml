@@ -69,7 +69,7 @@
         </javaClientGenerator>
 
 
-        <table tableName="already_bought"  />
+        <table tableName="user_order"  />
 
 
         <!-- geelynote mybatis插件的搭建 -->

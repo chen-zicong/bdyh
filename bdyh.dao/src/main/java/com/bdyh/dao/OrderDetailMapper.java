@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import retrofit2.http.PATCH;
 
 public interface OrderDetailMapper {
     int countByExample(OrderDetailExample example);
@@ -23,5 +24,9 @@ public interface OrderDetailMapper {
 
     int updateByExample(@Param("record") OrderDetail record, @Param("example") OrderDetailExample example);
 
+    @Select("select * form detail where  orderId =#{orderId}")
+    List<OrderDetail> selectByOrderId(@Param("orderId") String orderId);
+    @Select("select video_id  from order_detail where  order_id = #{orderId}")
+    List<Integer> selectVideosIdByOrderId(@Param("orderId") String orderId);
 
 }

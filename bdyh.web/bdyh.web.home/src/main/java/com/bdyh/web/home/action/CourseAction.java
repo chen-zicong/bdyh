@@ -2,13 +2,19 @@ package com.bdyh.web.home.action;
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.xml.registry.infomodel.User;
 
+import com.bdyh.dao.UserOrderMapper;
 import com.bdyh.entity.*;
+import com.bdyh.service.*;
 import com.bdyh.wechat.pay.utils.WXPayUtil;
+
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import com.bdyh.common.redis.RedisCacheUtil;
-import com.bdyh.service.CourseService;
-import com.bdyh.service.DistrictService;
-import com.bdyh.service.TeacherService;
-import com.bdyh.service.UserTrackService;
-import com.bdyh.service.VideoService;
 import com.bdyh.web.home.utils.CourseLevelUtil;
 
 /**
@@ -53,6 +54,9 @@ public class CourseAction {
 
     @Autowired
     private DistrictService districtService;
+
+    @Autowired
+    private OrderService orderService;
 
 
     /**
@@ -100,6 +104,8 @@ public class CourseAction {
     public String courseDetails(HttpSession session, Model model, @PathVariable("courseId") Integer courseId) throws Exception {
         Course course = null;
         Teacher teacher = null;
+        UserWechat user = (UserWechat) session.getAttribute("user");
+
 		/*RedisCacheUtil<Course> redisCacheUtil1=new RedisCacheUtil<Course>();
 		RedisCacheUtil<Teacher> redisCacheUtil2=new RedisCacheUtil<Teacher>();
 		//根据courseId保存课程对象，下次需要时候直接根据courseId在缓存中找
@@ -119,9 +125,57 @@ public class CourseAction {
 			redisCacheUtil2.setCacheObject(teacher.getTeacherId()+"", teacher);
 		}*/
 
+
+        /**
+         * 找到已经购买了的课程
+         */
         course = courseService.findCourseById(courseId);
         teacher = teacherService.findTeacherById(course.getTeacherId());
         List<Video> videoList = videoService.findVideoByCourseId(courseId);
+        List<UserOrder> userOrdersPay = orderService.findBoughtByOpenIdandCourseId(user.getOpenid(), courseId);
+        List<UserOrder> userOrdersUnPay = orderService.findUnBoughtByOpenIdandCourseId(user.getOpenid(), courseId);
+
+
+        List<Video> boughtVideo = null;
+        if (userOrdersPay.size() > 0) {
+            for (UserOrder order : userOrdersPay) {
+                List<Integer> videosId = orderService.findOrderDetailByOrderId(order.getOrderId());
+                boughtVideo = videoService.findBoughtVideo(videosId);
+
+            }
+        }
+
+
+        List<Video> unboughtVide = null;
+        if (userOrdersUnPay.size() > 0) {
+            for (UserOrder order : userOrdersUnPay) {
+                List<Integer> videosId = orderService.findOrderDetailByOrderId(order.getOrderId());
+                unboughtVide = videoService.findBoughtVideo(videosId);
+
+            }
+        }
+
+        List<VideosVo> videosVoList = new ArrayList<>();
+        VideosVo videosVo = null;
+        for (Video video : videoList) {
+            videosVo = new VideosVo();
+            BeanUtils.copyProperties(video, videosVo);
+            videosVo.setPaystatus(0);
+            for (Video payVideo : boughtVideo) {
+                if (payVideo.getCourseId().equals(payVideo.getCourseId())) {
+                    videosVo.setPaystatus(1);
+                    break;
+                }
+            }
+            for (Video unpayVide : unboughtVide) {
+                if (unpayVide.getCourseId().equals(unpayVide.getCourseId())) {
+                    videosVo.setPaystatus(-1);
+                    break;
+                }
+            }
+            videosVoList.add(videosVo);
+        }
+
 
         //使用freemarker生成播放视频的静态页面
 		/*Configuration configuration = freeMarkerConfigurer.getConfiguration();
@@ -142,13 +196,12 @@ public class CourseAction {
         //TODO 使用缓存查询，先前使用缓存出了问题
         model.addAttribute("course", course);
         model.addAttribute("teacher", teacher);
-        model.addAttribute("videoList", videoList);
+         model.addAttribute("videoList",videosVoList);
 
 
         //当用户点击了某课程，加入用户的足迹中
         //从session范围中取出用户信息
         //插入足迹的时候应该判断是否有course_id已存在，如果存在则覆盖，查询出来的课程顺序应该是按日期从新到老排序
-        UserWechat user = (UserWechat) session.getAttribute("user");
         UserTrack userTrack = userTrackService.findUserTrackByCourseIdAndOpenId(courseId, user.getOpenid());
         if (userTrack == null) {
             userTrack = new UserTrack();
@@ -186,6 +239,7 @@ public class CourseAction {
 
         return "wechat/course/details";
     }
+
 
     /**
      * 根据不同年级查询相应的课程

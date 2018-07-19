@@ -2,6 +2,7 @@ package com.bdyh.dao;
 
 import com.bdyh.entity.AlreadyBoughtExample;
 import com.bdyh.entity.AlreadyBoughtKey;
+
 import java.util.List;
 
 import com.bdyh.entity.OrderDetail;
@@ -24,7 +25,7 @@ public interface AlreadyBoughtMapper {
     int updateByExampleSelective(@Param("record") AlreadyBoughtKey record, @Param("example") AlreadyBoughtExample example);
 
     int updateByExample(@Param("record") AlreadyBoughtKey record, @Param("example") AlreadyBoughtExample example);
-    @Select("select * form detail where  orderId =#{orderId}")
-    List<OrderDetail>selectByOrderId(@Param("orderId") String orderId);
+
+
 
 }

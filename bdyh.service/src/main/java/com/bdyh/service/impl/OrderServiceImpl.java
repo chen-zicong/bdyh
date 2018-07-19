@@ -14,7 +14,6 @@ import com.bdyh.common.exception.BdyhException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.registry.infomodel.User;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
@@ -39,12 +38,13 @@ public class OrderServiceImpl implements OrderService {
     private AlreadyBoughtMapper alreadyBoughtMapper;
 
     @Override
-    public APIResponse createOrder(Integer courseId, Integer[] videosId ,UserWechat userWechat) {
+    public OrderVo createOrder(Integer courseId, Integer[] videosId, UserWechat userWechat) {
         UserOrder userOrder = new UserOrder();
         OrderDetail orderDetail;
         Course course = courseService.findCourseById(courseId);
         userOrder.setOpenId(userWechat.getOpenid());
         userOrder.setOrderId(Util.generateUUID());
+        userOrder.setCourseId(courseId);
         userOrder.setPay(0);
         //金额初始化为0
         BigDecimal orderAmount = new BigDecimal(BigInteger.ZERO);
@@ -69,12 +69,15 @@ public class OrderServiceImpl implements OrderService {
         userOrder.setDate(new Date());
         int insert = userOrderMapper.insert(userOrder);
         if (insert == 1) {
-            return APIResponse.success();
+            OrderVo orderVo = new OrderVo();
+            orderVo.setCourse(course);
+            orderVo.setPrice(orderAmount.floatValue());
+            orderVo.setCount(videosId.length);
+            orderVo.setOrderId(userOrder.getOrderId());
         } else {
-            return APIResponse.fail("创建订单失败");
-
+             throw  new BdyhException(ResultEnum.ORDER_NOT_EXIST);
         }
-
+        return  null;
     }
 
     @Override
@@ -85,15 +88,21 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public APIResponse finish(UserOrder order) {
 
-        AlreadyBoughtKey alreadyBoughtKey ;
+        AlreadyBoughtKey alreadyBoughtKey;
         order.setPay(1);
-        userOrderMapper.updateByPrimaryKeySelective(order);
+        int i = userOrderMapper.updateByPrimaryKeySelective(order);
 //        List<OrderDetail> orderDetails = orderDetailMapper.selectByOrderId(order.getOrderId());
-//        for(OrderDetail orderDetail : orderDetails){
-//           alreadyBoughtKey = new AlreadyBoughtKey(order.getOpenId(),order.getOrderId(),orderDetail.getVideoId())
+//        for (OrderDetail orderDetail : orderDetails) {
+//            alreadyBoughtKey = new AlreadyBoughtKey(order.getOpenId(), orderDetail.getVideoId())
 //        }
 //        alreadyBoughtKey.setCourseId();
-        return null;
+//        return null;
+        if (i == 1) {
+            return APIResponse.success();
+        } else {
+
+            return APIResponse.fail("失败");
+        }
     }
 
     @Override
@@ -103,13 +112,32 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public UserOrder findOne(String orderId) {
-        return  userOrderMapper.selectByPrimaryKey(orderId);
+        return userOrderMapper.selectByPrimaryKey(orderId);
 
     }
 
     @Override
-    public UserOrder findByOpenIdAndOrderId(String openId,String orderId) {
+    public UserOrder findByOpenIdAndOrderId(String openId, String orderId) {
         return userOrderMapper.selectByOpenIdAndOrderId(openId, orderId);
 
     }
+
+    @Override
+    public List<UserOrder> findBoughtByOpenIdandCourseId(String openId, int courseId) {
+        return userOrderMapper.findBoughtByOpenIdandCourseId(openId, courseId);
+
+    }
+
+    @Override
+    public List<UserOrder> findUnBoughtByOpenIdandCourseId(String openId, int courseId) {
+        return userOrderMapper.findUnBoughtByOpenIdAndCourseId(openId, courseId);
+
+    }
+
+    @Override
+    public List<Integer> findOrderDetailByOrderId(String orderId) {
+        return orderDetailMapper.selectVideosIdByOrderId(orderId);
+
+    }
+
 }
