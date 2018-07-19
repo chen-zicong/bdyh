@@ -3,7 +3,7 @@
 <mapper namespace="com.bdyh.dao.AlreadyBoughtMapper" >
   <resultMap id="BaseResultMap" type="com.bdyh.entity.AlreadyBoughtKey" >
     <constructor >
-      <idArg column="open_id" jdbcType="VARBINARY" javaType="byte[]" />
+      <idArg column="open_id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <idArg column="course_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <idArg column="video_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
@@ -85,7 +85,7 @@
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.bdyh.entity.AlreadyBoughtKey" >
     delete from already_bought
-    where open_id = #{openId,jdbcType=VARBINARY}
+    where open_id = #{openId,jdbcType=VARCHAR}
       and course_id = #{courseId,jdbcType=INTEGER}
       and video_id = #{videoId,jdbcType=INTEGER}
   </delete>
@@ -98,7 +98,7 @@
   <insert id="insert" parameterType="com.bdyh.entity.AlreadyBoughtKey" >
     insert into already_bought (open_id, course_id, video_id
       )
-    values (#{openId,jdbcType=VARBINARY}, #{courseId,jdbcType=INTEGER}, #{videoId,jdbcType=INTEGER}
+    values (#{openId,jdbcType=VARCHAR}, #{courseId,jdbcType=INTEGER}, #{videoId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.bdyh.entity.AlreadyBoughtKey" >
@@ -116,7 +116,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="openId != null" >
-        #{openId,jdbcType=VARBINARY},
+        #{openId,jdbcType=VARCHAR},
       </if>
       <if test="courseId != null" >
         #{courseId,jdbcType=INTEGER},
@@ -136,7 +136,7 @@
     update already_bought
     <set >
       <if test="record.openId != null" >
-        open_id = #{record.openId,jdbcType=VARBINARY},
+        open_id = #{record.openId,jdbcType=VARCHAR},
       </if>
       <if test="record.courseId != null" >
         course_id = #{record.courseId,jdbcType=INTEGER},
@@ -151,7 +151,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update already_bought
-    set open_id = #{record.openId,jdbcType=VARBINARY},
+    set open_id = #{record.openId,jdbcType=VARCHAR},
       course_id = #{record.courseId,jdbcType=INTEGER},
       video_id = #{record.videoId,jdbcType=INTEGER}
     <if test="_parameter != null" >

@@ -1,13 +1,13 @@
 package com.bdyh.entity;
 
 public class AlreadyBoughtKey {
-    private byte[] openId;
+    private String openId;
 
     private Integer courseId;
 
     private Integer videoId;
 
-    public AlreadyBoughtKey(byte[] openId, Integer courseId, Integer videoId) {
+    public AlreadyBoughtKey(String openId, Integer courseId, Integer videoId) {
         this.openId = openId;
         this.courseId = courseId;
         this.videoId = videoId;
@@ -17,12 +17,12 @@ public class AlreadyBoughtKey {
         super();
     }
 
-    public byte[] getOpenId() {
+    public String getOpenId() {
         return openId;
     }
 
-    public void setOpenId(byte[] openId) {
-        this.openId = openId;
+    public void setOpenId(String openId) {
+        this.openId = openId == null ? null : openId.trim();
     }
 
     public Integer getCourseId() {

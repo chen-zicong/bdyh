@@ -157,7 +157,17 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+    <select id="selectByVidesId" parameterType="java.util.List" resultMap="BaseResultMap">
+      select * from video where video_id in(
+      <foreach collection="list" index="index" item="item" separator=",">
+        #{item,jdbcType=INTEGER}
+      </foreach>
+    </select>
+
+
+
+
+    <update id="updateByExampleSelective" parameterType="map" >
     update video
     <set >
       <if test="record.videoId != null" >
