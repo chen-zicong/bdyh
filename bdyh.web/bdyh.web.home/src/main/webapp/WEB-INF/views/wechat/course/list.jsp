@@ -261,7 +261,6 @@
 			          <span class="am-navbar-label">首页</span>
 			      </a>
 			    </li>
-
 			    <li>
 			      <a href="${pageContext.request.contextPath}/course/myCourse"  style="margin-top:5px;">
 			          <i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-wodekecheng" ></i>

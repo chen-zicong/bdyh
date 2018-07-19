@@ -143,13 +143,12 @@
 	</head>
 	<body>
 	<div class="bdyh_mian">
-		<header data-am-widget="header"
-				class="am-header am-header-default am-header-fixed">
-			<div class="am-header-left am-header-nav" >
+		<header data-am-widget="header" class="am-header am-header-default am-header-fixed">
+			<div class="am-header-left am-header-nav">
+				<a href="${pageContext.request.contextPath}/index">
 		    <span class="am-header-nav-title">
                 首页
               </span>
-
 				<i class="am-header-icon am-icon-home"></i>
 				</a>
 
@@ -426,9 +425,6 @@
 		<!-- foot navbar start -->
 		<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default">
 			<nav data-am-widget="menu" class="am-menu  am-menu-slide1">
-				<a href="javascript: void(0)" class="am-menu-toggle">
-					<i class="am-menu-toggle-icon am-icon-bars"></i>
-				</a>
 				<ul class="am-menu-nav am-avg-sm-2">
 					<li class="am-parent" style="background:rgba(0,0,0,0.6); width: 70%;">
 						<a> <i class=" am-header-icon am-icon-shopping-cart" style="font-size:30px;color:#00a2f4;padding-right: 10px;"><span id="Quantity" style="display:none"><span style="display: inline-block;background: red;width: 18px;height: 18px; border-radius: 25px;margin-bottom: 13px;"><span id="MenueLength" style=" font-size: 14px;color: white;position: relative;bottom: 97%;right: 2%;"></span></span></span></i><span style="color:white">购物车<span id="Tprice"></span></span></a>
@@ -440,15 +436,15 @@
 							</li>--%>
 						</ul>
 					</li>
-					<button class="am-btn" style="float: right;background:rgba(0,0,0,0.3);color:#ffff;width:30%" >立即购买</button>
+					<button class="am-btn" style="float: right;background:rgba(0,0,0,0.3);color:#ffff;width:30%" onclick="Buy()">立即购买</button>
 				</ul>
 
 
 			</nav>
 		</div>
+		</div>
 		<!-- foot navbar end-->
 
-	</div>
 	</body>
 	<script src="http://bdpak.cn:8080/home/js/jquery-3.2.1.min.js"></script>
 	<script src="http://bdpak.cn:8080/home/assets/js/amazeui.min.js"></script>
@@ -460,8 +456,9 @@
         videojs.options.flash.swf = "http://bdpak.cn:8080/home/video.js/video-js.swf";
 	</script>
 	<script>
-        var IdList=[];  /*存放课程的ID*/
+        var IdList=[];  /*存放视频的ID*/
         var total_price=0; /*总价*/
+		var courseid="${course.courseId}"; /*课程ID*/
         function lecturerCollect(teacherId) {
             if ($("#lecturer_collect_no").prop("hidden")) {
                 //取消收藏
@@ -614,7 +611,7 @@
             if(Permission==1){
                 playVideo(path);
             }else{
-                alert("请先购买再进行观看");
+              window.location.href="${pageContext.request.contextPath}/routeW/Goto/course/warn";
             }
 
         });
@@ -711,6 +708,28 @@
             $('#MenueLength').text(Remalength-1);
             $('#Quantity').show();
         });
-		
+
+        /**/
+        function Buy() {
+            if(IdList.length){
+            $.ajax({
+				type:'POST',
+				url:'${pageContext.request.contextPath}/order/createOrder',
+				data:{
+				    courseId:courseid,
+					videosId:IdList
+				},
+				success:function (data) {
+				    if(data.code=="success"){
+					window.location.href="${pageContext.request.contextPath}/routeW/Goto/course/Pay";
+				    }else{
+				        alert(data.msg);
+					}
+				}
+
+			});
+			}
+
+        }
 	</script>
 	</html>
