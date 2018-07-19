@@ -90,18 +90,18 @@
 
                         <div class=" am-u-sm-8 am-list-main">
                             <h3 class="am-list-item-hd"><span style="">${order.course.courseName}</span><span style="float:right">￥${order.price}</span></h3>
-                            <div class="am-list-item-text" style="margin-top: 8%">规格 : 共计${order.}个视频</div>
+                            <div class="am-list-item-text" style="margin-top: 8%">规格 : 共计${order.count}个视频</div>
 
                         </div>
                     </li>
 
                     <li class="am-g am-list-item-dated"style="margin-top:8%" >
                         <a class="am-list-item-hd " style="color:#484242">课程金额</a>
-                        <span class="am-list-date"  style="color:#484242">￥200.00</span>
+                        <span class="am-list-date"  style="color:#484242">￥${order.price}</span>
                     </li>
 
                     <li class="am-g" style="padding-top: 20px;padding-bottom: 20px;margin-top:12%;padding-left: 25%;">
-                        <span style="color: #f37b1d;margin-top: 5px;display:inline-block">需付: ￥200.00元</span>
+                        <span style="color: #f37b1d;margin-top: 5px;display:inline-block">需付: ￥${order.price}元</span>
                         <button class="am-btn am-btn-warning" style=" border-radius: 6px;float:right" onclick="Pay()">提交订单</button>
                     </li>
                 </ul>

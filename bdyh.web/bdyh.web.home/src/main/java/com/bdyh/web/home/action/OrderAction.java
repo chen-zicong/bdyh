@@ -24,7 +24,6 @@ public class OrderAction {
     private OrderService orderService;
 
     @RequestMapping("createOrder")
-    @ResponseBody
     @Transactional
     public String CreateOrder(@Param("courseId") Integer courseId, @Param("videosId") Integer[] videosId, HttpSession session, Model model) {
         UserWechat userWechat = (UserWechat) session.getAttribute("user");
@@ -37,12 +36,10 @@ public class OrderAction {
 
 
         OrderVo order = orderService.createOrder(courseId, videosId, userWechat);
-        if (order != null) {
-            model.addAttribute("order", order);
-            return "/course/Pay";
-        } else {
-            return "/error";
-        }
+
+        model.addAttribute("order", order);
+        return "wechat/course/Pay";
+
 
     }
 

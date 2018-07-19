@@ -106,6 +106,8 @@ public class CourseAction {
         Teacher teacher = null;
         UserWechat user = (UserWechat) session.getAttribute("user");
 
+        List<Video> boughtVideo = new ArrayList<>();
+        List<Video> unboughtVide = new ArrayList<>();
 		/*RedisCacheUtil<Course> redisCacheUtil1=new RedisCacheUtil<Course>();
 		RedisCacheUtil<Teacher> redisCacheUtil2=new RedisCacheUtil<Teacher>();
 		//根据courseId保存课程对象，下次需要时候直接根据courseId在缓存中找
@@ -136,7 +138,8 @@ public class CourseAction {
         List<UserOrder> userOrdersUnPay = orderService.findUnBoughtByOpenIdandCourseId(user.getOpenid(), courseId);
 
 
-        List<Video> boughtVideo = null;
+
+
         if (userOrdersPay.size() > 0) {
             for (UserOrder order : userOrdersPay) {
                 List<Integer> videosId = orderService.findOrderDetailByOrderId(order.getOrderId());
@@ -146,7 +149,6 @@ public class CourseAction {
         }
 
 
-        List<Video> unboughtVide = null;
         if (userOrdersUnPay.size() > 0) {
             for (UserOrder order : userOrdersUnPay) {
                 List<Integer> videosId = orderService.findOrderDetailByOrderId(order.getOrderId());
@@ -159,18 +161,22 @@ public class CourseAction {
         VideosVo videosVo = null;
         for (Video video : videoList) {
             videosVo = new VideosVo();
-            BeanUtils.copyProperties(video, videosVo);
+            BeanUtils.copyProperties(videosVo, video);
             videosVo.setPaystatus(0);
-            for (Video payVideo : boughtVideo) {
-                if (payVideo.getCourseId().equals(payVideo.getCourseId())) {
-                    videosVo.setPaystatus(1);
-                    break;
+            if (boughtVideo.size()>0) {
+                for (Video payVideo : boughtVideo) {
+                    if (payVideo.getCourseId().equals(payVideo.getCourseId())) {
+                        videosVo.setPaystatus(1);
+                        break;
+                    }
                 }
             }
-            for (Video unpayVide : unboughtVide) {
-                if (unpayVide.getCourseId().equals(unpayVide.getCourseId())) {
-                    videosVo.setPaystatus(-1);
-                    break;
+            if (unboughtVide.size()>0) {
+                for (Video unpayVide : unboughtVide) {
+                    if (unpayVide.getCourseId().equals(unpayVide.getCourseId())) {
+                        videosVo.setPaystatus(-1);
+                        break;
+                    }
                 }
             }
             videosVoList.add(videosVo);
@@ -196,7 +202,7 @@ public class CourseAction {
         //TODO 使用缓存查询，先前使用缓存出了问题
         model.addAttribute("course", course);
         model.addAttribute("teacher", teacher);
-         model.addAttribute("videoList",videosVoList);
+        model.addAttribute("videoList", videosVoList);
 
 
         //当用户点击了某课程，加入用户的足迹中

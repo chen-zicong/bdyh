@@ -712,18 +712,10 @@
         /**/
         function Buy() {
             if(IdList.length){
-            $.ajax({
-				type:'POST',
-				url:'${pageContext.request.contextPath}/order/createOrder',
-				data:{
-				    courseId:courseid,
-					videosId:IdList
-				},
-				success:function () {
-				  console.log("操作成功");
-				}
+                alert(IdList);
 
-			});
+				window.location.href="${pageContext.request.contextPath}/order/createOrder?courseId="+courseid+"&videosId="+IdList;
+
 			}
 
         }

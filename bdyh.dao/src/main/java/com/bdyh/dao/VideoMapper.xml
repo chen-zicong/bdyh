@@ -162,6 +162,7 @@
       <foreach collection="list" index="index" item="item" separator=",">
         #{item,jdbcType=INTEGER}
       </foreach>
+      )
     </select>
 
 

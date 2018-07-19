@@ -47,12 +47,12 @@ public class OrderServiceImpl implements OrderService {
         userOrder.setCourseId(courseId);
         userOrder.setPay(0);
         //金额初始化为0
-        BigDecimal orderAmount = new BigDecimal(BigInteger.ZERO);
+        BigDecimal orderAmount = new BigDecimal("0.0");
         for (Integer videoId : videosId) {
             orderDetail = new OrderDetail();
             Video video = videoService.findVideoById(videoId);
             Double videoPrice = video.getVideoPrice();
-            orderAmount.add(new BigDecimal(videoPrice));
+           orderAmount = orderAmount.add(new BigDecimal(Double.toString(videoPrice)));
             orderDetail.setDetailId(Util.generateUUID());
             orderDetail.setCourseId(courseId);
             orderDetail.setVideoId(videoId);
@@ -60,6 +60,7 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setCourseName(course.getCourseName());
             orderDetail.setVideoName(video.getVideoName());
             orderDetail.setDate(new Date());
+            orderDetail.setOrderId(userOrder.getOrderId());
             int insert = orderDetailMapper.insert(orderDetail);
             if (insert != 1) {
                 throw new BdyhException(ResultEnum.DETAIL_ERROR);
@@ -67,6 +68,7 @@ public class OrderServiceImpl implements OrderService {
 
         }
         userOrder.setDate(new Date());
+        userOrder.setPrice(orderAmount);
         int insert = userOrderMapper.insert(userOrder);
         if (insert == 1) {
             OrderVo orderVo = new OrderVo();
@@ -74,10 +76,11 @@ public class OrderServiceImpl implements OrderService {
             orderVo.setPrice(orderAmount.floatValue());
             orderVo.setCount(videosId.length);
             orderVo.setOrderId(userOrder.getOrderId());
+            return orderVo;
         } else {
              throw  new BdyhException(ResultEnum.ORDER_NOT_EXIST);
         }
-        return  null;
+
     }
 
     @Override

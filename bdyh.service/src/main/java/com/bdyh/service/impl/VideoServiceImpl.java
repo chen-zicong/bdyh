@@ -37,8 +37,8 @@ public class VideoServiceImpl implements VideoService{
 
 	@Override
 	public List<Video> findBoughtVideo(List<Integer> videos) {
-		videoMapper.selectByVidesId(videos);
-		return null;
+		return videoMapper.selectByVidesId(videos);
+
 	}
 
 }
