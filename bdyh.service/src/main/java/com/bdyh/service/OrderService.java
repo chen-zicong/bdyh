@@ -1,10 +1,7 @@
 package com.bdyh.service;
 
 import com.bdyh.common.APIResponse;
-import com.bdyh.entity.OrderDetail;
-import com.bdyh.entity.OrderVo;
-import com.bdyh.entity.UserOrder;
-import com.bdyh.entity.UserWechat;
+import com.bdyh.entity.*;
 import org.simpleframework.xml.Order;
 
 import javax.servlet.http.HttpSession;
@@ -19,7 +16,7 @@ public interface OrderService {
 
     APIResponse pay(String orderId);
 
-    UserOrder findOne(String orderId);
+    PaidVideos findPaid(String orderId);
 
     UserOrder findByOpenIdAndOrderId(String openId, String orderId);
 
@@ -29,4 +26,10 @@ public interface OrderService {
 
 
     List<Integer> findOrderDetailByOrderId(String OrderId);
+
+    OrderVo findOne(String orderId);
+
+    public List<PayOrder> findpayOrderByOpenId(String openId);
+
+    public List<UnPayOrder> findUnpayOrderByOpenId(String openId);
 }

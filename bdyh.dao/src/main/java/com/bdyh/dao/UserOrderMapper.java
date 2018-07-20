@@ -1,5 +1,7 @@
 package com.bdyh.dao;
 
+import com.bdyh.entity.OrderVo;
+import com.bdyh.entity.PaidVideos;
 import com.bdyh.entity.UserOrder;
 import com.bdyh.entity.UserOrderExample;
 
@@ -39,6 +41,11 @@ public interface UserOrderMapper {
 
     @Select("select * from user_order where  open_id = #{openId} and pay= 0 and course_id = #{courseId}")
     List<UserOrder> findUnBoughtByOpenIdAndCourseId(@Param("openId") String openId, @Param("courseId") int courseId);
+
+    @Select("select user_order.course_id,order_detail.video_id from user_order ,order_detail " +
+            "   where user_order.order_id = #{orderId}" +
+            "       and order_detail.order_id = #{orderId} ")
+    PaidVideos findPiadOrder(String orderId);
 
 
 }

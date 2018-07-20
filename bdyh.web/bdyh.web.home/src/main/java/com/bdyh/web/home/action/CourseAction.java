@@ -138,8 +138,6 @@ public class CourseAction {
         List<UserOrder> userOrdersUnPay = orderService.findUnBoughtByOpenIdandCourseId(user.getOpenid(), courseId);
 
 
-
-
         if (userOrdersPay.size() > 0) {
             for (UserOrder order : userOrdersPay) {
                 List<Integer> videosId = orderService.findOrderDetailByOrderId(order.getOrderId());
@@ -163,7 +161,7 @@ public class CourseAction {
             videosVo = new VideosVo();
             BeanUtils.copyProperties(videosVo, video);
             videosVo.setPaystatus(0);
-            if (boughtVideo.size()>0) {
+            if (boughtVideo.size() > 0) {
                 for (Video payVideo : boughtVideo) {
                     if (payVideo.getCourseId().equals(payVideo.getCourseId())) {
                         videosVo.setPaystatus(1);
@@ -171,7 +169,7 @@ public class CourseAction {
                     }
                 }
             }
-            if (unboughtVide.size()>0) {
+            if (unboughtVide.size() > 0) {
                 for (Video unpayVide : unboughtVide) {
                     if (unpayVide.getCourseId().equals(unpayVide.getCourseId())) {
                         videosVo.setPaystatus(-1);
@@ -318,23 +316,25 @@ public class CourseAction {
         UserWechat user = (UserWechat) session.getAttribute("user");
         //根据用户的openid取出属于用户的课程
 
-        List<UserCourseVo> userCourseList = redisCache.getCacheList("userCourseList" + user.getOpenid());
-        if (userCourseList.size() == 0) {
-            userCourseList = courseService.findCourseOfUser(user);
-            //将查询结果存放至redis，key是userCourseList+openid
-            //redisCache.setCacheList("userCourseList"+user.getOpenid(), userCourseList);
-        }
+//        List<UserCourseVo> userCourseList = redisCache.getCacheList("userCourseList" + user.getOpenid());
+//        if (userCourseList.size() == 0) {
+//            userCourseList = courseService.findCourseOfUser(user);
+//            //将查询结果存放至redis，key是userCourseList+openid
+//            //redisCache.setCacheList("userCourseList"+user.getOpenid(), userCourseList);
+//        }
+//
+//        //根据用户的openid取出属于用户的待付款的课程，不使用缓存,考虑做成当用户付款之后删除缓存数据的做法
+//        //TODO 修改加入缓存
+//        List<UserCourseVo> userCourseListUnPay = courseService.findUnPayCourseOfUser(user);
+//        //根据用户的openid取出属于用户的已付款的课程，不使用缓存,考虑做成当用户付款之后删除缓存数据的做法
+//        //TODO 修改加入缓存
+//        List<UserCourseVo> userCourseListPayed = courseService.findPayedCourseOfUser(user);
 
-        //根据用户的openid取出属于用户的待付款的课程，不使用缓存,考虑做成当用户付款之后删除缓存数据的做法
-        //TODO 修改加入缓存
-        List<UserCourseVo> userCourseListUnPay = courseService.findUnPayCourseOfUser(user);
-        //根据用户的openid取出属于用户的已付款的课程，不使用缓存,考虑做成当用户付款之后删除缓存数据的做法
-        //TODO 修改加入缓存
-        List<UserCourseVo> userCourseListPayed = courseService.findPayedCourseOfUser(user);
+        List<PayOrder> payOrders = orderService.findpayOrderByOpenId(user.getOpenid());
+        List<UnPayOrder> unpayOrderByOpenId = orderService.findUnpayOrderByOpenId(user.getOpenid());
 
-        model.addAttribute("userCourseList", userCourseList);
-        model.addAttribute("userCourseListUnPay", userCourseListUnPay);
-        model.addAttribute("userCourseListPayed", userCourseListPayed);
+        model.addAttribute("userCourseListUnPay", payOrders);
+        model.addAttribute("userCourseListPayed", unpayOrderByOpenId);
         return "wechat/course/myCourse";
     }
 
@@ -458,6 +458,44 @@ public class CourseAction {
         return "redirect:/course/courseDetails/" + courseId;
 
 
+    }
+
+    /**
+     * 从支付订单进入视频详情的接口，从这里进入只显示已支付的所有课程 。
+     * @param orderId
+     * @param model
+     * @param session
+     * @return
+     */
+    @RequestMapping("paidCourse")
+    public String Paid(String orderId, Model model,HttpSession session) {
+        UserWechat user = (UserWechat) session.getAttribute("user");
+        PaidVideos one = orderService.findPaid(orderId);
+        List<Video> videosVoList = videoService.findBoughtVideo(one.getVideoId());
+        Course course = courseService.findCourseById(one.getCourseId());
+        Teacher teacher = teacherService.findTeacherById(course.getTeacherId());
+
+
+        model.addAttribute("teacher", teacher);
+        model.addAttribute("course", course);
+        model.addAttribute("videoList", videosVoList);
+
+
+        //判断是否有有收藏课程
+        UserCollectCourse userCollectCourse = courseService.findCollectCourseByCourseIdAndOpenId(course.getCourseId(), user.getOpenid());
+        if (userCollectCourse != null) {
+            //表示该课程被收藏
+            model.addAttribute("courseCollect", 1);
+        }
+
+        //跳转到视频播放页面时候应该根据openid和teacher_id查询是否存在记录，
+        //如果有记录说明该用户收藏了该教师，则要显示红心，数据库的表为user_collect_teacher
+        UserCollectTeacher userCollectTeacher = teacherService.findCollectTeacherByTeacherIdAndOpenId(teacher.getTeacherId(), user.getOpenid());
+        if (userCollectTeacher != null) {
+            //表示该教师被收藏
+            model.addAttribute("teacherCollect", 1);
+        }
+        return "";
     }
 
 

@@ -43,5 +43,25 @@ public class OrderAction {
 
     }
 
+    @RequestMapping("intoOrder")
+    public String IntoOrder(String orderId, Model model) {
+
+        OrderVo orderVo = orderService.findOne(orderId);
+        model.addAttribute("order", orderVo);
+        return "wechat/course/Pay";
+
+    }
+
+
+    @RequestMapping("cancelOrder")
+    public APIResponse cancelOrder(String orderId) {
+        return orderService.cancel(orderId);
+    }
+
+    @RequestMapping("myOrder")
+    public String findOrder() {
+        return null;
+    }
+
 
 }

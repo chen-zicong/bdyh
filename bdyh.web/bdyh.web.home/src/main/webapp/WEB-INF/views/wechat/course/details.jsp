@@ -658,8 +658,7 @@
             var Remalength=ListMenue();
             $('#MenueLength').text(Remalength-1);
             $('#Quantity').show();
-
-        });
+		});
 
         /*已购视频删除*/
         $('.am-menu-sub').on('click','.am-icon-times-circle',function(){

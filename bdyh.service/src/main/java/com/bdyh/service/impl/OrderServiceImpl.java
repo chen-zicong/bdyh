@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
             orderDetail = new OrderDetail();
             Video video = videoService.findVideoById(videoId);
             Double videoPrice = video.getVideoPrice();
-           orderAmount = orderAmount.add(new BigDecimal(Double.toString(videoPrice)));
+            orderAmount = orderAmount.add(new BigDecimal(Double.toString(videoPrice)));
             orderDetail.setDetailId(Util.generateUUID());
             orderDetail.setCourseId(courseId);
             orderDetail.setVideoId(videoId);
@@ -78,14 +78,20 @@ public class OrderServiceImpl implements OrderService {
             orderVo.setOrderId(userOrder.getOrderId());
             return orderVo;
         } else {
-             throw  new BdyhException(ResultEnum.ORDER_NOT_EXIST);
+            throw new BdyhException(ResultEnum.ORDER_NOT_EXIST);
         }
 
     }
 
     @Override
     public APIResponse cancel(String orderId) {
-        return null;
+        int result = orderDetailMapper.deleteOrder(orderId);
+        if (result > 0) {
+            return APIResponse.success();
+        } else {
+            return APIResponse.fail("取消订单失败");
+        }
+
     }
 
     @Override
@@ -113,9 +119,10 @@ public class OrderServiceImpl implements OrderService {
         return null;
     }
 
+    /* 通过订单号找到已经支付的所有的videosId和courseId*/
     @Override
-    public UserOrder findOne(String orderId) {
-        return userOrderMapper.selectByPrimaryKey(orderId);
+    public PaidVideos findPaid(String orderId) {
+        return userOrderMapper.findPiadOrder(orderId);
 
     }
 
@@ -125,22 +132,76 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    /*找到该课程已经购买的所有的order*/
     @Override
     public List<UserOrder> findBoughtByOpenIdandCourseId(String openId, int courseId) {
         return userOrderMapper.findBoughtByOpenIdandCourseId(openId, courseId);
 
     }
 
+    /*找到该课程未购买的所有的order*/
     @Override
     public List<UserOrder> findUnBoughtByOpenIdandCourseId(String openId, int courseId) {
         return userOrderMapper.findUnBoughtByOpenIdAndCourseId(openId, courseId);
 
     }
 
+    /*通过orderId找到videos数组*/
     @Override
     public List<Integer> findOrderDetailByOrderId(String orderId) {
         return orderDetailMapper.selectVideosIdByOrderId(orderId);
 
+    }
+
+    @Override
+    public OrderVo findOne(String orderId) {
+        UserOrder order = userOrderMapper.selectByPrimaryKey(orderId);
+        List<OrderDetail> orderDetails = orderDetailMapper.selectByOrderId(orderId);
+        Course course = courseService.findCourseById(order.getCourseId());
+        OrderVo orderVo = new OrderVo();
+        orderVo.setOrderId(orderId);
+        orderVo.setPrice(order.getPrice().floatValue());
+        orderVo.setCourse(course);
+        orderVo.setCount(orderDetails.size());
+        return orderVo;
+    }
+
+    /*找到该用户的所有的未支付的订单*/
+    public List<UnPayOrder> findUnpayOrderByOpenId(String openId) {
+        List<UserOrderAndDetail> userOrderAndDetails = orderDetailMapper.selectUnpayOrder(openId);
+        UnPayOrder unPayOrder;
+        Course course;
+        List<UnPayOrder> unPayOrderList = new ArrayList<>();
+        for (UserOrderAndDetail userOrderAndDetail : userOrderAndDetails) {
+
+
+            unPayOrder = new UnPayOrder();
+            course = courseService.findCourseById(userOrderAndDetail.getCourseId());
+            unPayOrder.setCourse(course);
+            unPayOrder.setCount(userOrderAndDetail.getOrderDetailList().size());
+            unPayOrder.setOrderId(userOrderAndDetail.getOrderId());
+            unPayOrder.setDate(userOrderAndDetail.getDate());
+            unPayOrderList.add(unPayOrder);
+        }
+        return unPayOrderList;
+    }
+
+    public List<PayOrder> findpayOrderByOpenId(String openId) {
+        List<UserOrderAndDetail> userOrderAndDetails = orderDetailMapper.selectpayOrder(openId);
+        PayOrder payOrder;
+        Course course;
+        List<PayOrder> payOrderList = new ArrayList<>();
+        for (UserOrderAndDetail userOrderAndDetail : userOrderAndDetails) {
+
+            payOrder = new PayOrder();
+            course = courseService.findCourseById(userOrderAndDetail.getCourseId());
+            payOrder.setCourse(course);
+            payOrder.setCount(userOrderAndDetail.getOrderDetailList().size());
+            payOrder.setOrderId(userOrderAndDetail.getOrderId());
+            payOrder.setDate(userOrderAndDetail.getDate());
+            payOrderList.add(payOrder);
+        }
+        return payOrderList;
     }
 
 }
