@@ -34,5 +34,11 @@ public class VideoServiceImpl implements VideoService{
 	public Video findVideoById(Integer videoId) {
 		return videoMapper.selectByPrimaryKey(videoId);
 	}
-	
+
+	@Override
+	public List<Video> findBoughtVideo(List<Integer> videos) {
+		return videoMapper.selectByVidesId(videos);
+
+	}
+
 }

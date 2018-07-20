@@ -14,12 +14,15 @@ public class UserOrder {
 
     private Date date;
 
-    public UserOrder(String orderId, String openId, BigDecimal price, Integer pay, Date date) {
+    private Integer courseId;
+
+    public UserOrder(String orderId, String openId, BigDecimal price, Integer pay, Date date, Integer courseId) {
         this.orderId = orderId;
         this.openId = openId;
         this.price = price;
         this.pay = pay;
         this.date = date;
+        this.courseId = courseId;
     }
 
     public UserOrder() {
@@ -64,5 +67,13 @@ public class UserOrder {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
     }
 }

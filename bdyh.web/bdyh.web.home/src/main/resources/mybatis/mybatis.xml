@@ -74,6 +74,8 @@
 		<!-- 自动扫描mapper文件 -->
 		<property name="mapperLocations" value="classpath:com/bdyh/dao/*.xml"/>
 		<property name="typeAliasesPackage" value="com.bdyh.entity"/>
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+
 		<property name="plugins">
 		  <array>
 		    <bean class="com.github.pagehelper.PageHelper">
@@ -90,7 +92,8 @@
 	<!-- mapperDao扫描器 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.bdyh.dao" />
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+
 	</bean>
 
 </beans>

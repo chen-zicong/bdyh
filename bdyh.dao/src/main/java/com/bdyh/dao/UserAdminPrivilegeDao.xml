@@ -16,8 +16,8 @@
 			<result column="menu_link" property="menuLink"/>
 			<result column="privilege_id" property="privilegeId"/>
 		</collection>
-    
-    
+
+
   </resultMap>
   <!-- 查询一级和二级菜单 -->
   <select id="findMenuList" parameterType="java.util.List" resultMap="BaseResultMap">

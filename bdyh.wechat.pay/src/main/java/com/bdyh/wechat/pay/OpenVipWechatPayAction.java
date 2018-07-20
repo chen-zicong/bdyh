@@ -85,7 +85,7 @@ public class OpenVipWechatPayAction {
         UserCourse userCourse = courseService.findUserCourseByOpenIdAndCourseId(map.get("openid"), map.get("out_trade_no"));
         UserOrder order = orderService.findByOpenIdAndOrderId(map.get("openid"), map.get("out_trade_no"));
         if(order!=null){
-            order.setPay(1);
+            orderService.finish(order);
 
         }
 
