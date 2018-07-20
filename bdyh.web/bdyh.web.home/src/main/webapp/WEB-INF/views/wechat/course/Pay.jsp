@@ -61,9 +61,12 @@
 
         }
         .am-list-news-default,li{
-            border-radius:6px
-
+            border-radius:5px;
         }
+        .am-list-news-default .am-list .am-list-item-desced{
+            padding-left:10px;
+        }
+
     </style>
 </head>
 <body>
@@ -84,7 +87,7 @@
         <div data-am-widget="list_news" class="am-list-news am-list-news-default" style="margin-top:10%">
             <!--列表标题-->
             <div class="am-list-news-hd am-cf">
-                <h2>商 品 信 息</h2>
+                <h2 style="color: #f37b1d">商 品 信 息</h2>
             </div>
 
             <div class="am-list-news-bd">
@@ -94,7 +97,7 @@
                     <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
                         <div class="am-u-sm-4 am-list-thumb">
                             <a href="##" class="">
-                                <img src="http://img0.imgtn.bdimg.com/it/u=2479868636,1193546218&fm=27&gp=0.jpg" />
+                                <img src="http://bdpak.cn:8080/home/courseImg/${order.course.courseImg}" />
                             </a>
                         </div>
 
@@ -105,7 +108,7 @@
                         </div>
                     </li>
                     <li class="am-g am-list-item-dated"style="margin-top:8%" >
-                        <a class="am-list-item-hd " style="color:#484242">课程金额</a>
+                        <a class="am-list-item-hd " style="color:#484242;padding-left:12px">课程金额</a>
                         <span class="am-list-date"  style="color:#484242">￥${order.price}</span>
                     </li>
 

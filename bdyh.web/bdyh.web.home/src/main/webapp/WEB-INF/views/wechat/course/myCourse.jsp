@@ -113,202 +113,209 @@ body, html {
     background-color: #8fe0e4;
     color: #fff;
 }
+/*按钮样式*/
+.am-btn{
+    border-radius:5px;
+    font-size:14px
+}
+
+
 </style>
 </head>
 <body>
-	<div class="bdyh_mian">
-		<header data-am-widget="header" class="am-header am-header-default am-header-fixed">
-			<h1 class="am-header-title">
-			    <a href="#title-link" class="">
-			      	我的课程
-			    </a>
-			</h1>
-		</header>
+<div class="bdyh_mian">
+    <header data-am-widget="header" class="am-header am-header-default am-header-fixed">
+        <h1 class="am-header-title">
+            <a href="#title-link" class="">
+                我的课程
+            </a>
+        </h1>
+    </header>
+    <!-- bdyh_news_content_main start -->
+    <div class="bdyh_news_content_main">
+        <!-- <div data-am-widget="list_news"
+            class="am-list-news am-list-news-default">
+            <div class="am-list-news-bd" style="margin-top:50px;">
+                <ul id="listContent" class="am-list">
 
-		<!-- bdyh_news_content_main start -->
-		<div class="bdyh_news_content_main">
-			<!-- <div data-am-widget="list_news"
-				class="am-list-news am-list-news-default">
-				<div class="am-list-news-bd" style="margin-top:50px;">
-					<ul id="listContent" class="am-list">
+                </ul>
+            </div>
+            <div style="margin:0px 0px 0px 35%;">
+                <a href="javaScript:getMore()" class="fa-cubes"> <span
+                    id="getMore" style="color:#757575;">点击加载更多</span>
+                </a>
+            </div>
+        </div> -->
 
-					</ul>
-				</div>
-				<div style="margin:0px 0px 0px 35%;">
-					<a href="javaScript:getMore()" class="fa-cubes"> <span
-						id="getMore" style="color:#757575;">点击加载更多</span>
-					</a>
-				</div>
-			</div> -->
-			
-			<!--选项栏 -->
-			<div data-am-widget="tabs" class="am-tabs am-tabs-default">
-				<ul class="am-tabs-nav am-cf" style="position:fixed;z-index: 1010;max-width: 640px;top: 40px;">
-					<li class="am-active"><a href="[data-tab-panel-0]">全部</a></li>
-					<li class=""><a href="[data-tab-panel-1]">待付款</a></li>
-					<li class=""><a href="[data-tab-panel-2]">已付款</a></li>
-				</ul>
-				<div class="am-tabs-bd">
-					<div data-tab-panel-0 class="am-tab-panel am-active" style="margin-top:55px;">
-						<div data-am-widget="list_news" class="am-list-news am-list-news-default" style="background-color:#fff;">
-							<!--课程列表-->
-							<div class="am-list-news-bd" style="box-shadow:0 0.05rem 0.1rem rgba(0,0,0,.3);border-radius:.1rem;padding:0px 10px;">
-								<ul class="am-list">
-								
-								
-								<!--缩略图在标题左边-->
-								<c:forEach items="${userCourseList }" var="userCourse">
-									<div onclick="checkPay(${userCourse.course.courseId},${userCourse.course.coursePrice})">
-									<li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
-										<div class="am-u-sm-4 am-list-thumb">
-											<%--<a href="${pageContext.request.contextPath}/course/courseDetails/${userCourse.course.courseId}" class="">--%>
-												<img src="http://bdpak.cn:8080/home/courseImg/${userCourse.course.courseImg}" />
-											<%--</a>--%>
-										</div>
+        <!--选项栏 -->
+        <div data-am-widget="tabs" class="am-tabs am-tabs-default">
+            <ul class="am-tabs-nav am-cf" style="position:fixed;z-index: 1010;max-width: 640px;top: 40px;">
+                <li class="am-active"><a href="[data-tab-panel-0]">未支付</a></li>
+                <li class=""><a href="[data-tab-panel-1]">已支付</a></li>
+            </ul>
+            <div class="am-tabs-bd">
 
-										<div class=" am-u-sm-8 am-list-main">
-											<h3 class="am-list-item-hd">
-												<a href="${pageContext.request.contextPath}/course/courseDetails/${userCourse.course.courseId}">${userCourse.course.courseName }</a>
-											</h3>
-											<div class="am-list-item-text">${userCourse.course.courseDesc }</div>
-											<div class="am-list-item-text">
-												<span style="color:#f37b1d;">
-													<c:choose>
-														<c:when test="${userCourse.course.coursePrice eq 0 }">
-															免费
-														</c:when>
-														<c:otherwise>
-															${userCourse.course.coursePrice }元
-														</c:otherwise>
-													</c:choose>
-												</span> <span
-													class="am-list-news-lesson-amount am-fr">共${userCourse.course.lessionNum }节课</span>
-											</div>
-											<!-- <div class="am-list-item-text">
-												<span class="am-list-news-lesson-amount ">10000人已学</span>
-									        </div>	 -->
-										</div>
-									</li>
-									</div>
-								</c:forEach>
-									
+                <!--未支付-->
+                <div data-tab-panel-0 class="am-tab-panel am-active" style="margin-top:55px;">
+                    <div data-am-widget="list_news" class="am-list-news am-list-news-default" >
+                        <!--课程列表-->
+                        <c:forEach items="${userCourseListUnPay }" var="userCourse">
+                        <div class="am-list-news-bd" style="box-shadow:0 0.05rem 0.1rem rgba(0,0,0,.3);border-radius:.1rem;padding:0px 10px;background:#fff">
+                            <ul class="am-list">
 
-									
-								</ul>
-							</div>
-						</div>
-					</div>
-					
-					<!--代付款 -->
-					<div data-tab-panel-1 class="am-tab-panel" style="margin-top:55px;">
-						<div data-am-widget="list_news" class="am-list-news am-list-news-default" style="background-color:#fff;">
-							<!--课程列表-->
-							<div class="am-list-news-bd" style="box-shadow:0 0.05rem 0.1rem rgba(0,0,0,.3);border-radius:.1rem;padding:0px 10px;">
-								<ul class="am-list">
-									
-									
-									<c:forEach items="${userCourseListUnPay }" var="userCourse">
-										<!--缩略图在标题左边-->
-										<li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
-										<div onclick="checkPay(${userCourse.course.courseId},${userCourse.course.coursePrice})">
-											<div class="am-u-sm-4 am-list-thumb">
-												<%--<a href="${pageContext.request.contextPath}/course/courseDetails/${userCourse.course.courseId}" class=""> --%>
-													<img src="http://bdpak.cn:8080/home/courseImg/${userCourse.course.courseImg}" />
+                                    <!--缩略图在标题左边-->
+                                    <li class="am-g" style="font-size:13px">
+                                        <div style="position: relative;top: 10px;">
+                                            <span style="color:#999">下单时间 : ${userCourse.date}</span>
+                                            <span id="order_number" style="display:none">${userCourse.orderId}</span>
+                                            <span style="float:right;color:#f37b1d">待付款</span>
+                                        </div>
+                                    </li>
+                                    <hr style="border: 1px solid #ccc">
+                                    <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+                                        <div >
+                                            <div class="am-u-sm-4 am-list-thumb">
 
-											</div>
-	
-											<div class=" am-u-sm-8 am-list-main">
-												<h3 class="am-list-item-hd">
-													<a href="#">${userCourse.course.courseName }</a>
-												</h3>
-												<div class="am-list-item-text">${userCourse.course.courseDesc }</div>
-												<div class="am-list-item-text">
-													<span style="color:#f37b1d;">待付款(${userCourse.course.coursePrice }元)</span> 
-													<span class="am-list-news-lesson-amount am-fr">共${userCourse.course.lessionNum }节课</span>
-												</div>										
-											</div>
-										</div>
-										</li>
-									</c:forEach>
-									
-								</ul>
-							</div>
-						</div>
-					</div>
-					
-					<!-- 已付款 -->
-					<div data-tab-panel-2 class="am-tab-panel" style="margin-top:55px;">
-						<div data-am-widget="list_news" class="am-list-news am-list-news-default" style="background-color:#fff;">
-							<!--课程列表-->
-							<div class="am-list-news-bd" style="box-shadow:0 0.05rem 0.1rem rgba(0,0,0,.3);border-radius:.1rem;padding:0px 10px;">
-								<ul class="am-list">
-								
-									<c:forEach items="${userCourseListPayed }" var="userCourse"> 
-										<!--缩略图在标题左边-->
-										<li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
-											<div class="am-u-sm-4 am-list-thumb">
-												<a href="${pageContext.request.contextPath}/course/courseDetails/${userCourse.course.courseId}" class=""> <img
-													src="http://bdpak.cn:8080/home/courseImg/${userCourse.course.courseImg}" />
-												</a>
-											</div>
-	
-											<div class=" am-u-sm-8 am-list-main">
-												<h3 class="am-list-item-hd">
-													<a href="${pageContext.request.contextPath}/course/courseDetails/${userCourse.course.courseId}">${userCourse.course.courseName }</a>
-												</h3>
-												<div class="am-list-item-text">${userCourse.course.courseDesc }</div>
-												<div class="am-list-item-text">
-													<span style="color:#f37b1d;">已付款(${userCourse.course.coursePrice }元)</span> 
-													<span class="am-list-news-lesson-amount am-fr">共${userCourse.course.lessionNum }节课</span>
-												</div>										
-											</div>
-										</li>
-									</c:forEach>
-								
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- bdyh_news_content_main end -->
+                                                <img src="http://bdpak.cn:8080/home/courseImg/${userCourse.course.courseImg}" />
 
-		<!--回顶部 -->
-		<div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
-			<a href="#top" title=""> <i
-				class="am-gotop-icon am-icon-hand-o-up"></i>
-			</a>
-		</div>
+                                            </div>
+                                            <div class=" am-u-sm-8 am-list-main">
+                                                <h3 class="am-list-item-hd">
+                                                    <a href="#">${userCourse.course.courseName}</a>
+                                                </h3>
+                                                <div class="am-list-item-text">${userCourse.course.courseDesc}</div>
+                                                <div class="am-list-item-text">
+                                                    <span style="color:#f37b1d;">待付款(${userCourse.price})元</span>
+                                                    <span class="am-list-news-lesson-amount am-fr">共${userCourse.count}节课</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <hr style="border: 1px solid #ccc">
+                                    <li class="am-g" style="padding-top: 3px;padding-bottom: 15px;">
+                                        <span style="color:#ef0d0d">实付款:￥${userCourse.price}</span>
+                                        <span style="float:right"><button class="am-btn am-btn-primary " onclick="orderUnpay('${userCourse.orderId}')">取消订单</button> <button class="am-btn am-btn-warning" onclick="orderpay('${userCourse.orderId}')">支付订单</button></span>
+                                    </li>
+                            </ul>
+                        </div>
+                        </c:forEach>
+               <%--         <div class="am-list-news-bd" style="box-shadow:0 0.05rem 0.1rem rgba(0,0,0,.3);border-radius:.1rem;padding:0px 10px;background:#fff">
+                            <ul class="am-list">
 
-		<!-- foot navbar start -->
-		<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default">
-			<ul class="am-navbar-nav am-cf am-avg-sm-4">
-			    <li>
-			      <a href="${pageContext.request.contextPath}/index"  style="margin-top:5px;">
-			          <i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-zhuye" ></i>
-			          <span class="am-navbar-label">首页</span>
-			      </a>
-			    </li>
+                                <c:forEach items="${userCourseListUnPay }" var="userCourse">
+                                    <!--缩略图在标题左边-->
+                                    <li class="am-g" style="font-size:13px">
+                                        <div style="position: relative;top: 10px;">
+                                            <span style="color:#999">下单时间 : 2018-07-20</span>
+                                            <span id="order_number" style="display:none">100011111</span>
+                                            <span style="float:right;color:#f37b1d">待付款</span>
+                                        </div>
+                                    </li>
+                                    <hr style="border: 1px solid #ccc">
+                                    <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+                                        <div onclick="checkPay(${userCourse.course.courseId},${userCourse.course.coursePrice})">
+                                            <div class="am-u-sm-4 am-list-thumb">
 
-			    <li>
-			      <a href="${pageContext.request.contextPath}/course/myCourse"  style="margin-top:5px;">
-			          <i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-wodekecheng" ></i>
-			          <span class="am-navbar-label">我的课程</span>
-			      </a>
-			    </li>
-			    
-			    <li>
-			      <a href="${pageContext.request.contextPath}/user/userCenter" style="margin-top:5px;">
-			          <i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-gerenzhongxinxia"></i>
-			          <span class="am-navbar-label">个人中心</span>
-			      </a>
-			    </li>
-			</ul>
-		</div>
-		<!-- foot navbar end-->
+                                                <img src="http://img0.imgtn.bdimg.com/it/u=2479868636,1193546218&fm=27&gp=0.jpg" />
 
-	</div>
+                                            </div>
+                                            <div class=" am-u-sm-8 am-list-main">
+                                                <h3 class="am-list-item-hd">
+                                                    <a href="#">初中数学</a>
+                                                </h3>
+                                                <div class="am-list-item-text">数学很好啊</div>
+                                                <div class="am-list-item-text">
+                                                    <span style="color:#f37b1d;">待付款(100)元</span>
+                                                    <span class="am-list-news-lesson-amount am-fr">共10节课</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <hr style="border: 1px solid #ccc">
+                                    <li class="am-g" style="padding-top: 3px;padding-bottom: 15px;">
+                                        <span style="color:#ef0d0d">实付款:￥100.00</span>
+                                        <span style="float:right"><button class="am-btn am-btn-primary">取消订单</button> <button class="am-btn am-btn-warning">支付订单</button></span>
+                                    </li>
+                                </c:forEach>
+
+
+                            </ul>
+
+                        </div>--%>
+                    </div>
+                </div>
+
+                <!-- 已支付 -->
+                <div data-tab-panel-1 class="am-tab-panel" style="margin-top:55px;">
+                    <div data-am-widget="list_news" class="am-list-news am-list-news-default" >
+                        <!--课程列表-->
+                        <c:forEach items="${userCourseListPayed}" var="userCourse">
+                        <div class="am-list-news-bd" style="box-shadow:0 0.05rem 0.1rem rgba(0,0,0,.3);border-radius:.1rem;padding:0px 10px;background:#fff" onclick="Look('${userCourse.course.courseId}')">
+                            <ul class="am-list">
+                                <!--缩略图在标题左边-->
+                                <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+                                    <div class="am-u-sm-4 am-list-thumb">
+                                        <a href="${pageContext.request.contextPath}/course/courseDetails/${userCourse.course.courseId}" class=""> <img
+                                                src="http://bdpak.cn:8080/home/courseImg/${userCourse.course.courseImg}" />
+                                        </a>
+                                    </div>
+
+                                    <div class=" am-u-sm-8 am-list-main">
+                                        <h3 class="am-list-item-hd">
+                                            <a href="${pageContext.request.contextPath}/course/courseDetails/${userCourse.course.courseId}">${userCourse.course.courseName}</a>
+                                        </h3>
+                                        <div class="am-list-item-text">${userCourse.course.courseDesc}</div>
+                                        <div class="am-list-item-text">
+                                            <span style="color:#f37b1d;">已付款(${userCourse.price})元</span>
+                                            <span class="am-list-news-lesson-amount am-fr">共${userCourse.count}节课</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        </c:forEach>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- bdyh_news_content_main end -->
+
+    <!--回顶部 -->
+    <div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
+        <a href="#top" title=""> <i
+                class="am-gotop-icon am-icon-hand-o-up"></i>
+        </a>
+    </div>
+
+    <!-- foot navbar start -->
+    <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default">
+        <ul class="am-navbar-nav am-cf am-avg-sm-4">
+            <li>
+                <a href="${pageContext.request.contextPath}/index"  style="margin-top:5px;">
+                    <i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-zhuye" ></i>
+                    <span class="am-navbar-label">首页</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="${pageContext.request.contextPath}/course/myCourse"  style="margin-top:5px;">
+                    <i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-wodekecheng" ></i>
+                    <span class="am-navbar-label">我的课程</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="${pageContext.request.contextPath}/user/userCenter" style="margin-top:5px;">
+                    <i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-gerenzhongxinxia"></i>
+                    <span class="am-navbar-label">个人中心</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- foot navbar end-->
+
+</div>
 
 </body>
 <script type="text/javascript">
@@ -361,144 +368,24 @@ body, html {
 <script src="http://bdpak.cn:8080/home/js/jquery-3.2.1.min.js"></script>
 <script src="http://bdpak.cn:8080/home/assets/js/amazeui.min.js"></script>
 <!-- <script src="/bdyh.web.home/wechat/teacher_subject/subject.js"></script> -->
-<script src="http://bdpak.cn:8080/home/js/dist/amazeui.dialog.min.js"
-	charset="utf-8"></script>
-<script type="text/javascript">
-	var pageSize = 10, startPage = 1, totalPage = 0;
-	var applicationRecord = document.getElementById('listContent');
-
-	function getMore() {
-		//getMoreData(1,10);
-		if (startPage == totalPage || totalPage == 0) {
-			return;
-		} else {
-			startPage += 1;
-		}
-		var dataList;
-		$.ajax({
-			type : 'post',
-			url : "/bdyh.web.home/educateInfoW/select",
-			dataType : 'json',
-			data : {
-				startPage : startPage,
-				pageSize : pageSize,
-				teacherLesson : $("#tea_subject").val(),
-				teacherGrade : $("#tea_grade").val(),
-				placeProvince : $("#prov").val(),
-				placeCity : $("#city").val(),
-				placeDistrict : $("#district").val(),
-				otherExplain : $("#keyWord").val()
-			},
-			beforeSend : function() {
-
-			},
-			success : function(data) {
-				if (data.status == 1) {
-					dataList = data.data.familyEducateInfoList;
-					var html = '';
-					for (var i = 0; i < dataList.length; i++) {
-						html += setLi(dataList[i]);
-					}
-					$("#listContent").append(html);
-					if (startPage == totalPage) {
-						document.getElementById('getMore').innerHTML = "暂无更多！";
-					}
-					//成功  
-				} else {
-					//出错   
-				}
-			}
-		});
-	}
-
-	function search() {
-		startPage = 1;
-		$
-				.ajax({
-					type : 'post',
-					url : "/bdyh.web.home/educateInfoW/select",
-					dataType : 'json',
-					data : {
-						startPage : startPage,
-						pageSize : pageSize,
-						teacherLesson : $("#tea_subject").val(),
-						teacherGrade : $("#tea_grade").val(),
-						placeProvince : $("#prov").val(),
-						placeCity : $("#city").val(),
-						placeDistrict : $("#district").val(),
-						otherExplain : $("#keyWord").val()
-					},
-					beforeSend : function() {
-
-					},
-					success : function(data) {
-						if (data.status == 1) {
-							dataList = data.data.familyEducateInfoList;
-							var html = '';
-							if (data.data.totalPage > 0) {
-								for (var i = 0; i < dataList.length; i++) {
-									html += setLi(dataList[i]);
-								}
-								applicationRecord.innerHTML = html;
-								totalPage = data.data.totalPage;
-								if (startPage == totalPage) {
-									document.getElementById('getMore').innerHTML = "暂无更多！";
-								} else {
-									document.getElementById('getMore').innerHTML = "点击加载更多！";
-								}
-							} else if (data.data.totalPage == 0) {
-								applicationRecord.innerHTML = "";
-								document.getElementById('getMore').innerHTML = "暂无更多！";
-								AMUI.dialog.alert({
-									title : '提示',
-									content : "暂无数据",
-									onConfirm : function() {
-										console.log('close');
-									}
-								});
-							} else {
-								document.getElementById('getMore').innerHTML = "暂无更多！";
-							}
-							//成功  
-						} else {
-							//出错   
-						}
-					}
-				});
-	}
-
-	function back() {
-		window.history.back();
-	}
-
-    function checkPay(courseId,coursePrice){
-        window.location.href="${pageContext.request.contextPath}/course/checkPay?courseId="+courseId+"&coursePrice="+coursePrice;
-    }
-</script>
+<script src="http://bdpak.cn:8080/home/js/dist/amazeui.dialog.min.js" charset="utf-8"></script>
 <script src="http://bdpak.cn:8080/home/address-master/dist/address.js"
 	type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-	$(function() {
-		/* document.addEventListener('touchmove', function (e) {
-			e.preventDefault();
-		}, false); */
-		//	自定义输出
-		$("#address1").address(
-				{
-					customOutput : true,
-					selectEnd : function(json, address) {
-						for ( var key in json) {
-							$("#address1-form")
-									.find("option[id='" + key + "']").val(
-											json[key]);
-							document.getElementById(key).innerText = json[key];
-						}
-					}
-				}).on("provTap", function(event, activeli) {
-			console.log(activeli.text());
-		}).on("cityTap", function(event, activeli) {
-			console.log(activeli.text());
-		})
-	});
+
+	function Look(url) {
+
+    }
+
+    function orderpay(orderid) {
+        window.location.href="${pageContext.request.contextPath}/order/intoOrder?orderId="+orderid;
+    }
+
+
+    function orderUnpay(orderid) {
+        window.location.href="${pageContext.request.contextPath}/order/cancelOrder?orderId="+orderid;
+
+    }
+
 </script>
 </html>
