@@ -30,7 +30,7 @@
 <script src="http://bdpak.cn:8080/home/js/jquery-3.2.1.min.js"></script>
 <script>
     $('.weui-btn').click(function () {
-        window.location.href="${pageContext.request.contextPath}/routeW/Goto/course/details";
+      window.history.back();
     })
 
 </script>

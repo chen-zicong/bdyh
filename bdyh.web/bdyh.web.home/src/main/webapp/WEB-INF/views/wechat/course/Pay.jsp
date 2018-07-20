@@ -54,6 +54,16 @@
             line-height: 40px;
             padding: 0 10px;
         }
+
+        /*列表样式重写*/
+        .am-list-news-default{
+            margin:0 auto;
+
+        }
+        .am-list-news-default,li{
+            border-radius:6px
+
+        }
     </style>
 </head>
 <body>
@@ -83,7 +93,7 @@
                     <!--缩略图在标题左边-->
                     <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
                         <div class="am-u-sm-4 am-list-thumb">
-                            <a href="http://www.douban.com/online/11614662/" class="">
+                            <a href="##" class="">
                                 <img src="http://img0.imgtn.bdimg.com/it/u=2479868636,1193546218&fm=27&gp=0.jpg" />
                             </a>
                         </div>
@@ -94,7 +104,6 @@
 
                         </div>
                     </li>
-
                     <li class="am-g am-list-item-dated"style="margin-top:8%" >
                         <a class="am-list-item-hd " style="color:#484242">课程金额</a>
                         <span class="am-list-date"  style="color:#484242">￥${order.price}</span>
@@ -109,8 +118,6 @@
             </div>
 
         </div>
-
-
 
 
     </div>
