@@ -377,12 +377,39 @@ body, html {
     }
 
     function orderpay(orderid) {
+
         window.location.href="${pageContext.request.contextPath}/order/intoOrder?orderId="+orderid;
     }
 
 
+
+
     function orderUnpay(orderid) {
-        window.location.href="${pageContext.request.contextPath}/order/cancelOrder?orderId="+orderid;
+        var r=confirm("确定要取消订单吗？");
+        if (r==true)
+        {
+            $.ajax({
+                type:'POST',
+                url:'${pageContext.request.contextPath}/order/cancelOrder',
+                data:{
+                    orderId:orderid
+                },
+                success:function (data) {
+                    if(data.code=="success"){
+                        alert("取消订单成功!");
+                    }else {
+                        alert("取消订单失败!");
+                    }
+
+
+                }
+            });
+        }
+        else
+        {
+            confirm.close();
+        }
+
 
     }
 
