@@ -164,14 +164,13 @@ body, html {
                             <ul class="am-list">
 
                                     <!--缩略图在标题左边-->
-                                    <li class="am-g" style="font-size:13px">
-                                        <div style="position: relative;top: 10px;">
+
+                                        <div style="position: relative;top: 10px;font-size:13px">
                                             <span style="color:#999">下单时间 : ${userCourse.date}</span>
                                             <span id="order_number" style="display:none">${userCourse.orderId}</span>
                                             <span style="float:right;color:#f37b1d">待付款</span>
                                         </div>
-                                    </li>
-                                    <hr style="border: 1px solid #ccc">
+                                        <hr style="border: 1px solid #ccc">
                                     <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
                                         <div >
                                             <div class="am-u-sm-4 am-list-thumb">
@@ -192,10 +191,10 @@ body, html {
                                         </div>
                                     </li>
                                     <hr style="border: 1px solid #ccc">
-                                    <li class="am-g" style="padding-top: 3px;padding-bottom: 15px;">
+                                    <div class="am-g" style="padding-top: 3px;padding-bottom: 15px;">
                                         <span style="color:#ef0d0d">实付款:￥${userCourse.price}</span>
                                         <span style="float:right"><button class="am-btn am-btn-primary " onclick="orderUnpay('${userCourse.orderId}')">取消订单</button> <button class="am-btn am-btn-warning" onclick="orderpay('${userCourse.orderId}')">支付订单</button></span>
-                                    </li>
+                                    </div>
                             </ul>
                         </div>
                         </c:forEach>
