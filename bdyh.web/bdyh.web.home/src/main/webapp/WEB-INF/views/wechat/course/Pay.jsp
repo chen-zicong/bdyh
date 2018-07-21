@@ -115,7 +115,7 @@
                     <li class="am-g" style="padding-top: 20px;padding-bottom: 20px;margin-top:12%;padding-left: 25%;">
                         <div style="float:right;margin-right: 3%;">
                         <span style="color: #f37b1d;margin-top: 5px;display:inline-block;margin-right: 11px;">需付: ￥${order.price}元</span>
-                        <button class="am-btn am-btn-warning" style=" border-radius: 6px;" onclick="Pay()">提交订单</button>
+                        <button class="am-btn am-btn-warning" style=" border-radius: 6px;" onclick="Pay('${order.orderId}')">提交订单</button>
                         </div>
                     </li>
                 </ul>
@@ -166,7 +166,37 @@
     }
 
     /*支付*/
-    function Pay() {
+    function Pay(orderid) {
+        $.ajax({
+            type: "GET",
+            url: "${pageContext.request.contextPath}/vipPay/wechatPay?orderId="+orderid,
+            success: function(data){
+                WeixinJSBridge.invoke(
+                    'getBrandWCPayRequest', data ,
+                    function(res){
+                        if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                            alert("支付成功");
+                            window.open("${pageContext.request.contextPath}/course/courseDetails?orderId="+orderid);
+                        } else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+                            alert("取消支付");
+                        } else {
+                            alert("支付失败");
+                        }
+                        /* alert(res.err_code +","+ res.err_desc +" ,"+ res.err_msg); */
+                    }
+                );
+                if (typeof WeixinJSBridge == "undefined"){
+                    if( document.addEventListener ){
+                        document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                    }else if (document.attachEvent){
+                        document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                        document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                    }
+                }else{
+                    onBridgeReady();
+                }
+            }
+        })
 
     }
 

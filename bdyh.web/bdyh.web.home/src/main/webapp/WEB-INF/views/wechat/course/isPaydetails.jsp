@@ -319,7 +319,7 @@
                         <div class="am-list-news-hd am-cf">
                             <!--带更多链接-->
                             <a style="margin-left:10px;color:#464846;display: inline-block;">
-                                <span>${course.courseName}</span>
+                                <span><i class="am-icon-bars" style="color:#0e90d2; padding-right:10px"></i> ${course.courseName}</span>
                             </a>
 
                         </div>
@@ -328,7 +328,7 @@
                                <c:forEach items="${videoList}" var="video">
                                 <li class="am-g am-list-item-dated" style="margin-bottom:8px">
                                     <div class="am-list-item-hd lesson-catalog-list" style="display: inline-block; width: 95%">
-                                        <a  href="javaScript:playVideo('${video.videoPath}')" style="display:inline-block">
+                                        <a  href="javaScript:playVideo('${video.videoPath}')" style="display:inline-block;color: rgba(0,0,0,.7);">
                                             <i style="font-size:15px;margin-left:5px;" class="iconfont icon-bofang"></i>
                                             <span>${video.videoName}</span>
                                         </a>

@@ -356,25 +356,38 @@
 								<ul class="am-list am-list-course" style="font-size:14px;">
 									<c:forEach items="${videoList }" var="video">
 										<li class="am-g am-list-item-dated" style="margin-bottom:8px">
+                                            <c:choose>
 											<div  class="am-list-item-hd lesson-catalog-list" style="display: inline-block; width: 95%">
+                                                <c:when test="${video.paystatus eq 1}">
 												<a id="Ccourse" href="#" style="display:inline-block">
 													<i style="font-size:15px;margin-left:5px;" class="iconfont icon-bofang"></i>
 													<span>${video.videoName}</span>
-													<c:choose>
-													<c:when test="${video.videoPrice eq 0}">
-													<span syle="color:green;">(免费)</span>
-														<span id="Permission" style="display:none">1</span>
-													</c:when>
-													<c:otherwise>
-														<span  style="color:red;">(￥<span id="CoursePrice">${video.videoPrice}</span>元)</span>
-														<span id="Permission" style="display:none">0</span>
-													</c:otherwise>
-													</c:choose>
-													<span id="path" style="display:none;">${video.videoPath}</span>
+													<span syle="color:green;">(已购)</span>
+														<span id="Permission" style="display:none">${video.paystatus}</span>
+													    <span id="path" style="display:none;">${video.videoPath}</span>
 												</a>
-												<i class="am-icon-plus-circle" style="float: right;display: inline-block;font-size:18px;color:blue"></i>
-												<span id="videoId" style="display:none">${video.videoId}</span>
+                                                </c:when>
+                                                <c:when test="${video.paystatus eq 0}">
+                                                <a id="Ccourse" href="#" style="display:inline-block">
+                                                    <i style="font-size:15px;margin-left:5px;" class="iconfont icon-bofang"></i>
+                                                    <span  style="color:red;">(￥<span id="CoursePrice">${video.videoPrice}</span>元)</span>
+                                                    <span id="Permission" style="display:none">${video.paystatus}</span>
+                                                    <span id="path" style="display:none;">${video.videoPath}</span>
+                                                </a>
+                                                    <i class="am-icon-plus-circle" style="float: right;display: inline-block;font-size:18px;color:blue"></i>
+                                                    <span id="videoId" style="display:none">${video.videoId}</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                <a id="Ccourse" href="#" style="display:inline-block">
+                                                    <i style="font-size:15px;margin-left:5px;" class="iconfont icon-bofang"></i>
+                                                    <span>${video.videoName}</span>
+                                                    <span syle="color:#ccc;">(待付款)</span>
+                                                    <span id="Permission" style="display:none">${video.paystatus}</span>
+                                                    <span id="path" style="display:none;">${video.videoPath}</span>
+                                                </a>
+                                                </c:otherwise>
 											</div>
+                                            </c:choose>
 										</li>
 									<%--	<li class="am-g am-list-item-dated">
 											<a href="javaScript:playVideo('${video.videoPath}')" class="am-list-item-hd lesson-catalog-list">

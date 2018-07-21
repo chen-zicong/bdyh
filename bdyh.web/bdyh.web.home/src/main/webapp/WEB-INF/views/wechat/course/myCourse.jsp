@@ -249,12 +249,12 @@ body, html {
                     <div data-am-widget="list_news" class="am-list-news am-list-news-default" >
                         <!--课程列表-->
                         <c:forEach items="${userCourseListPayed}" var="userCourse">
-                        <div class="am-list-news-bd" style="box-shadow:0 0.05rem 0.1rem rgba(0,0,0,.3);border-radius:.1rem;padding:0px 10px;background:#fff" onclick="Look('${userCourse.course.courseId}')">
+                        <div class="am-list-news-bd" style="box-shadow:0 0.05rem 0.1rem rgba(0,0,0,.3);border-radius:.1rem;padding:0px 10px;background:#fff" onclick="Look('${userCourse.orderId}')">
                             <ul class="am-list">
                                 <!--缩略图在标题左边-->
                                 <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
                                     <div class="am-u-sm-4 am-list-thumb">
-                                        <a href="${pageContext.request.contextPath}/course/courseDetails/${userCourse.course.courseId}" class=""> <img
+                                        <a href="javascript:;" class=""> <img
                                                 src="http://bdpak.cn:8080/home/courseImg/${userCourse.course.courseImg}" />
                                         </a>
                                     </div>
@@ -371,19 +371,20 @@ body, html {
 <script src="http://bdpak.cn:8080/home/address-master/dist/address.js"
 	type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
+/*查看已购课程详情*/
 
-	function Look(url) {
+	function Look(orderid) {
+	    window.location.href="${pageContext.request.contextPath}/order/paidCourse?orderId="+orderid;
 
     }
-
+/*跳转到付款页面*/
     function orderpay(orderid) {
 
         window.location.href="${pageContext.request.contextPath}/order/intoOrder?orderId="+orderid;
     }
 
 
-
-
+/*取消订单*/
     function orderUnpay(orderid) {
         var r=confirm("确定要取消订单吗？");
         if (r==true)
@@ -397,6 +398,7 @@ body, html {
                 success:function (data) {
                     if(data.code=="success"){
                         alert("取消订单成功!");
+                        window.location.reload();
                     }else {
                         alert("取消订单失败!");
                     }
