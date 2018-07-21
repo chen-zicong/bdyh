@@ -29,7 +29,7 @@ public class WechatPayServiceImpl implements WechatPayService {
     @Override
     public Map<String, String> gtVipPay(Map<String, String> paramMap ,String orderId) {
 
-        UserOrder order = orderService.findOne(orderId);
+        UserOrder order = orderService.findUserOrder(orderId);
         if(order==null){
             throw new BdyhException(ResultEnum.ORDER_NOT_EXIST);
         }

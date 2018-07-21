@@ -27,7 +27,7 @@ public interface OrderDetailMapper {
 
     int updateByExample(@Param("record") OrderDetail record, @Param("example") OrderDetailExample example);
 
-    @Select("select * form detail where  orderId =#{orderId}")
+    @Select("select * from order_detail where  order_id =#{orderId}")
     List<OrderDetail> selectByOrderId(@Param("orderId") String orderId);
 
     @Select("select video_id  from order_detail where  order_id = #{orderId}")
@@ -36,7 +36,7 @@ public interface OrderDetailMapper {
     @Select("select * " +
             "   from user_order,order_detail " +
             "       where user_order.open_id=#{openId} " +
-            "       and order_detail.open_id = #{openId}" +
+            "       and order_detail.order_id = user_order.order_id "+
             "       and pay = 0 ")
     List<UserOrderAndDetail> selectUnpayOrder(@Param("openId") String openId);
 
@@ -44,12 +44,12 @@ public interface OrderDetailMapper {
     @Select("select * " +
             "   from user_order,order_detail " +
             "       where user_order.open_id=#{openId} " +
-            "       and order_detail.open_id = #{openId}" +
+            "       and order_detail.order_id = user_order.order_id "+
             "       and pay = 1 ")
     List<UserOrderAndDetail> selectpayOrder(@Param("openId") String openId);
 
-    @Delete("delete from user_order,order_detail" +
-            "   where user_order.order_id = #{orderId}" +
-            "   and order_detail.order_id = #{orderId}")
+  @Delete("delete from user_order where  order_id = #{orderId}")
     int deleteOrder(@Param("orderId") String orderId);
+    @Delete("delete from order_detail where  order_id = #{orderId}")
+  int deleteOrderDetail(@Param("orderId") String orderId);
 }

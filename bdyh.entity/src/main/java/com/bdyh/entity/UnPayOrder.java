@@ -8,13 +8,13 @@ public class UnPayOrder {
     private Float price;
     private int count;
     private String orderId;
-    private Date date;
+    private String date;
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

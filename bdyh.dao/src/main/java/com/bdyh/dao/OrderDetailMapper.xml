@@ -2,16 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bdyh.dao.OrderDetailMapper" >
   <resultMap id="BaseResultMap" type="com.bdyh.entity.OrderDetail" >
-    <constructor >
-      <arg column="detail_id" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="order_id" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="course_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="course_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="video_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="video_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
-      <arg column="date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-    </constructor>
+
+      <id column="detail_id"  property="detailId" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <result column="order_id"  property="orderId" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <result column="course_name"  property="courseName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <result column="course_id"  property="courseId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <result column="video_id"   property="videoId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <result column="video_name" property="videoName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <result column="price"  property="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <result column="date" property="date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >

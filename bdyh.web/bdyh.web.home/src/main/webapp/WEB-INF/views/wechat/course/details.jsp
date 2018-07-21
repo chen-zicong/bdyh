@@ -356,13 +356,14 @@
 								<ul class="am-list am-list-course" style="font-size:14px;">
 									<c:forEach items="${videoList }" var="video">
 										<li class="am-g am-list-item-dated" style="margin-bottom:8px">
-                                            <c:choose>
+
 											<div  class="am-list-item-hd lesson-catalog-list" style="display: inline-block; width: 95%">
+												<c:choose>
                                                 <c:when test="${video.paystatus eq 1}">
 												<a id="Ccourse" href="#" style="display:inline-block">
 													<i style="font-size:15px;margin-left:5px;" class="iconfont icon-bofang"></i>
 													<span>${video.videoName}</span>
-													<span syle="color:green;">(已购)</span>
+													<span style="color:green;">(已购)</span>
 														<span id="Permission" style="display:none">${video.paystatus}</span>
 													    <span id="path" style="display:none;">${video.videoPath}</span>
 												</a>
@@ -370,6 +371,7 @@
                                                 <c:when test="${video.paystatus eq 0}">
                                                 <a id="Ccourse" href="#" style="display:inline-block">
                                                     <i style="font-size:15px;margin-left:5px;" class="iconfont icon-bofang"></i>
+                                                    <span>${video.videoName}</span>
                                                     <span  style="color:red;">(￥<span id="CoursePrice">${video.videoPrice}</span>元)</span>
                                                     <span id="Permission" style="display:none">${video.paystatus}</span>
                                                     <span id="path" style="display:none;">${video.videoPath}</span>
@@ -381,13 +383,14 @@
                                                 <a id="Ccourse" href="#" style="display:inline-block">
                                                     <i style="font-size:15px;margin-left:5px;" class="iconfont icon-bofang"></i>
                                                     <span>${video.videoName}</span>
-                                                    <span syle="color:#ccc;">(待付款)</span>
+                                                    <span style="color:#ccc;">(待付款)</span>
                                                     <span id="Permission" style="display:none">${video.paystatus}</span>
                                                     <span id="path" style="display:none;">${video.videoPath}</span>
                                                 </a>
                                                 </c:otherwise>
+												</c:choose>
 											</div>
-                                            </c:choose>
+
 										</li>
 									<%--	<li class="am-g am-list-item-dated">
 											<a href="javaScript:playVideo('${video.videoPath}')" class="am-list-item-hd lesson-catalog-list">
@@ -470,6 +473,7 @@
         videojs.options.flash.swf = "http://bdpak.cn:8080/home/video.js/video-js.swf";
 	</script>
 	<script>
+
         var IdList=[];  /*存放视频的ID*/
         var total_price=0; /*总价*/
 		var courseid="${course.courseId}"; /*课程ID*/
@@ -725,12 +729,13 @@
         /**/
         function Buy() {
             if(IdList.length){
-                alert(IdList);
 
-				window.location.href="${pageContext.request.contextPath}/order/createOrder?courseId="+courseid+"&videosId="+IdList;
+            window.location.replace("${pageContext.request.contextPath}/order/createOrder?courseId="+courseid+"&videosId="+IdList);
 
-			}
+				<%--window.location.href="${pageContext.request.contextPath}/order/createOrder?courseId="+courseid+"&videosId="+IdList;--%>
+            }
 
         }
 	</script>
+
 	</html>

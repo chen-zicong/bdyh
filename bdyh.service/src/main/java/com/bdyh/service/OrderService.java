@@ -16,7 +16,7 @@ public interface OrderService {
 
     APIResponse pay(String orderId);
 
-    PaidVideos findPaid(String orderId);
+    UserOrderAndDetail findPaid(String orderId);
 
     UserOrder findByOpenIdAndOrderId(String openId, String orderId);
 
@@ -28,6 +28,7 @@ public interface OrderService {
     List<Integer> findOrderDetailByOrderId(String OrderId);
 
     OrderVo findOne(String orderId);
+    UserOrder findUserOrder(String orderId);
 
     public List<PayOrder> findpayOrderByOpenId(String openId);
 

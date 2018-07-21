@@ -317,53 +317,7 @@ body, html {
 </div>
 
 </body>
-<script type="text/javascript">
-	function setLi(item) {
-		var Li = '<li class="am-g am-list-item-desced">'
-				+ '<div>'
-				+ '<a href="###">'
-				+ '<i style="color:#6C7B8B;font-size:16px;" class="iconfont icon-lesson1"></i>'
-				+ '<span style="color:#757575;">'
-				+ item.teacherLesson
-				+ '</span>'
-				+ '<span class="am-list-news-grade am-fr">《'
-				+ item.teacherGrade
-				+ '》</span>'
-				+ '</a>'
-				+ '</div>'
-				+ '<div class="am-list-item-hd">'
-				+ '<span>家长：</span>'
-				+ item.parentName
-				+ '</span>'
-				+ '<span class="am-fr">联系电话：'
-				+ item.linkPhone
-				+ '</span>'
-				+ '</div>'
-				+ '<div class="am-list-item-text">'
-				+ '<span>期望老师：</span>'
-				+ item.expectSex
-				+ '</span>'
-				+ '<span style="display:inline-block;margin-left:5%;">课时费：'
-				+ item.lessonCharge
-				+ '元/h</span>'
-				+ '<span class="am-fr">每周次数：'
-				+ item.timesWeek
-				+ '</span>'
-				+ '</div>'
-				+ '<div class="am-list-item-text">家教地址：'
-				+ item.placeProvince
-				+ item.placeCity
-				+ item.placeDistrict
-				+ item.managerName
-				+ '</div>'
-				+ '<div class="am-list-item-text">要求说明：'
-				+ item.otherExplain
-				+ '</div>'
-				+ '<div class="am-list-item-text">发布时间：'
-				+ item.addTime + '</div>' + '</li>';
-		return Li;
-	}
-</script>
+
 <script src="http://bdpak.cn:8080/home/js/jquery-3.2.1.min.js"></script>
 <script src="http://bdpak.cn:8080/home/assets/js/amazeui.min.js"></script>
 <!-- <script src="/bdyh.web.home/wechat/teacher_subject/subject.js"></script> -->
@@ -374,7 +328,7 @@ body, html {
 /*查看已购课程详情*/
 
 	function Look(orderid) {
-	    window.location.href="${pageContext.request.contextPath}/order/paidCourse?orderId="+orderid;
+	    window.location.href="${pageContext.request.contextPath}/course/paidCourse?orderId="+orderid;
 
     }
 /*跳转到付款页面*/

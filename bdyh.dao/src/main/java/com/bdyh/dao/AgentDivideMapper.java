@@ -37,4 +37,7 @@ public interface AgentDivideMapper {
 
     @Update("update agent_divide set divide = #{divideNum} where agent_id =#{agentId} and teacher_id = #{teacherId}")
     int updateDivideNum(@Param("agentId") int agentId, @Param("teacherId") int teacherId, @Param("divideNum") int divideNum);
+
+
+
 }

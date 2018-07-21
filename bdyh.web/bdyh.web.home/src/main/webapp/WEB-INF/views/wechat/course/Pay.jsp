@@ -160,6 +160,7 @@
 <script src="http://bdpak.cn:8080/home/js/jquery-3.2.1.min.js"></script>
 <script src="http://bdpak.cn:8080/home/assets/js/amazeui.min.js"></script>
 <script>
+
     /*返回上一级*/
     function back() {
         window.history.back();
@@ -202,4 +203,5 @@
 
 
 </script>
+
 </html>
