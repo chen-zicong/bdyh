@@ -318,13 +318,14 @@
                         <!--课程目录-->
                         <div class="am-list-news-hd am-cf">
                             <!--带更多链接-->
-                            <a style="margin-left:10px;color:#464846;display: inline-block;">
+                            <a style="margin-left:6px;color:#464846;display: inline-block;">
                                 <span><i class="am-icon-bars" style="color:#0e90d2; padding-right:10px"></i> ${course.courseName}</span>
                             </a>
 
                         </div>
 
                         <div class="am-list-news-bd course-list">
+                            <ul class="am-list am-list-course" style="font-size:14px;">
                                <c:forEach items="${videoList}" var="video">
                                 <li class="am-g am-list-item-dated" style="margin-bottom:8px">
                                     <div class="am-list-item-hd lesson-catalog-list" style="display: inline-block; width: 95%">
@@ -391,9 +392,7 @@
     videojs.options.flash.swf = "http://bdpak.cn:8080/home/video.js/video-js.swf";
 </script>
 <script>
-    var IdList=[];  /*存放视频的ID*/
-    var total_price=0; /*总价*/
-    var courseid="${course.courseId}"; /*课程ID*/
+
     function lecturerCollect(teacherId) {
         if ($("#lecturer_collect_no").prop("hidden")) {
             //取消收藏

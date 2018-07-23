@@ -253,16 +253,14 @@
 				       <span class="am-list-news-more">更多 &raquo;</span>
 				   </a>
 				</div>
-				
+
 				<div  class="am-list-news-bd">
 					<ul id="am-list-news-bd" class="am-list">
-					
-					
 						<c:forEach items="${courseList }" var="course">
 							<li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
-							<div onclick="checkPay(${course.courseId},${course.coursePrice})">
+							<div onclick="Jump('${course.courseId}')">
 								<div class="am-u-sm-4 am-list-thumb">
-								  <a href="${pageContext.request.contextPath}/course/courseDetails/${course.courseId}" class="">
+								  <a href="javascript:;" class="">
 								    <img src="http://bdpak.cn:8080/home/courseImg/${course.courseImg}"/>
 								  </a>			
 								</div>
@@ -380,8 +378,8 @@
 <script src="http://bdpak.cn:8080/home/assets/js/app.js"></script>
 <script>
 
-    function checkPay(courseId,coursePrice){
-        window.location.href="${pageContext.request.contextPath}/course/checkPay?courseId="+courseId+"&coursePrice="+coursePrice;
+    function Jump(courseId){
+        window.location.href="${pageContext.request.contextPath}/course/courseDetails/"+courseId;
     }
 
 
