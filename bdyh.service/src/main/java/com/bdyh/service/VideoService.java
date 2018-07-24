@@ -7,10 +7,12 @@ import com.bdyh.entity.Video;
 
 public interface VideoService {
 
-	public List<Video> findVideoByCourseId(Integer courseId);
+    public List<Video> findVideoByCourseId(Integer courseId);
 
-	public void saveVideo(Video newVideo);
+    public void saveVideo(Video newVideo);
 
-	public Video findVideoById(Integer videoId);
+    public Video findVideoById(Integer videoId);
+
+    List<Video> findBoughtVideo(List<Integer> videos);
 
 }

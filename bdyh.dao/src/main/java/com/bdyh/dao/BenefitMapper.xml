@@ -174,7 +174,22 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+    <select id="selectBenefitByOrderId" parameterType="list" resultType="com.bdyh.entity.IncomeStatisticsVo">
+      SELECT SUM(teacher_benefit) teacher_benefit,SUM(count) count FROM benefit WHERE order_id in (
+      <foreach collection="orderIds" index="index" item="item" separator=",">
+        #{item,jdbcType=VARCHAR}
+      </foreach>
+      )
+    </select>
+
+
+
+
+
+
+
+
+    <update id="updateByExampleSelective" parameterType="map" >
     update benefit
     <set >
       <if test="record.orderId != null" >

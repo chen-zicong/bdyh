@@ -117,13 +117,13 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path=""/>
-			<bean class="com.bdyh.web.admin.interceptor.LoginInterceptor"></bean>
+            <bean class="com.bdyh.web.admin.interceptor.LoginInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
 
      
 	<!-- 启动shiro授权注解拦截方式 -->
-	<aop:config proxy-target-class="true"></aop:config>  
+    <aop:config proxy-target-class="true"/>
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">  
         <property name="securityManager" ref="securityManager"/>  
     </bean>  

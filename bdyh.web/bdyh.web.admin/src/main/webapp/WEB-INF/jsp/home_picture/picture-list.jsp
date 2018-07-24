@@ -23,6 +23,8 @@
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <title>轮播图列表</title>
+<script type="text/javascript">
+</script>
 </head>
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 轮播图管理 <span class="c-gray en">&gt;</span> 轮播图列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
@@ -36,7 +38,7 @@
 					<th >pictureId</th>
 					<th >图片名称</th>
 					<th >图片</th>
-
+					
 					<th >状态</th>
 					<th >操作</th>
 				</tr>
@@ -47,7 +49,7 @@
 						<td><input name="" type="checkbox" value=""></td>
 						<td>${picture.pictureId }</td>
 						<th>${picture.pictureName }</th>
-            <td><%-- <a href="javascript:;" onClick="course_edit('查看该课程','${pageContext.request.contextPath}/course/courseVideo/${course.courseId }','10001')"></a> --%><img width="210" height="150" class="picture-thumb " src="http://bdpak.cn:8080/home/home_picture/${picture.picturePath}"></td>
+						<td><%-- <a href="javascript:;" onClick="course_edit('查看该课程','${pageContext.request.contextPath}/course/courseVideo/${course.courseId }','10001')"></a> --%><img width="210" height="150" class="picture-thumb" src="http://bdpak.cn:8080/home/home_picture/${picture.picturePath }"></td>
 						
 						<td class="td-status">
 							<c:choose>
@@ -92,15 +94,6 @@
 <script type="text/javascript" src="http://bdpak.cn:8080/bdyhAdmin/admin/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
 <script type="text/javascript" src="http://bdpak.cn:8080/bdyhAdmin/admin/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
-
-$(function () {
-    $("img").mouseover(function(){
-        $(this).animate({width:"420px",height:"300px"},1500);
-    }).mouseout(function () {
-        $(this).animate({width:"210px",height:"150px"},600);
-    })
-})
-
 $('.table-sort').dataTable({
 	"aaSorting": [[ 1, "desc" ]],//默认第几个排序
 	"bStateSave": true,//状态保存

@@ -2,8 +2,11 @@ package com.bdyh.dao;
 
 import com.bdyh.entity.Teacher;
 import com.bdyh.entity.TeacherExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 public interface TeacherMapper {
     int countByExample(TeacherExample example);
@@ -27,4 +30,9 @@ public interface TeacherMapper {
     int updateByPrimaryKeySelective(Teacher record);
 
     int updateByPrimaryKey(Teacher record);
+
+    @Select("select * from  teacher where agent_id = #{agentId} ")
+    List<Teacher> findTeacherByAgentId(@Param("agentId") Integer agentId);
+    @Select("select * from teacher")
+    List<Teacher> findAllTeacher();
 }

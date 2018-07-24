@@ -1,65 +1,27 @@
 package com.bdyh.entity;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 public class TeacherIncome {
-    private Integer id;
 
-    private Integer teacherId;
+    private Date date;
+    private BigDecimal teacherBenefit;
 
-    private Float income;
 
-    private Integer courseId;
-
-    private Integer count;
-
-    public TeacherIncome(Integer id, Integer teacherId, Float income, Integer courseId, Integer count) {
-        this.id = id;
-        this.teacherId = teacherId;
-        this.income = income;
-        this.courseId = courseId;
-        this.count = count;
+    public BigDecimal getTeacherBenefit() {
+        return teacherBenefit;
     }
 
-    public TeacherIncome() {
-        super();
+    public void setTeacherBenefit(BigDecimal teacherBenefit) {
+        this.teacherBenefit = teacherBenefit;
     }
 
-    public Integer getId() {
-        return id;
+    public Date getDate() {
+        return date;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getTeacherId() {
-        return teacherId;
-    }
-
-    public void setTeacherId(Integer teacherId) {
-        this.teacherId = teacherId;
-    }
-
-    public Float getIncome() {
-        return income;
-    }
-
-    public void setIncome(Float income) {
-        this.income = income;
-    }
-
-    public Integer getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

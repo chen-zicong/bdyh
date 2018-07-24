@@ -1,4 +1,4 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE HTML>
@@ -26,7 +26,7 @@
 </head>
 <body>
 <div class="page-container">
-	<p class="f-20 text-success">欢迎使用小科斗微课后台系统 <span class="f-14"></span></p>
+	<p class="f-20 text-success">欢迎使用小蝌蚪微课后台系统 <span class="f-14"></span></p>
 	<p>登录次数：${sessionScope.activeUser.loginNumber+1 } </p>
 	<p><!-- 上次登录IP：222.35.131.79.1  --> 上次登录时间：${sessionScope.activeUser.loginTime }</p>
 	

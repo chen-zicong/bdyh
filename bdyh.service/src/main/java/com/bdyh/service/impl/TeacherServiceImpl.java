@@ -207,12 +207,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     }
 
-    public int updateTeacherIncome(TeacherIncome teacherIncome) {
-        TeacherIncomeExample teacherIncomeExample = new TeacherIncomeExample();
-        TeacherIncomeExample.Criteria criteria = teacherIncomeExample.createCriteria();
-        criteria.andCourseIdEqualTo(teacherIncome.getCourseId()).andTeacherIdEqualTo(teacherIncome.getTeacherId());
-        return teacherIncomeMapper.updateByExampleSelective(teacherIncome, teacherIncomeExample);
-    }
+
 
     public TeacherIncome findTeacherIncomeByTeacherId(int teacherId) {
         TeacherIncomeExample teacherIncomeExample = new TeacherIncomeExample();

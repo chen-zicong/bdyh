@@ -87,12 +87,6 @@
 <script type="text/javascript" src="http://bdpak.cn:8080/bdyhAdmin/admin/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
 $(function(){
-    $("img").mouseover(function(){
-        $(this).animate({width:"250px",height:"250px"},1300);
-    }).mouseout(function () {
-        $(this).animate({width:"100px",height:"100px"},600);
-    })
-
 	$('.table-sort').dataTable({
 		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
 		"bStateSave": true,//状态保存

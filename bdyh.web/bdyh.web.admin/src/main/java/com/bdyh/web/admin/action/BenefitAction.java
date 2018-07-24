@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-	@RequestMapping(value="benefit")
+@RequestMapping(value="benefit")
 public class BenefitAction {
 	@Autowired
 	private CourseService courseService;
@@ -42,11 +42,4 @@ public class BenefitAction {
 	public String courseBenefit(HttpSession session,Model model){
 		return "benefit/course-benefit";
 	}
-
-	@RequestMapping(value="statisticalOfTeacher")
-	public String benefitOfTeacher(){
-		//TODO
-		return "benefit/benefit_teacher";
-	}
 }
-

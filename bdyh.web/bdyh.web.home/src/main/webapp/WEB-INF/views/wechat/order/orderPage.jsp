@@ -120,7 +120,6 @@
         }
 
         function pay(){
-            alert("nihao")
             $.ajax({
                 type: "GET",
                 url: "${pageContext.request.contextPath}/vipPay/wechatPay?coursePrice=${coursePrice}&tradeNo=${tradeNo}",

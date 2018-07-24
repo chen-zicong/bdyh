@@ -42,7 +42,6 @@ public interface TeacherService {
 
     public int addTeacherIncome(TeacherIncome teacherIncome);
 
-    public int updateTeacherIncome(TeacherIncome teacherIncome);
 
     public TeacherIncome findTeacherIncomeByTeacherId(int teacherId);
 

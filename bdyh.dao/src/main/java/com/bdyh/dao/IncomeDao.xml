@@ -18,12 +18,12 @@
 
     </sql>
 
-    <select id="selectByTeacherId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectByTeacherId" parameterType="java.lang.Integer" resultType="com.bdyh.entity.IncomeStatisticsVo">
         SELECT
-          course.course_id,course_level,course_type,course_name,course_img,course_desc,count,status,course_price,income
-          FROM  course, teacher_income
-           WHERE   course.teacher_id = #{id ,jdbcType=INTEGER}
-                and teacher_income.teacher_id = #{id ,jdbcType=INTEGER}
+            c.*,SUM (b.teacher_benifit),SUM (b.count)
+          FROM  course c, benefit b
+           WHERE   c.teacher_id = #{id ,jdbcType=INTEGER}
+                and b.teacher_id = #{id ,jdbcType=INTEGER}
     </select>
 
     <select id="selectIncomeByTeacherId" parameterType="java.lang.Integer"
