@@ -95,9 +95,9 @@
 
 $(function () {
     $("img").mouseover(function(){
-        $(this).animate({width:"420px",height:"300px"});
+        $(this).animate({width:"420px",height:"300px"},1500);
     }).mouseout(function () {
-        $(this).animate({width:"210px",height:"150px"});
+        $(this).animate({width:"210px",height:"150px"},600);
     })
 })
 

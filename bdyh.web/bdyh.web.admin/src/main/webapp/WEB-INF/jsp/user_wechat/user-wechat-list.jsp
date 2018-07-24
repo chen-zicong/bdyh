@@ -88,9 +88,9 @@
 <script type="text/javascript">
 $(function(){
     $("img").mouseover(function(){
-        $(this).animate({width:"250px",height:"250px"});
+        $(this).animate({width:"250px",height:"250px"},1300);
     }).mouseout(function () {
-        $(this).animate({width:"100px",height:"100px"});
+        $(this).animate({width:"100px",height:"100px"},600);
     })
 
 	$('.table-sort').dataTable({

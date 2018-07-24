@@ -140,14 +140,6 @@
 			.am-list .am-list-item-dated a {
 				padding-right: 5%;
 			}
-
-            /*菜单样式重写覆盖*/
-			.am-menu-slide1 .am-menu-nav>.am-parent.am-open>a:before{
-				display:none;
-			}
-			.am-menu-slide1 .am-menu-nav>.am-parent>a:after{
-				content:none;
-			}
 		</style>
 	</head>
 	<body>
@@ -364,42 +356,25 @@
 								<ul class="am-list am-list-course" style="font-size:14px;">
 									<c:forEach items="${videoList }" var="video">
 										<li class="am-g am-list-item-dated" style="margin-bottom:8px">
-
 											<div  class="am-list-item-hd lesson-catalog-list" style="display: inline-block; width: 95%">
-												<c:choose>
-                                                <c:when test="${video.paystatus eq 1}">
 												<a id="Ccourse" href="#" style="display:inline-block">
 													<i style="font-size:15px;margin-left:5px;" class="iconfont icon-bofang"></i>
 													<span>${video.videoName}</span>
-													<span style="color:green;">(已购)</span>
-														<span id="Permission" style="display:none">${video.paystatus}</span>
-													    <span id="path" style="display:none;">${video.videoPath}</span>
+													<c:choose>
+													<c:when test="${video.videoPrice eq 0}">
+													<span syle="color:green;">(免费)</span>
+														<span id="Permission" style="display:none">1</span>
+													</c:when>
+													<c:otherwise>
+														<span  style="color:red;">(￥<span id="CoursePrice">${video.videoPrice}</span>元)</span>
+														<span id="Permission" style="display:none">0</span>
+													</c:otherwise>
+													</c:choose>
+													<span id="path" style="display:none;">${video.videoPath}</span>
 												</a>
-                                                </c:when>
-                                                <c:when test="${video.paystatus eq 0}">
-                                                <a id="Ccourse" href="#" style="display:inline-block">
-                                                    <i style="font-size:15px;margin-left:5px;" class="iconfont icon-bofang"></i>
-                                                    <span>${video.videoName}</span>
-                                                    <span  style="color:red;">(￥<span id="CoursePrice">${video.videoPrice}</span>元)</span>
-                                                    <span id="Permission" style="display:none">${video.paystatus}</span>
-                                                    <span id="path" style="display:none;">${video.videoPath}</span>
-                                                </a>
-                                                    <i class="am-icon-plus-circle" style="float: right;display: inline-block;font-size:18px;color:blue"></i>
-													<i class="am-icon-check-circle-o" style="float: right;display: inline-block;font-size:18px;color:green;display:none"></i>
-                                                    <span id="videoId" style="display:none">${video.videoId}</span>
-                                                </c:when>
-                                                <c:otherwise>
-                                                <a id="Ccourse" href="#" style="display:inline-block">
-                                                    <i style="font-size:15px;margin-left:5px;" class="iconfont icon-bofang"></i>
-                                                    <span>${video.videoName}</span>
-                                                    <span style="color:#ccc;">(待付款)</span>
-                                                    <span id="Permission" style="display:none">${video.paystatus}</span>
-                                                    <span id="path" style="display:none;">${video.videoPath}</span>
-                                                </a>
-                                                </c:otherwise>
-												</c:choose>
+												<i class="am-icon-plus-circle" style="float: right;display: inline-block;font-size:18px;color:blue"></i>
+												<span id="videoId" style="display:none">${video.videoId}</span>
 											</div>
-
 										</li>
 									<%--	<li class="am-g am-list-item-dated">
 											<a href="javaScript:playVideo('${video.videoPath}')" class="am-list-item-hd lesson-catalog-list">
@@ -482,11 +457,9 @@
         videojs.options.flash.swf = "http://bdpak.cn:8080/home/video.js/video-js.swf";
 	</script>
 	<script>
-
         var IdList=[];  /*存放视频的ID*/
         var total_price=0; /*总价*/
 		var courseid="${course.courseId}"; /*课程ID*/
-        var isSelect_All=false; /*全选状态*/
         function lecturerCollect(teacherId) {
             if ($("#lecturer_collect_no").prop("hidden")) {
                 //取消收藏
@@ -600,6 +573,37 @@
 
         }
 
+        function pay(){
+            $.ajax({
+                type: "POST",
+                url: "${pageContext.request.contextPath}/vipPay/wechatPay",
+                success: function(data){
+                    WeixinJSBridge.invoke(
+                        'getBrandWCPayRequest', data ,
+                        function(res){
+                            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                                alert("支付成功");
+                            } else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+                                alert("取消支付");
+                            } else {
+                                alert("支付失败");
+                            }
+                            /* alert(res.err_code +","+ res.err_desc +" ,"+ res.err_msg); */
+                        }
+                    );
+                    if (typeof WeixinJSBridge == "undefined"){
+                        if( document.addEventListener ){
+                            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                        }else if (document.attachEvent){
+                            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                        }
+                    }else{
+                        onBridgeReady();
+                    }
+                }
+            })
+        }
 
         /*视频权限*/
         $('.am-list').on('click','#Ccourse',function(){
@@ -633,17 +637,6 @@
                 }
             }
         }
-        /*重置添加按钮*/
-        function back(ItemId){
-            var CourseLength=ListCourse();
-            for(var i=0;i<CourseLength;i++){
-                var CourseId=$('.am-list-course').find('li').eq(i).find('#videoId').text();
-                if(ItemId==CourseId){
-                    $('.am-list-course').find('li').eq(i).find('.am-icon-plus-circle').show();
-                    $('.am-list-course').find('li').eq(i).find('.am-icon-check-circle-o').css('display','none');
-                }
-            }
-        }
 
         /*视频购买添加*/
         $('.am-list').on('click','.am-icon-plus-circle',function(){
@@ -651,8 +644,6 @@
             var CourseName=$(this).parent().find('span').eq(0).text();
             var CoursePrice=$(this).parent().find('#CoursePrice').text();
             var CourseId=$(this).parent().find('#videoId').text();
-            $(this).css('display','none');
-            $(this).parent().find('.am-icon-check-circle-o').show();
             var index=$.inArray(CourseId,IdList);
             if(index==-1){
                 var items=  '<li style="width:100%" >'
@@ -668,9 +659,7 @@
             var Remalength=ListMenue();
             $('#MenueLength').text(Remalength-1);
             $('#Quantity').show();
-
-
-        });
+		});
 
         /*已购视频删除*/
         $('.am-menu-sub').on('click','.am-icon-times-circle',function(){
@@ -680,10 +669,6 @@
             $(this).parent().parent().parent().remove();
             total_price=Number(total_price)-Number(CoursePrice);/*统计删除后的总金额*/
             $('#Tprice').text("￥"+total_price);
-            back(CourseId);
-            isSelect_All=!isSelect_All;
-            $('.select_all').css('color','#60b6e1'); /*点击删除时，重置全选按钮*/
-
             var Remalength=ListMenue();
             $('#MenueLength').text(Remalength-1);
             if(Remalength==1){
@@ -691,77 +676,48 @@
                 $('#Quantity').css('display','none');
                 $('#Tprice').css('display','none');
                 $('.select_all').css('color','#60b6e1');
-                $('.am-menu-sub').removeClass("am-in");
             }
         });
 
         /*视频全选*/
         $('.select_all').on('click',function(){
-            isSelect_All=!isSelect_All;
-            if(isSelect_All){
-                $('.select_all').css('color','red');
-                var CourseLength=ListCourse();
-                for(var i=0;i<CourseLength;i++){
-                    var Permission=$('.am-list-course').find('li').eq(i).find('#Permission').text();
-                    var CourseId=$('.am-list-course').find('li').eq(i).find('#videoId').text();
-                    var CourseName=$('.am-list-course').find('li').eq(i).find('span').eq(0).text();
-                    var CoursePrice=$('.am-list-course').find('li').eq(i).find('#CoursePrice').text();
-                    if(Permission==0){
-                        var index=$.inArray(CourseId,IdList);
-                        if(index==-1){
-                            var items=  '<li style="width:100%" >'
-                                +'<a href="##" class="" ><span style="position: absolute;left: 13px;font-size:14px;font-family:楷体">'+CourseName+'</span><span style="position: absolute; right: 20px;">￥<span id="McoursePrice">'+CoursePrice+'</span><i class="am-icon-times-circle" style="margin-left: 20px"></i></span></a>'
-                                +'<span id="CourseId" style="display:none">'+CourseId+'</span>'
-                                +'</li>';
-                            $('.am-menu-sub').append(items);
-                            IdList.push(CourseId);
-                            total_price=Number(total_price)+Number(CoursePrice); /*统计添加后的总金额*/
-                            $('.am-list-course').find('li').eq(i).find('.am-icon-plus-circle').css('display','none');
-                            $('.am-list-course').find('li').eq(i).find('.am-icon-check-circle-o').show();
-                        }
+            $('.select_all').css('color','red');
+            $('.am-btn').css('background','red');
+            var CourseLength=ListCourse();
+            for(var i=0;i<CourseLength;i++){
+                var Permission=$('.am-list-course').find('li').eq(i).find('#Permission').text();
+                var CourseId=$('.am-list-course').find('li').eq(i).find('#videoId').text();
+                var CourseName=$('.am-list-course').find('li').eq(i).find('span').eq(0).text();
+                var CoursePrice=$('.am-list-course').find('li').eq(i).find('#CoursePrice').text();
+                if(Permission==0){
+                    var index=$.inArray(CourseId,IdList);
+                    if(index==-1){
+                        var items=  '<li style="width:100%" >'
+                            +'<a href="##" class="" ><span style="position: absolute;left: 13px;font-size:14px;font-family:楷体">'+CourseName+'</span><span style="position: absolute; right: 20px;">￥<span id="McoursePrice">'+CoursePrice+'</span><i class="am-icon-times-circle" style="margin-left: 20px"></i></span></a>'
+                            +'<span id="CourseId" style="display:none">'+CourseId+'</span>'
+                            +'</li>';
+                        $('.am-menu-sub').append(items);
+                        IdList.push(CourseId);
+                        total_price=Number(total_price)+Number(CoursePrice); /*统计添加后的总金额*/
                     }
-                };
-                var Remalength=ListMenue();
-                if(Remalength>1){
-                    $('.am-btn').css('background','red');
-                    $('#Tprice').show();
-                    $('#Tprice').text("￥"+total_price);
-                    $('#MenueLength').text(Remalength-1);
-                    $('#Quantity').show();
-
                 }
-            } else{                                                       /*重置全选，变为全删除*/
-                var Remalength=ListMenue()-1;
-                if(Remalength>1){
-                    for(var i=0;i<Remalength;i++){
-                        var  videoId=$('.am-menu-sub').find('li').eq(i).find('#CourseId').text();
-                        var  videoPrice=$('.am-menu-sub').find('li').eq(i).find('#McoursePrice').text();
-                        back(videoId);
-                        removeByValue(IdList,videoId);
-                        total_price=Number(total_price)-Number(videoPrice);/*统计删除后的总金额*/
-
-                    }
-                    $('.am-menu-sub').find('li').remove();
-                    $('.am-btn').css('background','rgba(0,0,0,0.3)');
-                    $('#Quantity').css('display','none');
-                    $('#Tprice').css('display','none');
-                    $('.select_all').css('color','#60b6e1');
-                    $('.am-menu-sub').removeClass("am-in");
-                }
-
-            }
+            };
+            $('#Tprice').show();
+            $('#Tprice').text("￥"+total_price);
+            var Remalength=ListMenue();
+            $('#MenueLength').text(Remalength-1);
+            $('#Quantity').show();
         });
 
-        /*购买*/
+        /**/
         function Buy() {
             if(IdList.length){
+                alert(IdList);
 
-            window.location.replace("${pageContext.request.contextPath}/routeW/createOrder?courseId="+courseid+"&videosId="+IdList);
+				window.location.href="${pageContext.request.contextPath}/order/createOrder?courseId="+courseid+"&videosId="+IdList;
 
-				<%--window.location.href="${pageContext.request.contextPath}/order/createOrder?courseId="+courseid+"&videosId="+IdList;--%>
-            }
+			}
 
         }
 	</script>
-
 	</html>
