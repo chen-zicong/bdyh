@@ -7,7 +7,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/node_modules/layui-src/dist/css/layui.css"  media="all">
+    <link rel="stylesheet" href="http://bdpak.cn:8080/bdyhAdmin/admin/lib/layui/layui.css"  media="all">
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
@@ -18,7 +18,7 @@
     <%--    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>--%>
 </script>
-<script src="${pageContext.request.contextPath}/node_modules/layui-src/dist/layui.js" charset="utf-8"></script>
+<script src="http://bdpak.cn:8080/bdyhAdmin/admin/lib/layui/layui.all.js" charset="utf-8"></script>
 
 <script>
     layui.config({
@@ -47,12 +47,12 @@
         table.render({
             elem: '#test'
             ,height: 332
-            ,url: 'user.json' //数据接口
-            ,page: true //开启分页
+            ,url: '${pageContext.request.contextPath}/statistics/teacherIncomeStatistics' //数据接口
+            ,page: false //开启分页
             ,cols: [[ //表头
-                {field: 'id', title: '老师&nbsp;ID', width:300, sort: true, fixed: 'left'}
-                ,{field: 'username', title: '老师用户名', width:300}
-                ,{field: 'experience', title: '累计收益', width: 300, sort: true}
+                {field: 'teacherId', title: '老师&nbsp;ID', width:300, sort: true, fixed: 'left'}
+                ,{field: 'teacherName', title: '老师用户名', width:300}
+                ,{field: 'teacherBenefit', title: '累计收益', width: 300, sort: true}
                 /*,{field: 'sex', title: '性别', width:300, sort: true}*/
                 /*                ,{field: 'city', title: '城市', width:80}
                                 ,{field: 'sign', title: '签名', width: 170}
@@ -70,7 +70,7 @@
                 ,layEvent = obj.event; //获得 lay-event 对应的值
             if(layEvent === 'detail'){
                 /*layer.msg('查看操作');*/
-                window.location.href="${pageContext.request.contextPath}/layui/echarts.jsp?teacher_id="+data.id
+
             }/* else if(layEvent === 'del'){
                 layer.confirm('真的删除行么', function(index){
                     obj.del(); //删除对应行（tr）的DOM结构

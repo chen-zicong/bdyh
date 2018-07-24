@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import com.bdyh.common.APIResponse;
+import com.bdyh.common.APIResponseX;
 import com.bdyh.common.AdminUtil;
 import com.bdyh.common.Util;
 import com.bdyh.entity.*;
@@ -140,12 +141,12 @@ public class StatisticsAction {
     /*霍获取老师和代理商的收益列表*/
     @RequestMapping("teacherIncomeStatistics")
     @ResponseBody
-    public APIResponse teacherIncomeStatistics() {
+    public APIResponseX teacherIncomeStatistics() {
         Agent agent = (Agent) AdminUtil.getShiroSessionByKey("userAgent");
         List<AgentStatistics> teachersIncome = benefitService.findTeachersIncome(agent);
 //        PageHelper.startPage(pageNun, pageSize);
 //        PageInfo<AgentStatistics> agentStatisticsPageInfo = new PageInfo<>(teachersIncome);
-        return APIResponse.success(teachersIncome);
+        return APIResponseX.success(teachersIncome,teachersIncome.size());
     }
 
     /*管理员获取所有老师的收益*/
@@ -158,11 +159,11 @@ public class StatisticsAction {
 
     @RequestMapping("teacherIncomeByMonth")
     @ResponseBody
-    public APIResponse teacherIncomeByMonth(Integer teacherId, Integer pageNun, Integer pageSize) {
-        PageHelper.startPage(pageNun, pageSize);
+    public  List<List<Object>>  teacherIncomeByMonth(Integer teacherId) {
+
         List<List<Object>> teacherByMonth = benefitService.findTeacherByMonth(teacherId);
-        PageInfo<List<Object>> list = new PageInfo<>(teacherByMonth);
-        return APIResponse.success(list);
+
+        return teacherByMonth;
 
     }
 }

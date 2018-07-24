@@ -13,16 +13,16 @@
 <body>
 
 <div id="main" style="width: 1000px;height:600px;"></div>
-<script src="${pageContext.request.contextPath}/node_modules/echarts/dist/echarts.min.js"></script>
-<script src="${pageContext.request.contextPath}/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.bootcss.com/echarts/3.8.5/echarts-en.common.js"></script>
 <script>
     var teacher_id=<%=request.getParameter("teacher_id")%>
     var myChart = echarts.init(document.getElementById('main'));
     $.ajax({
-        url : 'benefit_teacher.json',
+        url : '${pageContext.request.contextPath}/statistics/teacherIncomeByMonth',
         type : "get",
         dataType : "json",
-        data :{teacher_id:teacher_id},
+        data :{teacherId:5},
         cache : false,
         async : false,
         success :function (data) {
@@ -35,7 +35,7 @@
                 },
                 xAxis: {
                     data: data.map(function (item) {
-                        return item[0];
+                        return item[1];
                     })
                 },
                 yAxis: {
@@ -89,7 +89,7 @@
                     name: '收益',
                     type: 'line',
                     data: data.map(function (item) {
-                        return item[1];
+                        return item[0];
                     }),
                     markLine: {
                         silent: true,

@@ -190,35 +190,7 @@ public class RouteAction {
      */
     @GetMapping(value = "vip")
     public String openVip(HttpServletRequest request, Model model) {
-//		H5UnifiedorderReqParam h5UnifiedorderReqParam = new H5UnifiedorderReqParam();
-//		h5UnifiedorderReqParam.setAppid(WXPayConfig.APP_ID);
-//		h5UnifiedorderReqParam.setMch_id(WXPayConfig.PARTNERID);
-//		h5UnifiedorderReqParam.setNonce_str(WXPayUtil.generateNonceStr());
-//		h5UnifiedorderReqParam.setSign_type("HMAC-SHA256");
-//		h5UnifiedorderReqParam.setBody("ceshi");
-//		h5UnifiedorderReqParam.setOut_trade_no(WXPayUtil.generateNonceStr());
-//		h5UnifiedorderReqParam.setTotal_fee(1);
-//		h5UnifiedorderReqParam
-//				.setSpbill_create_ip(GetIpAdrr.getIpAddr(request));
-//
-//		/*UserWechat userWechat=(UserWechat)request.getSession().getAttribute("user");
-//
-//		h5UnifiedorderReqParam.setOpenid(userWechat.getOpenid());*/
-//
-//		h5UnifiedorderReqParam.setOpenid("ofiiht1Kqdf7iZWWh9nPX6Ef2iCY");
-//		h5UnifiedorderReqParam.setNotify_url(
-//				"https://127.0.0.1/bdyh.wechat.pay/vipPay/wechatPay");
-//		try {
-//			Map<String, String> reqMap = WxPayRequestUtil
-//					.unifiedorderReqApp(h5UnifiedorderReqParam.gtReqMap());
-//			System.out.println("reqMap"+reqMap.toString());
-//			System.out.println(reqMap);
-//			model.addAttribute("prepay", reqMap.get("package"));
-//			model.addAttribute("reqMap", reqMap);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
         return "wechat/vip/vipList";
     }
 
@@ -258,7 +230,6 @@ public class RouteAction {
 
         model.addAttribute("order", order);
         return "wechat/course/Pay";
-
 
     }
 
