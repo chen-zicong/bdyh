@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bdyh.dao.UserOrderMapper" >
-  <resultMap id="BaseResultMap" type="com.bdyh.entity.UserOrder" >
+<mapper namespace="com.bdyh.dao.BenefitMapper" >
+  <resultMap id="BaseResultMap" type="com.bdyh.entity.Benefit" >
     <constructor >
       <idArg column="order_id" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="open_id" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
-      <arg column="pay" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="teacher_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="agent_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="teacher_benefit" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="agent_benefit" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="admin_benefit" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
       <arg column="date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="course_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="count" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -70,15 +72,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    order_id, open_id, price, pay, date, course_id
+    order_id, teacher_id, agent_id, teacher_benefit, agent_benefit, admin_benefit, date, 
+    count
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bdyh.entity.UserOrderExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bdyh.entity.BenefitExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from user_order
+    from benefit
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -89,97 +92,114 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from user_order
+    from benefit
     where order_id = #{orderId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from user_order
+    delete from benefit
     where order_id = #{orderId,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.bdyh.entity.UserOrderExample" >
-    delete from user_order
+  <delete id="deleteByExample" parameterType="com.bdyh.entity.BenefitExample" >
+    delete from benefit
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.bdyh.entity.UserOrder" >
-    insert into user_order (order_id, open_id, price, 
-      pay, date, course_id
-      )
-    values (#{orderId,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
-      #{pay,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP}, #{courseId,jdbcType=INTEGER}
-      )
+  <insert id="insert" parameterType="com.bdyh.entity.Benefit" >
+    insert into benefit (order_id, teacher_id, agent_id, 
+      teacher_benefit, agent_benefit, admin_benefit, 
+      date, count)
+    values (#{orderId,jdbcType=VARCHAR}, #{teacherId,jdbcType=INTEGER}, #{agentId,jdbcType=INTEGER}, 
+      #{teacherBenefit,jdbcType=DECIMAL}, #{agentBenefit,jdbcType=DECIMAL}, #{adminBenefit,jdbcType=DECIMAL}, 
+      #{date,jdbcType=TIMESTAMP}, #{count,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.bdyh.entity.UserOrder" >
-    insert into user_order
+  <insert id="insertSelective" parameterType="com.bdyh.entity.Benefit" >
+    insert into benefit
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="orderId != null" >
         order_id,
       </if>
-      <if test="openId != null" >
-        open_id,
+      <if test="teacherId != null" >
+        teacher_id,
       </if>
-      <if test="price != null" >
-        price,
+      <if test="agentId != null" >
+        agent_id,
       </if>
-      <if test="pay != null" >
-        pay,
+      <if test="teacherBenefit != null" >
+        teacher_benefit,
+      </if>
+      <if test="agentBenefit != null" >
+        agent_benefit,
+      </if>
+      <if test="adminBenefit != null" >
+        admin_benefit,
       </if>
       <if test="date != null" >
         date,
       </if>
-      <if test="courseId != null" >
-        course_id,
+      <if test="count != null" >
+        count,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="orderId != null" >
         #{orderId,jdbcType=VARCHAR},
       </if>
-      <if test="openId != null" >
-        #{openId,jdbcType=VARCHAR},
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=INTEGER},
       </if>
-      <if test="price != null" >
-        #{price,jdbcType=DECIMAL},
+      <if test="agentId != null" >
+        #{agentId,jdbcType=INTEGER},
       </if>
-      <if test="pay != null" >
-        #{pay,jdbcType=INTEGER},
+      <if test="teacherBenefit != null" >
+        #{teacherBenefit,jdbcType=DECIMAL},
+      </if>
+      <if test="agentBenefit != null" >
+        #{agentBenefit,jdbcType=DECIMAL},
+      </if>
+      <if test="adminBenefit != null" >
+        #{adminBenefit,jdbcType=DECIMAL},
       </if>
       <if test="date != null" >
         #{date,jdbcType=TIMESTAMP},
       </if>
-      <if test="courseId != null" >
-        #{courseId,jdbcType=INTEGER},
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.bdyh.entity.UserOrderExample" resultType="java.lang.Integer" >
-    select count(*) from user_order
+  <select id="countByExample" parameterType="com.bdyh.entity.BenefitExample" resultType="java.lang.Integer" >
+    select count(*) from benefit
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-
-    <update id="updateByExampleSelective" parameterType="map" >
-    update user_order
+  <update id="updateByExampleSelective" parameterType="map" >
+    update benefit
     <set >
       <if test="record.orderId != null" >
         order_id = #{record.orderId,jdbcType=VARCHAR},
       </if>
-      <if test="record.openId != null" >
-        open_id = #{record.openId,jdbcType=VARCHAR},
+      <if test="record.teacherId != null" >
+        teacher_id = #{record.teacherId,jdbcType=INTEGER},
       </if>
-      <if test="record.price != null" >
-        price = #{record.price,jdbcType=DECIMAL},
+      <if test="record.agentId != null" >
+        agent_id = #{record.agentId,jdbcType=INTEGER},
       </if>
-      <if test="record.pay != null" >
-        pay = #{record.pay,jdbcType=INTEGER},
+      <if test="record.teacherBenefit != null" >
+        teacher_benefit = #{record.teacherBenefit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.agentBenefit != null" >
+        agent_benefit = #{record.agentBenefit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.adminBenefit != null" >
+        admin_benefit = #{record.adminBenefit,jdbcType=DECIMAL},
       </if>
       <if test="record.date != null" >
         date = #{record.date,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.courseId != null" >
-        course_id = #{record.courseId,jdbcType=INTEGER},
+      <if test="record.count != null" >
+        count = #{record.count,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -187,45 +207,55 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update user_order
+    update benefit
     set order_id = #{record.orderId,jdbcType=VARCHAR},
-      open_id = #{record.openId,jdbcType=VARCHAR},
-      price = #{record.price,jdbcType=DECIMAL},
-      pay = #{record.pay,jdbcType=INTEGER},
+      teacher_id = #{record.teacherId,jdbcType=INTEGER},
+      agent_id = #{record.agentId,jdbcType=INTEGER},
+      teacher_benefit = #{record.teacherBenefit,jdbcType=DECIMAL},
+      agent_benefit = #{record.agentBenefit,jdbcType=DECIMAL},
+      admin_benefit = #{record.adminBenefit,jdbcType=DECIMAL},
       date = #{record.date,jdbcType=TIMESTAMP},
-      course_id = #{record.courseId,jdbcType=INTEGER}
+      count = #{record.count,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bdyh.entity.UserOrder" >
-    update user_order
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdyh.entity.Benefit" >
+    update benefit
     <set >
-      <if test="openId != null" >
-        open_id = #{openId,jdbcType=VARCHAR},
+      <if test="teacherId != null" >
+        teacher_id = #{teacherId,jdbcType=INTEGER},
       </if>
-      <if test="price != null" >
-        price = #{price,jdbcType=DECIMAL},
+      <if test="agentId != null" >
+        agent_id = #{agentId,jdbcType=INTEGER},
       </if>
-      <if test="pay != null" >
-        pay = #{pay,jdbcType=INTEGER},
+      <if test="teacherBenefit != null" >
+        teacher_benefit = #{teacherBenefit,jdbcType=DECIMAL},
+      </if>
+      <if test="agentBenefit != null" >
+        agent_benefit = #{agentBenefit,jdbcType=DECIMAL},
+      </if>
+      <if test="adminBenefit != null" >
+        admin_benefit = #{adminBenefit,jdbcType=DECIMAL},
       </if>
       <if test="date != null" >
         date = #{date,jdbcType=TIMESTAMP},
       </if>
-      <if test="courseId != null" >
-        course_id = #{courseId,jdbcType=INTEGER},
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
       </if>
     </set>
     where order_id = #{orderId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bdyh.entity.UserOrder" >
-    update user_order
-    set open_id = #{openId,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DECIMAL},
-      pay = #{pay,jdbcType=INTEGER},
+  <update id="updateByPrimaryKey" parameterType="com.bdyh.entity.Benefit" >
+    update benefit
+    set teacher_id = #{teacherId,jdbcType=INTEGER},
+      agent_id = #{agentId,jdbcType=INTEGER},
+      teacher_benefit = #{teacherBenefit,jdbcType=DECIMAL},
+      agent_benefit = #{agentBenefit,jdbcType=DECIMAL},
+      admin_benefit = #{adminBenefit,jdbcType=DECIMAL},
       date = #{date,jdbcType=TIMESTAMP},
-      course_id = #{courseId,jdbcType=INTEGER}
+      count = #{count,jdbcType=INTEGER}
     where order_id = #{orderId,jdbcType=VARCHAR}
   </update>
 </mapper>

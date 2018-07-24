@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdyh.dao.UserOrderDao">
+    <resultMap id="BaseResultMap" type="com.bdyh.entity.UserOrderAndDetail">
+
+        <id column="order_id" property="orderId" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="open_id" property="openId" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="price" property="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal"/>
+        <result column="pay" property="pay" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+        <result column="date" property="date" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result column="course_id" property="courseId" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+
+        <collection property="orderDetail" ofType="com.bdyh.entity.OrderDetail">
+            <id column="detail_id" property="detailId" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <result column="order_id" property="orderId" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <result column="course_name" property="courseName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <result column="course_id" property="courseId" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <result column="video_id" property="videoId" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <result column="video_name" property="videoName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <result column="price" property="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal"/>
+            <result column="date" property="date" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        </collection>
+    </resultMap>
+    <resultMap id="PaidVideos" type="com.bdyh.entity.PaidVideos">
+        <result column="course" property="courseId"/>
+        <collection property="videoId" ofType="integer">
+
+        </collection>
+    </resultMap>
+
+    <select id="selectUnpayOrder" parameterType="string" resultMap="BaseResultMap">
+  SELECT  * FROM user_order o , order_detail  d where
+          o.open_id = #{openId,jdbcType=VARCHAR}
+           and o.order_id = d.order_id
+            and o.pay = 0
+</select>
+    <select id="selectpayOrder" resultMap="BaseResultMap" parameterType="string" >
+        SELECT  * FROM user_order o , order_detail  d where
+          o.open_id = #{openId,jdbcType=VARCHAR}
+           and o.order_id = d.order_id
+            and o.pay = 1
+    </select>
+    <select id="findPiadOrder" parameterType="string" resultMap="BaseResultMap">
+       SELECT  * FROM user_order o , order_detail  d where
+          o.order_id = #{order_id,jdbcType=VARCHAR}
+           and o.order_id = d.order_id
+
+    </select>
+
+</mapper>

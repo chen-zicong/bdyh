@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.bdyh.common.APIResponse;
+import com.bdyh.common.enums.ResultEnum;
+import com.bdyh.common.exception.BdyhException;
 import com.bdyh.entity.*;
 import com.bdyh.service.CourseService;
 import com.bdyh.service.OrderService;
@@ -45,12 +48,12 @@ public class OpenVipWechatPayAction {
 
     /**
      * @param request
-     * @return Map<String       String>
+     * @return Map<String               String>
      * @description 获取开通vip服务的支付提交订单
      * @auhtor qwc 2018年2月22日 下午5:10:33
      */
     @RequestMapping(value = "wechatPay")
-    public Map<String, String> vipPayReq(HttpServletRequest request,String orderId) throws IOException {
+    public Map<String, String> vipPayReq(HttpServletRequest request, String orderId) throws IOException {
 
 
         Map<String, String> paramMap = new HashMap<String, String>();
@@ -65,13 +68,14 @@ public class OpenVipWechatPayAction {
      * 使用微信支付SDK
      */
     @RequestMapping("/pay")
-    public void  Pay(){
+    public void Pay() {
 
     }
 
     /**
-     *  微信支付后的回调
-     *  支付成功后微信会访问这个url
+     * 微信支付后的回调
+     * 支付成功后微信会访问这个url
+     *
      * @param request
      * @param response
      * @throws IOException
@@ -80,41 +84,28 @@ public class OpenVipWechatPayAction {
     @RequestMapping(value = "wechatPayRes")
     public void wechatPayRes(HttpServletRequest request, HttpServletResponse response) throws IOException, DocumentException {
         Map<String, String> map = WXPayUtil.xmlToMapByWechat(request);
-        TeacherIncome teacherIncome;
+
         //获取微信回调给我的参数中的openid还有订单号 查找数据库是否存在这一条订单
-        UserCourse userCourse = courseService.findUserCourseByOpenIdAndCourseId(map.get("openid"), map.get("out_trade_no"));
+//        UserCourse userCourse = courseService.findUserCourseByOpenIdAndCourseId(map.get("openid"), map.get("out_trade_no"));
         UserOrder order = orderService.findByOpenIdAndOrderId(map.get("openid"), map.get("out_trade_no"));
-        if(order!=null){
-            orderService.finish(order);
+        if (order == null) {
+            throw new BdyhException(ResultEnum.ORDER_NOT_EXIST);
 
         }
+        APIResponse finish = orderService.finish(order);
 
-        if (userCourse.getPay() == 1) {
-            return;
-        }
+//        if (userCourse.getPay() == 1) {
+//            return;
+//        }
 
-        userCourse.setPay(1);
-        Course course = courseService.findCourseById(userCourse.getCourseId());
-        teacherIncome = teacherService.findTeacherIncome(userCourse.getCourseId(), course.getTeacherId());
-        if (teacherIncome == null) {
-            teacherIncome = new TeacherIncome();
-            teacherIncome.setCourseId(userCourse.getCourseId());
-            teacherIncome.setTeacherId(course.getTeacherId());
-            teacherIncome.setIncome(Float.valueOf(map.get("total_fee")) / 100);
-            teacherIncome.setCount(1);
-            teacherService.addTeacherIncome(teacherIncome);
+//        userCourse.setPay(1);
 
-        } else {
-            teacherIncome.setCount(teacherIncome.getCount() + 1);
-            teacherIncome.setIncome(teacherIncome.getIncome() + Float.valueOf(map.get("total_fee")) / 100);
-            teacherService.updateTeacherIncome(teacherIncome);
-        }
 
-        courseService.updataUserCourse(userCourse);
+//        courseService.updataUserCourse(userCourse);
         //告诉微信 朕收到了你的回调
         String xml = "<xml> <return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>";
         response.getWriter().write(xml);
 
-        return;
+
     }
 }

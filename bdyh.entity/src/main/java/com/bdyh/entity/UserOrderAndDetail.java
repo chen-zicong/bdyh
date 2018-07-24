@@ -3,13 +3,13 @@ package com.bdyh.entity;
 import java.util.List;
 
 public class UserOrderAndDetail extends UserOrder {
-    private List<OrderDetail> orderDetailList;
+    private List<OrderDetail> orderDetail;
 
-    public List<OrderDetail> getOrderDetailList() {
-        return orderDetailList;
+    public List<OrderDetail> getOrderDetail() {
+        return orderDetail;
     }
 
-    public void setOrderDetailList(List<OrderDetail> orderDetailList) {
-        this.orderDetailList = orderDetailList;
+    public void setOrderDetail(List<OrderDetail> orderDetail) {
+        this.orderDetail = orderDetail;
     }
 }

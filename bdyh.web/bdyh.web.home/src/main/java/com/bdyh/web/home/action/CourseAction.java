@@ -333,8 +333,8 @@ public class CourseAction {
         List<PayOrder> payOrders = orderService.findpayOrderByOpenId(user.getOpenid());
         List<UnPayOrder> unpayOrderByOpenId = orderService.findUnpayOrderByOpenId(user.getOpenid());
 
-        model.addAttribute("userCourseListUnPay", payOrders);
-        model.addAttribute("userCourseListPayed", unpayOrderByOpenId);
+        model.addAttribute("userCourseListUnPay",unpayOrderByOpenId );
+        model.addAttribute("userCourseListPayed",payOrders);
         return "wechat/course/myCourse";
     }
 
@@ -470,9 +470,10 @@ public class CourseAction {
     @RequestMapping("paidCourse")
     public String Paid(String orderId, Model model,HttpSession session) {
         UserWechat user = (UserWechat) session.getAttribute("user");
-        PaidVideos one = orderService.findPaid(orderId);
-        List<Video> videosVoList = videoService.findBoughtVideo(one.getVideoId());
-        Course course = courseService.findCourseById(one.getCourseId());
+        List<Integer> videosId = orderService.findOrderDetailByOrderId(orderId);
+        UserOrder userOrder = orderService.findUserOrder(orderId);
+        List<Video> videosVoList = videoService.findBoughtVideo(videosId);
+        Course course = courseService.findCourseById(userOrder.getCourseId());
         Teacher teacher = teacherService.findTeacherById(course.getTeacherId());
 
 
@@ -495,7 +496,7 @@ public class CourseAction {
             //表示该教师被收藏
             model.addAttribute("teacherCollect", 1);
         }
-        return "";
+        return "wechat/course/isPaydetails";
     }
 
 

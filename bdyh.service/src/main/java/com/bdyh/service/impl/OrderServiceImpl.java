@@ -2,12 +2,11 @@ package com.bdyh.service.impl;
 
 import com.bdyh.common.APIResponse;
 import com.bdyh.common.Util;
-import com.bdyh.dao.AlreadyBoughtMapper;
-import com.bdyh.dao.OrderDetailMapper;
-import com.bdyh.dao.UserOrderMapper;
+import com.bdyh.dao.*;
 import com.bdyh.entity.*;
 import com.bdyh.service.CourseService;
 import com.bdyh.service.OrderService;
+import com.bdyh.service.TeacherService;
 import com.bdyh.service.VideoService;
 import com.bdyh.common.enums.ResultEnum;
 import com.bdyh.common.exception.BdyhException;
@@ -15,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +36,18 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private AlreadyBoughtMapper alreadyBoughtMapper;
+
+    @Autowired
+    private UserOrderDao userOrderDao;
+
+    @Autowired
+    private TeacherService teacherService;
+
+    @Autowired
+    private BenefitMapper benefitMapper;
+
+    @Autowired
+    private AgentDivideMapper agentDivideMapper;
 
     @Override
     public OrderVo createOrder(Integer courseId, Integer[] videosId, UserWechat userWechat) {
@@ -86,7 +98,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public APIResponse cancel(String orderId) {
         int result = orderDetailMapper.deleteOrder(orderId);
-        if (result > 0) {
+        int i = orderDetailMapper.deleteOrderDetail(orderId);
+        if (result > 0 && i>0) {
             return APIResponse.success();
         } else {
             return APIResponse.fail("取消订单失败");
@@ -96,22 +109,38 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public APIResponse finish(UserOrder order) {
+        Course course = courseService.findCourseById(order.getCourseId());
+//        TeacherIncome teacherIncome = teacherService.findTeacherIncome(order.getCourseId(), course.getTeacherId());
+        List<Integer> videosID = orderDetailMapper.selectVideosIdByOrderId(order.getOrderId());
+        AgentDivide one = agentDivideMapper.findOne(course.getAgentId(), course.getTeacherId());
 
-        AlreadyBoughtKey alreadyBoughtKey;
-        order.setPay(1);
-        int i = userOrderMapper.updateByPrimaryKeySelective(order);
-//        List<OrderDetail> orderDetails = orderDetailMapper.selectByOrderId(order.getOrderId());
-//        for (OrderDetail orderDetail : orderDetails) {
-//            alreadyBoughtKey = new AlreadyBoughtKey(order.getOpenId(), orderDetail.getVideoId())
-//        }
-//        alreadyBoughtKey.setCourseId();
-//        return null;
-        if (i == 1) {
-            return APIResponse.success();
-        } else {
-
-            return APIResponse.fail("失败");
+       if (benefitMapper.selectByPrimaryKey(order.getOrderId())==null){
+            Benefit benefit = new Benefit();
+            benefit.setAgentId(one.getAgentId());
+            benefit.setTeacherId(one.getTeacherId());
+            benefit.setTeacherBenefit(order.getPrice().multiply(new BigDecimal((float)one.getDivide()/100)));
+            benefit.setAgentBenefit(order.getPrice().subtract(benefit.getTeacherBenefit()));
+            benefit.setCount(videosID.size());
+            benefit.setDate(new Date());
+            benefit.setOrderId(order.getOrderId());
+           int insert = benefitMapper.insert(benefit);
+           if (insert == 0) {
+               throw new BdyhException(ResultEnum.ORDER_UPDATE_FAIL);
+           }
         }
+//        AlreadyBoughtKey alreadyBoughtKey;
+        order.setPay(1);
+
+        int i = userOrderMapper.updateByPrimaryKeySelective(order);
+        if(i==0){
+            throw new BdyhException(ResultEnum.ORDER_UPDATE_FAIL);
+        }
+
+
+        return APIResponse.success();
+
+//
+
     }
 
     @Override
@@ -121,8 +150,8 @@ public class OrderServiceImpl implements OrderService {
 
     /* 通过订单号找到已经支付的所有的videosId和courseId*/
     @Override
-    public PaidVideos findPaid(String orderId) {
-        return userOrderMapper.findPiadOrder(orderId);
+    public UserOrderAndDetail findPaid(String orderId) {
+        return userOrderDao.findPiadOrder(orderId);
 
     }
 
@@ -166,9 +195,15 @@ public class OrderServiceImpl implements OrderService {
         return orderVo;
     }
 
+    @Override
+    public UserOrder findUserOrder(String orderId) {
+        return userOrderMapper.selectByPrimaryKey(orderId);
+
+    }
+
     /*找到该用户的所有的未支付的订单*/
     public List<UnPayOrder> findUnpayOrderByOpenId(String openId) {
-        List<UserOrderAndDetail> userOrderAndDetails = orderDetailMapper.selectUnpayOrder(openId);
+        List<UserOrderAndDetail> userOrderAndDetails = userOrderDao.selectUnpayOrder(openId);
         UnPayOrder unPayOrder;
         Course course;
         List<UnPayOrder> unPayOrderList = new ArrayList<>();
@@ -178,16 +213,17 @@ public class OrderServiceImpl implements OrderService {
             unPayOrder = new UnPayOrder();
             course = courseService.findCourseById(userOrderAndDetail.getCourseId());
             unPayOrder.setCourse(course);
-            unPayOrder.setCount(userOrderAndDetail.getOrderDetailList().size());
+            unPayOrder.setCount(userOrderAndDetail.getOrderDetail().size());
             unPayOrder.setOrderId(userOrderAndDetail.getOrderId());
-            unPayOrder.setDate(userOrderAndDetail.getDate());
+            unPayOrder.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(userOrderAndDetail.getDate()));
+            unPayOrder.setPrice(userOrderAndDetail.getPrice().floatValue());
             unPayOrderList.add(unPayOrder);
         }
         return unPayOrderList;
     }
 
     public List<PayOrder> findpayOrderByOpenId(String openId) {
-        List<UserOrderAndDetail> userOrderAndDetails = orderDetailMapper.selectpayOrder(openId);
+        List<UserOrderAndDetail> userOrderAndDetails = userOrderDao.selectpayOrder(openId);
         PayOrder payOrder;
         Course course;
         List<PayOrder> payOrderList = new ArrayList<>();
@@ -196,9 +232,10 @@ public class OrderServiceImpl implements OrderService {
             payOrder = new PayOrder();
             course = courseService.findCourseById(userOrderAndDetail.getCourseId());
             payOrder.setCourse(course);
-            payOrder.setCount(userOrderAndDetail.getOrderDetailList().size());
+            payOrder.setCount(userOrderAndDetail.getOrderDetail().size());
             payOrder.setOrderId(userOrderAndDetail.getOrderId());
             payOrder.setDate(userOrderAndDetail.getDate());
+            payOrder.setPrice(userOrderAndDetail.getPrice().floatValue());
             payOrderList.add(payOrder);
         }
         return payOrderList;

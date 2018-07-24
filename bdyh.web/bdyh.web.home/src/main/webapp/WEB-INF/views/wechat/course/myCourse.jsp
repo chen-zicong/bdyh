@@ -164,14 +164,13 @@ body, html {
                             <ul class="am-list">
 
                                     <!--缩略图在标题左边-->
-                                    <li class="am-g" style="font-size:13px">
-                                        <div style="position: relative;top: 10px;">
+
+                                        <div style="position: relative;top: 10px;font-size:13px">
                                             <span style="color:#999">下单时间 : ${userCourse.date}</span>
                                             <span id="order_number" style="display:none">${userCourse.orderId}</span>
                                             <span style="float:right;color:#f37b1d">待付款</span>
                                         </div>
-                                    </li>
-                                    <hr style="border: 1px solid #ccc">
+                                        <hr style="border: 1px solid #ccc">
                                     <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
                                         <div >
                                             <div class="am-u-sm-4 am-list-thumb">
@@ -192,10 +191,10 @@ body, html {
                                         </div>
                                     </li>
                                     <hr style="border: 1px solid #ccc">
-                                    <li class="am-g" style="padding-top: 3px;padding-bottom: 15px;">
+                                    <div class="am-g" style="padding-top: 3px;padding-bottom: 15px;">
                                         <span style="color:#ef0d0d">实付款:￥${userCourse.price}</span>
                                         <span style="float:right"><button class="am-btn am-btn-primary " onclick="orderUnpay('${userCourse.orderId}')">取消订单</button> <button class="am-btn am-btn-warning" onclick="orderpay('${userCourse.orderId}')">支付订单</button></span>
-                                    </li>
+                                    </div>
                             </ul>
                         </div>
                         </c:forEach>
@@ -250,12 +249,12 @@ body, html {
                     <div data-am-widget="list_news" class="am-list-news am-list-news-default" >
                         <!--课程列表-->
                         <c:forEach items="${userCourseListPayed}" var="userCourse">
-                        <div class="am-list-news-bd" style="box-shadow:0 0.05rem 0.1rem rgba(0,0,0,.3);border-radius:.1rem;padding:0px 10px;background:#fff" onclick="Look('${userCourse.course.courseId}')">
+                        <div class="am-list-news-bd" style="box-shadow:0 0.05rem 0.1rem rgba(0,0,0,.3);border-radius:.1rem;padding:0px 10px;background:#fff" onclick="Look('${userCourse.orderId}')">
                             <ul class="am-list">
                                 <!--缩略图在标题左边-->
                                 <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
                                     <div class="am-u-sm-4 am-list-thumb">
-                                        <a href="${pageContext.request.contextPath}/course/courseDetails/${userCourse.course.courseId}" class=""> <img
+                                        <a href="javascript:;" class=""> <img
                                                 src="http://bdpak.cn:8080/home/courseImg/${userCourse.course.courseImg}" />
                                         </a>
                                     </div>
@@ -318,53 +317,7 @@ body, html {
 </div>
 
 </body>
-<script type="text/javascript">
-	function setLi(item) {
-		var Li = '<li class="am-g am-list-item-desced">'
-				+ '<div>'
-				+ '<a href="###">'
-				+ '<i style="color:#6C7B8B;font-size:16px;" class="iconfont icon-lesson1"></i>'
-				+ '<span style="color:#757575;">'
-				+ item.teacherLesson
-				+ '</span>'
-				+ '<span class="am-list-news-grade am-fr">《'
-				+ item.teacherGrade
-				+ '》</span>'
-				+ '</a>'
-				+ '</div>'
-				+ '<div class="am-list-item-hd">'
-				+ '<span>家长：</span>'
-				+ item.parentName
-				+ '</span>'
-				+ '<span class="am-fr">联系电话：'
-				+ item.linkPhone
-				+ '</span>'
-				+ '</div>'
-				+ '<div class="am-list-item-text">'
-				+ '<span>期望老师：</span>'
-				+ item.expectSex
-				+ '</span>'
-				+ '<span style="display:inline-block;margin-left:5%;">课时费：'
-				+ item.lessonCharge
-				+ '元/h</span>'
-				+ '<span class="am-fr">每周次数：'
-				+ item.timesWeek
-				+ '</span>'
-				+ '</div>'
-				+ '<div class="am-list-item-text">家教地址：'
-				+ item.placeProvince
-				+ item.placeCity
-				+ item.placeDistrict
-				+ item.managerName
-				+ '</div>'
-				+ '<div class="am-list-item-text">要求说明：'
-				+ item.otherExplain
-				+ '</div>'
-				+ '<div class="am-list-item-text">发布时间：'
-				+ item.addTime + '</div>' + '</li>';
-		return Li;
-	}
-</script>
+
 <script src="http://bdpak.cn:8080/home/js/jquery-3.2.1.min.js"></script>
 <script src="http://bdpak.cn:8080/home/assets/js/amazeui.min.js"></script>
 <!-- <script src="/bdyh.web.home/wechat/teacher_subject/subject.js"></script> -->
@@ -372,18 +325,47 @@ body, html {
 <script src="http://bdpak.cn:8080/home/address-master/dist/address.js"
 	type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
+/*查看已购课程详情*/
 
-	function Look(url) {
+	function Look(orderid) {
+	    window.location.href="${pageContext.request.contextPath}/course/paidCourse?orderId="+orderid;
 
     }
-
+/*跳转到付款页面*/
     function orderpay(orderid) {
+
         window.location.href="${pageContext.request.contextPath}/order/intoOrder?orderId="+orderid;
     }
 
 
+/*取消订单*/
     function orderUnpay(orderid) {
-        window.location.href="${pageContext.request.contextPath}/order/cancelOrder?orderId="+orderid;
+        var r=confirm("确定要取消订单吗？");
+        if (r==true)
+        {
+            $.ajax({
+                type:'POST',
+                url:'${pageContext.request.contextPath}/order/cancelOrder',
+                data:{
+                    orderId:orderid
+                },
+                success:function (data) {
+                    if(data.code=="success"){
+                        alert("取消订单成功!");
+                        window.location.reload();
+                    }else {
+                        alert("取消订单失败!");
+                    }
+
+
+                }
+            });
+        }
+        else
+        {
+            confirm.close();
+        }
+
 
     }
 

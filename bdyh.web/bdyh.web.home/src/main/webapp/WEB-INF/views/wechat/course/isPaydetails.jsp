@@ -318,42 +318,25 @@
                         <!--课程目录-->
                         <div class="am-list-news-hd am-cf">
                             <!--带更多链接-->
-                            <a style="margin-left:10px;color:#464846;display: inline-block;">
-                                <span>高二数学(共20节)</span>
+                            <a style="margin-left:6px;color:#464846;display: inline-block;">
+                                <span><i class="am-icon-bars" style="color:#0e90d2; padding-right:10px"></i> ${course.courseName}</span>
                             </a>
 
                         </div>
 
                         <div class="am-list-news-bd course-list">
                             <ul class="am-list am-list-course" style="font-size:14px;">
-                                <!--  <c:forEach items="${videoList }" var="video">
-                                   	<li class="am-g am-list-item-dated">
-                                            <a href="javaScript:playVideo('${video.videoPath}')" class="am-list-item-hd lesson-catalog-list">
-                                                &lt;%&ndash;<a href="javaScript:pay()" class="am-list-item-hd lesson-catalog-list">&ndash;%&gt;
-                                            -+	<i style="font-size:15px;margin-left:5px;" class="iconfont icon-bofang"></i>
-                                                <span>${video.videoName }
-                                                    <c:choose>
-                                                        <c:when test="${video.videoPrice eq 0 }">
-                                                            (免费)
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <span style="color:red;">(付费${video.videoPrice }元)</span>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </span>
-                                            </a>
-                                        </li>
-                                </c:forEach>-->
-
+                               <c:forEach items="${videoList}" var="video">
                                 <li class="am-g am-list-item-dated" style="margin-bottom:8px">
                                     <div class="am-list-item-hd lesson-catalog-list" style="display: inline-block; width: 95%">
-                                        <a  href="javaScript:playVideo('${video.videoPath}')" style="display:inline-block">
+                                        <a  href="javaScript:playVideo('${video.videoPath}')" style="display:inline-block;color: rgba(0,0,0,.7);">
                                             <i style="font-size:15px;margin-left:5px;" class="iconfont icon-bofang"></i>
-                                            <span>第一单第二节圆的面积</span>
+                                            <span>${video.videoName}</span>
                                         </a>
                                         <span id="videoId" style="display:none">1004</span>
                                     </div>
                                 </li>
+                               </c:forEach>
                             </ul>
                         </div>
                     </div>
@@ -409,9 +392,7 @@
     videojs.options.flash.swf = "http://bdpak.cn:8080/home/video.js/video-js.swf";
 </script>
 <script>
-    var IdList=[];  /*存放视频的ID*/
-    var total_price=0; /*总价*/
-    var courseid="${course.courseId}"; /*课程ID*/
+
     function lecturerCollect(teacherId) {
         if ($("#lecturer_collect_no").prop("hidden")) {
             //取消收藏

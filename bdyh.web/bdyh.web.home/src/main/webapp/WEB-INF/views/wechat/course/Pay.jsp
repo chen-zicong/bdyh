@@ -74,7 +74,7 @@
     <header data-am-widget="header"
             class="am-header am-header-default am-header-fixed">
         <div class="am-header-left am-header-nav">
-            <a href="${pageContext.request.contextPath}/routeW/Goto/course/details" >
+            <a href="javascript:back();" >
                 <img class="am-header-icon-custom" src="data:image/svg+xml;charset&#x3D;utf-8,&lt;svg xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot; viewBox&#x3D;&quot;0 0 12 20&quot;&gt;&lt;path d&#x3D;&quot;M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z&quot; fill&#x3D;&quot;%23fff&quot;/&gt;&lt;/svg&gt;" alt=""/>
             </a>
         </div>
@@ -87,7 +87,7 @@
         <div data-am-widget="list_news" class="am-list-news am-list-news-default" style="margin-top:10%">
             <!--列表标题-->
             <div class="am-list-news-hd am-cf">
-                <h2 style="color: #f37b1d">商 品 信 息</h2>
+                <h2 style="color: #f37b1d;padding-left:3%;">商 品 信 息</h2>
             </div>
 
             <div class="am-list-news-bd">
@@ -102,19 +102,21 @@
                         </div>
 
                         <div class=" am-u-sm-8 am-list-main">
-                            <h3 class="am-list-item-hd"><span style="">${order.course.courseName}</span><span style="float:right">￥${order.price}</span></h3>
+                            <h3 class="am-list-item-hd"><span style="">${order.course.courseName}</span><span style="float:right;padding-right: 4%">￥${order.price}</span></h3>
                             <div class="am-list-item-text" style="margin-top: 8%">规格 : 共计${order.count}个视频</div>
 
                         </div>
                     </li>
                     <li class="am-g am-list-item-dated"style="margin-top:8%" >
                         <a class="am-list-item-hd " style="color:#484242;padding-left:12px">课程金额</a>
-                        <span class="am-list-date"  style="color:#484242">￥${order.price}</span>
+                        <span class="am-list-date"  style="color:#484242;padding-right: 2%">￥${order.price}</span>
                     </li>
 
                     <li class="am-g" style="padding-top: 20px;padding-bottom: 20px;margin-top:12%;padding-left: 25%;">
-                        <span style="color: #f37b1d;margin-top: 5px;display:inline-block">需付: ￥${order.price}元</span>
-                        <button class="am-btn am-btn-warning" style=" border-radius: 6px;float:right" onclick="Pay()">提交订单</button>
+                        <div style="float:right;margin-right: 3%;">
+                        <span style="color: #f37b1d;margin-top: 5px;display:inline-block;margin-right: 11px;">需付: ￥${order.price}元</span>
+                        <button class="am-btn am-btn-warning" style=" border-radius: 6px;" onclick="Pay('${order.orderId}')">提交订单</button>
+                        </div>
                     </li>
                 </ul>
                 <p style="font-size:14px;text-align:center;color:#355eef">©版权所有小科斗微课堂</p>
@@ -158,10 +160,48 @@
 <script src="http://bdpak.cn:8080/home/js/jquery-3.2.1.min.js"></script>
 <script src="http://bdpak.cn:8080/home/assets/js/amazeui.min.js"></script>
 <script>
-    function Pay() {
+
+    /*返回上一级*/
+    function back() {
+        window.history.back();
+    }
+
+    /*支付*/
+    function Pay(orderid) {
+        $.ajax({
+            type: "GET",
+            url: "${pageContext.request.contextPath}/vipPay/wechatPay?orderId="+orderid,
+            success: function(data){
+                WeixinJSBridge.invoke(
+                    'getBrandWCPayRequest', data ,
+                    function(res){
+                        if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                            alert("支付成功");
+                            window.open("${pageContext.request.contextPath}/course/courseDetails?orderId="+orderid);
+                        } else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+                            alert("取消支付");
+                        } else {
+                            alert("支付失败");
+                        }
+                        /* alert(res.err_code +","+ res.err_desc +" ,"+ res.err_msg); */
+                    }
+                );
+                if (typeof WeixinJSBridge == "undefined"){
+                    if( document.addEventListener ){
+                        document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                    }else if (document.attachEvent){
+                        document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                        document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                    }
+                }else{
+                    onBridgeReady();
+                }
+            }
+        })
 
     }
 
 
 </script>
+
 </html>

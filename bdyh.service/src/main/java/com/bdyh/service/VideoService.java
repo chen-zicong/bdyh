@@ -2,6 +2,7 @@ package com.bdyh.service;
 
 import java.util.List;
 
+import com.bdyh.entity.OrderDetail;
 import com.bdyh.entity.Video;
 
 public interface VideoService {

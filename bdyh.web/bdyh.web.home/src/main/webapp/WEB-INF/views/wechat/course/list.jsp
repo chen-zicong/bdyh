@@ -202,7 +202,7 @@
 						<c:forEach items="${courseList }" var="course">
 							<li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
 								<%--<a href="${pageContext.request.contextPath}/course/checkPay?courseId=${course.courseId}&coursePrice=${course.coursePrice}">--%>
-									<div onclick=checkPay(${course.courseId},${course.coursePrice})>
+									<div onclick=checkPay('${course.courseId}')>
 								<div class="am-u-sm-4 am-list-thumb">
 										<%--${pageContext.request.contextPath}/course/courseDetails/${course.courseId}--%>
 
@@ -441,8 +441,8 @@
 		window.history.back();
 	}
 
-    function checkPay(courseId,coursePrice){
-        window.location.href="${pageContext.request.contextPath}/course/checkPay?courseId="+courseId+"&coursePrice="+coursePrice;
+    function checkPay(courseId){
+        window.location.href="${pageContext.request.contextPath}/course/courseDetails/"+courseId;
     }
 </script>
 <script src="http://bdpak.cn:8080/home/address-master/dist/address.js"

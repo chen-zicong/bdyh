@@ -1,5 +1,6 @@
 package com.bdyh.dao;
 
+import com.bdyh.entity.OrderDetail;
 import com.bdyh.entity.Video;
 import com.bdyh.entity.VideoExample;
 import java.util.List;

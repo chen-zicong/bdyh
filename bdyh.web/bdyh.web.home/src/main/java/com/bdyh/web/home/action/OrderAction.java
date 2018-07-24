@@ -54,6 +54,7 @@ public class OrderAction {
 
 
     @RequestMapping("cancelOrder")
+    @ResponseBody
     public APIResponse cancelOrder(String orderId) {
         return orderService.cancel(orderId);
     }
