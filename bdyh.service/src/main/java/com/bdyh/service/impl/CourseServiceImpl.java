@@ -1,9 +1,13 @@
 package com.bdyh.service.impl;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.bdyh.dao.*;
 import com.bdyh.entity.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +27,7 @@ public class CourseServiceImpl implements CourseService {
     private CourseMapper courseMapper;
 
     @Autowired
-    private  UserOrderMapper userOrderMapper;
+    private UserOrderMapper userOrderMapper;
 
     /**
      * CourseDao为自定义的dao层接口
@@ -42,6 +46,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private IncomeDao incomeDao;
+
+    @Autowired
+    private BenefitMapper benefitMapper;
 
 
     /*---------------------------------------------------------------------微信端模块--------------------------------------------------------------------*/
@@ -287,12 +294,24 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<IncomeStatisticsVo> findSoldCourseOfTeacher(Integer teacherId) {
-//        CourseExample courseExample = new CourseExample();
-//        CourseExample.Criteria criteria = courseExample.createCriteria();
-//        criteria.andTeacherIdEqualTo(teacherId);
-     //  criteria.andBenefitNotEqualTo(0.0);
-       List<IncomeStatisticsVo> incomeStatisticsVos = incomeDao.selectByTeacherId(teacherId);
-        return incomeStatisticsVos;
+        List<IncomeStatisticsVo> incomeStatisticsVoList = new ArrayList<>();
+        List<Course> courses = courseMapper.selectAllCourseByTeacherId(teacherId);
+        if (courses != null && courses.size() != 0) {
+            for (Course course : courses) {
+                List<String> orderIds = userCourseMapper.selectOrderIdByCourseId(course.getCourseId());
+                if (orderIds.size() != 0) {
+                    IncomeStatisticsVo incomeStatisticsVo = benefitMapper.selectBenefitByOrderId(orderIds);
+                    BeanUtils.copyProperties(course, incomeStatisticsVo);
+                    incomeStatisticsVoList.add(incomeStatisticsVo);
+                } else {
+                    IncomeStatisticsVo incomeStatisticsVo = new IncomeStatisticsVo();
+                    BeanUtils.copyProperties(course, incomeStatisticsVo);
+                    incomeStatisticsVo.setCount(0);
+                    incomeStatisticsVo.setTeacherBenefit(new BigDecimal(BigInteger.ZERO));
+                }
+            }
+        }
+        return incomeStatisticsVoList;
     }
 
     @Override
@@ -328,6 +347,7 @@ public class CourseServiceImpl implements CourseService {
         criteria.andFlowNumberNotEqualTo(0);
         return courseMapper.selectByExample(courseExample);
     }
+
     @Override
     public List<Course> findFlowedCourseOfAgent(Integer agentId) {
         CourseExample courseExample = new CourseExample();
@@ -391,7 +411,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     public Float benefitOfTeacher(Integer id) {
-        TeacherIncomeExample teacherIncomeExample  = new TeacherIncomeExample();
+        TeacherIncomeExample teacherIncomeExample = new TeacherIncomeExample();
         TeacherIncomeExample.Criteria criteria = teacherIncomeExample.createCriteria();
         Float income = incomeDao.selectIncomeByTeacherId(id);
         return income;

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -113,12 +114,20 @@ public class OrderServiceImpl implements OrderService {
 //        TeacherIncome teacherIncome = teacherService.findTeacherIncome(order.getCourseId(), course.getTeacherId());
         List<Integer> videosID = orderDetailMapper.selectVideosIdByOrderId(order.getOrderId());
         AgentDivide one = agentDivideMapper.findOne(course.getAgentId(), course.getTeacherId());
+        //默认分成比例 老师分6成
+        BigDecimal divide = new BigDecimal("0.6");
+        if(one!=null&&one.getDivide()!=null) {
+            //如果有存在自定义老师的分成比例。
+            //bigDecimal 用String构造器才不会出现精度丢失。
+            BigDecimal newDivide = new BigDecimal(String.valueOf(one.getDivide()));
+            divide =  newDivide.subtract(new BigDecimal("100"));
+        }
 
        if (benefitMapper.selectByPrimaryKey(order.getOrderId())==null){
             Benefit benefit = new Benefit();
-            benefit.setAgentId(one.getAgentId());
-            benefit.setTeacherId(one.getTeacherId());
-            benefit.setTeacherBenefit(order.getPrice().multiply(new BigDecimal((float)one.getDivide()/100)));
+            benefit.setAgentId(course.getAgentId());
+            benefit.setTeacherId(course.getTeacherId());
+            benefit.setTeacherBenefit(order.getPrice().multiply(divide));
             benefit.setAgentBenefit(order.getPrice().subtract(benefit.getTeacherBenefit()));
             benefit.setCount(videosID.size());
             benefit.setDate(new Date());
@@ -129,12 +138,10 @@ public class OrderServiceImpl implements OrderService {
            }
         }
 //        AlreadyBoughtKey alreadyBoughtKey;
-        order.setPay(1);
+                order.setPay(1);
 
-        int i = userOrderMapper.updateByPrimaryKeySelective(order);
-        if(i==0){
-            throw new BdyhException(ResultEnum.ORDER_UPDATE_FAIL);
-        }
+         userOrderMapper.updateByPrimaryKeySelective(order);
+
 
 
         return APIResponse.success();

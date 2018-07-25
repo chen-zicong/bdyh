@@ -39,7 +39,7 @@
 					<th width="100">封面</th>
 					<th>课程介绍</th>
 					
-					<th width="150">已售数量</th>
+					<th width="150">已售节数</th>
 					<th width="60">发布状态</th>
 					<th width="100">课程价格</th>
 					<th width="100">收益统计</th>
@@ -71,7 +71,7 @@
 						</td>
 						
 						<th>${course.coursePrice }￥</th>
-						<th>${course.income }￥</th>
+						<th>${course.teacherBenefit }￥</th>
 					</tr>
 					
 				</c:forEach>

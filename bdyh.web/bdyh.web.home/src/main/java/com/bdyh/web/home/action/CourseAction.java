@@ -499,5 +499,4 @@ public class CourseAction {
         return "wechat/course/isPaydetails";
     }
 
-
 }

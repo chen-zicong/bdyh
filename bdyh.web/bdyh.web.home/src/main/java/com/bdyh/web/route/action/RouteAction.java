@@ -3,11 +3,18 @@ package com.bdyh.web.route.action;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import com.bdyh.common.enums.ResultEnum;
+import com.bdyh.common.exception.BdyhException;
 import com.bdyh.entity.Course;
+import com.bdyh.entity.OrderVo;
 import com.bdyh.service.CourseService;
+import com.bdyh.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +35,9 @@ public class RouteAction {
     private RedisCacheUtil<Object> redisCache;
     @Autowired
     private CourseService courseService;
+
+    @Autowired
+    private OrderService orderService;
     // @ExceptionHandler(GlobalExceptionHandler.class)
 
     /**
@@ -180,35 +190,7 @@ public class RouteAction {
      */
     @GetMapping(value = "vip")
     public String openVip(HttpServletRequest request, Model model) {
-//		H5UnifiedorderReqParam h5UnifiedorderReqParam = new H5UnifiedorderReqParam();
-//		h5UnifiedorderReqParam.setAppid(WXPayConfig.APP_ID);
-//		h5UnifiedorderReqParam.setMch_id(WXPayConfig.PARTNERID);
-//		h5UnifiedorderReqParam.setNonce_str(WXPayUtil.generateNonceStr());
-//		h5UnifiedorderReqParam.setSign_type("HMAC-SHA256");
-//		h5UnifiedorderReqParam.setBody("ceshi");
-//		h5UnifiedorderReqParam.setOut_trade_no(WXPayUtil.generateNonceStr());
-//		h5UnifiedorderReqParam.setTotal_fee(1);
-//		h5UnifiedorderReqParam
-//				.setSpbill_create_ip(GetIpAdrr.getIpAddr(request));
-//
-//		/*UserWechat userWechat=(UserWechat)request.getSession().getAttribute("user");
-//
-//		h5UnifiedorderReqParam.setOpenid(userWechat.getOpenid());*/
-//
-//		h5UnifiedorderReqParam.setOpenid("ofiiht1Kqdf7iZWWh9nPX6Ef2iCY");
-//		h5UnifiedorderReqParam.setNotify_url(
-//				"https://127.0.0.1/bdyh.wechat.pay/vipPay/wechatPay");
-//		try {
-//			Map<String, String> reqMap = WxPayRequestUtil
-//					.unifiedorderReqApp(h5UnifiedorderReqParam.gtReqMap());
-//			System.out.println("reqMap"+reqMap.toString());
-//			System.out.println(reqMap);
-//			model.addAttribute("prepay", reqMap.get("package"));
-//			model.addAttribute("reqMap", reqMap);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
         return "wechat/vip/vipList";
     }
 
@@ -230,6 +212,25 @@ public class RouteAction {
         model.addAttribute("tradeNo", tradeNo);
         model.addAttribute("courseId", courseId);
         return "wechat/order/orderPage";
+    }
+
+    @RequestMapping("createOrder")
+    @Transactional
+    public String CreateOrder(@Param("courseId") Integer courseId, @Param("videosId") Integer[] videosId, HttpSession session, Model model) {
+        UserWechat userWechat = (UserWechat) session.getAttribute("user");
+        if (userWechat == null) {
+            throw new BdyhException(ResultEnum.USER_NOT_EXIST);
+        }
+        if (courseId == null || videosId == null) {
+            throw new BdyhException(ResultEnum.PROPERTY_ERROR);
+        }
+
+
+        OrderVo order = orderService.createOrder(courseId, videosId, userWechat);
+
+        model.addAttribute("order", order);
+        return "wechat/course/Pay";
+
     }
 
 }

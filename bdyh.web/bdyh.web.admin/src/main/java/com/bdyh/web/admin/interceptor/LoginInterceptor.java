@@ -28,6 +28,10 @@ public class LoginInterceptor implements HandlerInterceptor{
 			//如果进行登陆提交，放行
 			return true;
 		}
+		if(url.indexOf("node_modules")>=0){
+
+			return true;
+		}
 		//验证码
 		if(url.indexOf("kaptcha/getKaptchaImage")>=0){
 			return true;
