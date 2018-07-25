@@ -113,6 +113,7 @@
                     </li>
 
                     <li class="am-g" style="padding-top: 20px;padding-bottom: 20px;margin-top:12%;padding-left: 25%;">
+
                         <div style="float:right;margin-right: 3%;">
                         <span style="color: #f37b1d;margin-top: 5px;display:inline-block;margin-right: 11px;">需付: ￥${order.price}元</span>
                         <button class="am-btn am-btn-warning" style=" border-radius: 6px;" onclick="Pay('${order.orderId}')">提交订单</button>

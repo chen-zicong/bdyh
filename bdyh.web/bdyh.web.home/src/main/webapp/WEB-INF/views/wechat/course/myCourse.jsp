@@ -335,6 +335,7 @@ body, html {
     function orderpay(orderid) {
 
         window.location.href="${pageContext.request.contextPath}/routeW/intoOrder?orderId="+orderid;
+
     }
 
 

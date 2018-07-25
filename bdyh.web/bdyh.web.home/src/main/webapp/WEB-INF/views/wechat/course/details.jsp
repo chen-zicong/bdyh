@@ -601,6 +601,7 @@
         }
 
 
+
     /*    /!*视频权限*!/
         $('.am-list').on('click','#Ccourse',function(){
             var Permission=$(this).find('#Permission').text();
