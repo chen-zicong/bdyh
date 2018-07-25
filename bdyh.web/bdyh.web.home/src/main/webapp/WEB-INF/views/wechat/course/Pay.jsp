@@ -176,8 +176,7 @@
                     'getBrandWCPayRequest', data ,
                     function(res){
                         if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-                            alert("支付成功");
-                            window.open("${pageContext.request.contextPath}/course/courseDetails?orderId="+orderid);
+                            window.location.replace("${pageContext.request.contextPath}/course/paidCourse?orderId="+orderid);
                         } else if(res.err_msg == "get_brand_wcpay_request:cancel"){
                             alert("取消支付");
                         } else {

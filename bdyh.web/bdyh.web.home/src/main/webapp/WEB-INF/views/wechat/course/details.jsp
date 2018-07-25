@@ -368,7 +368,7 @@
 											<div  class="am-list-item-hd lesson-catalog-list" style="display: inline-block; width: 95%">
 												<c:choose>
                                                 <c:when test="${video.paystatus eq 1}">
-												<a id="Ccourse" href="#" style="display:inline-block">
+												<a id="Ccourse" href="javascript:playVideo('${video.videoPath}')" style="display:inline-block">
 													<i style="font-size:15px;margin-left:5px;" class="iconfont icon-bofang"></i>
 													<span>${video.videoName}</span>
 													<span style="color:green;">(已购)</span>
@@ -377,7 +377,7 @@
 												</a>
                                                 </c:when>
                                                 <c:when test="${video.paystatus eq 0}">
-                                                <a id="Ccourse" href="#" style="display:inline-block">
+                                                <a id="Ccourse" href="${pageContext.request.contextPath}/routeW/Goto/course/warn" style="display:inline-block">
                                                     <i style="font-size:15px;margin-left:5px;" class="iconfont icon-bofang"></i>
                                                     <span>${video.videoName}</span>
                                                     <span  style="color:red;">(￥<span id="CoursePrice">${video.videoPrice}</span>元)</span>
@@ -389,7 +389,7 @@
                                                     <span id="videoId" style="display:none">${video.videoId}</span>
                                                 </c:when>
                                                 <c:otherwise>
-                                                <a id="Ccourse" href="#" style="display:inline-block">
+                                                <a id="Ccourse" href="${pageContext.request.contextPath}/routeW/Goto/course/warn" style="display:inline-block">
                                                     <i style="font-size:15px;margin-left:5px;" class="iconfont icon-bofang"></i>
                                                     <span>${video.videoName}</span>
                                                     <span style="color:#ccc;">(待付款)</span>
@@ -601,7 +601,7 @@
         }
 
 
-        /*视频权限*/
+    /*    /!*视频权限*!/
         $('.am-list').on('click','#Ccourse',function(){
             var Permission=$(this).find('#Permission').text();
             var path=$(this).find('#path').text();
@@ -611,7 +611,7 @@
               window.location.href="${pageContext.request.contextPath}/routeW/Goto/course/warn";
             }
 
-        });
+        });*/
 
         /*获取菜单长度*/
         function ListMenue(){

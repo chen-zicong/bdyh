@@ -334,7 +334,7 @@ body, html {
 /*跳转到付款页面*/
     function orderpay(orderid) {
 
-        window.location.href="${pageContext.request.contextPath}/order/intoOrder?orderId="+orderid;
+        window.location.href="${pageContext.request.contextPath}/routeW/intoOrder?orderId="+orderid;
     }
 
 
