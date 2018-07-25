@@ -166,4 +166,11 @@ public class StatisticsAction {
         return teacherByMonth;
 
     }
+
+    /*根据老师ID 跳转到查看他收入的图表*/
+    @RequestMapping("teacherEcharts")
+    public String teacherEcharts(Integer teacherId,Model model){
+        model.addAttribute("teacherId",teacherId);
+            return "benefit/benefit_teacher_echarts";
+    }
 }

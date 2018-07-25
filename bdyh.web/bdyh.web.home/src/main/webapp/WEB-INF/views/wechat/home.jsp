@@ -15,6 +15,9 @@
 		<link rel="stylesheet" href="http://bdpak.cn:8080/home/assets/css/amazeui.min.css" />
 		<link rel="stylesheet" type="text/css" href="http://bdpak.cn:8080/home/address-master/dist/amazeui.address.css" />
 		<link rel="stylesheet" href="http://bdpak.cn:8080/home/wechat/wechat-icon/iconfont.css" />
+		<script src="http://bdpak.cn:8080/home/wechat/wechat-icon/iconfont.js">
+
+		</script>
 		<style>
 		/* 清除浏览器差异，保持样式统一 */
 		{
@@ -66,6 +69,12 @@
 			-webkit-font-smoothing: antialiased;
 			-moz-osx-font-smoothing: grayscale;
 		}
+			.icon{
+				width: 1em; height: 1em;
+				vertical-align: -0.15em;
+				fill: currentColor;
+				overflow: hidden;
+			}
 		</style>
 		<!-- common end -->
 		
@@ -84,7 +93,7 @@
 		
 		/* 轮播图的高度 */
 		.bdyh_mian .am-slides li{
-			height:160px;
+			height:180px;
 		}
 		
 		
@@ -192,43 +201,58 @@
 			<ul class="bdyh_circle_nav_list am-avg-sm-4">
 		        <li>
 		        	<a href="${pageContext.request.contextPath}/course/lessonListLevel/1" >
-			        	<i style="color:#efea6b;" class="iconfont icon-yiji1"></i>
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-zonghesuzhipingjiachuzhongban"></use>
+						</svg>
 			        	<span>一年级</span>
 		        	</a>
 		        </li>
 		        <li>
 			        <a href="${pageContext.request.contextPath}/course/lessonListLevel/2" >
-				        <i style="color:#55ea83;" class="iconfont icon-erji"></i>
+				        <%--<i style="color:#55ea83;" class="iconfont icon-erji"></i>--%>
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-gaozhongkecheng"></use>
+						</svg>
 				        <span>二年级</span>
 			        </a>       	
 		        </li>
 		        <li>
 		        	<a href="${pageContext.request.contextPath}/course/lessonListLevel/3">
-			        	<i  style="color:blue;" class="iconfont icon-sanwei"></i>
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-jiaoxuekeyan"></use>
+						</svg>
 			        	<span>三年级</span>
 		        	</a>
 		        </li>
 		        <li>
 			        <a href="${pageContext.request.contextPath}/course/lessonListLevel/4">
-				        <i style="color:#6C7B8B;" class="iconfont icon-sigongge"></i>
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-xueqingfenxixuanzhong"></use>
+						</svg>
 				        <span>四年级</span>
 			        </a>
 		        </li>
 		        <li>
 		        	<a href="${pageContext.request.contextPath}/course/lessonListLevel/5">
-			        	<i style="color:#55ea83;" class="iconfont icon-wu"></i>
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-jiaoxuezhongxin_keqianfankui"></use>
+						</svg>
 			        	<span>五年级</span>
 		        	</a>
 		        </li>
 		        <li>
 		        	<a href="${pageContext.request.contextPath}/course/lessonListLevel/6">
-			        	<i style="color:#00BFFF;" class="iconfont icon-liugongge"></i>
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-jiaoxueloudanganguanli"></use>
+						</svg>
 			        	<span>六年级</span>
 		        	</a>
 		        </li>
 		        <li>
 			        <a href="${pageContext.request.contextPath}/course/allCourse">
-				        <i style="color:#006666;" class="iconfont icon-weibiaoti-"></i>
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-jiaoxuezhongxin_wentidaoru"></use>
+						</svg>
 				        <span>全部课程</span>
 			        </a>
 		        </li>
@@ -266,7 +290,7 @@
 								</div>
 								
 								<div class=" am-u-sm-8 am-list-main">
-								    <h3 class="am-list-item-hd"><a href=""  >${course.courseName}</a></h3>
+								    <h3 class="am-list-item-hd"><a href="javascript:;" >${course.courseName}</a></h3>
 								    <div class="am-list-item-text">${course.courseDesc}</div>
 								    <div class="am-list-item-text">
 										<span style="color:#f37b1d;">
