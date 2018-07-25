@@ -108,6 +108,7 @@ public class CourseAction {
 
         List<Video> boughtVideo = new ArrayList<>();
         List<Video> unboughtVide = new ArrayList<>();
+
 		/*RedisCacheUtil<Course> redisCacheUtil1=new RedisCacheUtil<Course>();
 		RedisCacheUtil<Teacher> redisCacheUtil2=new RedisCacheUtil<Teacher>();
 		//根据courseId保存课程对象，下次需要时候直接根据courseId在缓存中找
@@ -141,7 +142,8 @@ public class CourseAction {
         if (userOrdersPay.size() > 0) {
             for (UserOrder order : userOrdersPay) {
                 List<Integer> videosId = orderService.findOrderDetailByOrderId(order.getOrderId());
-                boughtVideo = videoService.findBoughtVideo(videosId);
+                List<Video> video = videoService.findBoughtVideo(videosId);
+                boughtVideo.addAll(video);
 
             }
         }
@@ -150,7 +152,8 @@ public class CourseAction {
         if (userOrdersUnPay.size() > 0) {
             for (UserOrder order : userOrdersUnPay) {
                 List<Integer> videosId = orderService.findOrderDetailByOrderId(order.getOrderId());
-                unboughtVide = videoService.findBoughtVideo(videosId);
+                List<Video> video = videoService.findBoughtVideo(videosId);
+                unboughtVide.addAll(video);
 
             }
         }
@@ -163,15 +166,16 @@ public class CourseAction {
             videosVo.setPaystatus(0);
             if (boughtVideo.size() > 0) {
                 for (Video payVideo : boughtVideo) {
-                    if (payVideo.getCourseId().equals(payVideo.getCourseId())) {
+                    if (payVideo.getVideoId().equals(videosVo.getVideoId())) {
                         videosVo.setPaystatus(1);
                         break;
                     }
+
                 }
             }
             if (unboughtVide.size() > 0) {
                 for (Video unpayVide : unboughtVide) {
-                    if (unpayVide.getCourseId().equals(unpayVide.getCourseId())) {
+                    if (unpayVide.getVideoId().equals(videosVo.getVideoId())) {
                         videosVo.setPaystatus(-1);
                         break;
                     }

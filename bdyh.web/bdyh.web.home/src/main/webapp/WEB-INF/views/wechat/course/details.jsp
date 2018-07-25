@@ -183,7 +183,7 @@
 				<video id="example_video_1" class="video-js vjs-amazeui" controls
 					   preload="none" width="100%" height="264"
 					   poster="http://bdpak.cn:8080/home/demo/slideshow5.jpg" data-setup="{}">
-					<source id="example_video_source" src="http://bdpak.cn:8080/home/video/${video[0].videoPath}" type='video/wmv' />
+					<source id="example_video_source" src="http://bdpak.cn:8080/home/video/${video[0].videoPath}" type='video/mp4' />
 					<!-- <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
 				  <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' /> -->
 					<track kind="captions" src="http://bdpak.cn:8080/home/video.js/demo.captions.vtt" srclang="en" label="English"></track>

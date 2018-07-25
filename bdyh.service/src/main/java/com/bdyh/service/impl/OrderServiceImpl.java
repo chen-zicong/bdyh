@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -120,7 +121,8 @@ public class OrderServiceImpl implements OrderService {
             //如果有存在自定义老师的分成比例。
             //bigDecimal 用String构造器才不会出现精度丢失。
             BigDecimal newDivide = new BigDecimal(String.valueOf(one.getDivide()));
-            divide =  newDivide.subtract(new BigDecimal("100"));
+            //保留两位 四舍五入
+            divide =  newDivide.divide(new BigDecimal("100"),2, RoundingMode.HALF_UP);
         }
 
        if (benefitMapper.selectByPrimaryKey(order.getOrderId())==null){

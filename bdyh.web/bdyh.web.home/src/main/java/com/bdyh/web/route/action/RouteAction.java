@@ -233,4 +233,14 @@ public class RouteAction {
 
     }
 
+
+    @RequestMapping("intoOrder")
+    public String IntoOrder(String orderId, Model model) {
+
+        OrderVo orderVo = orderService.findOne(orderId);
+        model.addAttribute("order", orderVo);
+        return "wechat/course/Pay";
+
+    }
+
 }
