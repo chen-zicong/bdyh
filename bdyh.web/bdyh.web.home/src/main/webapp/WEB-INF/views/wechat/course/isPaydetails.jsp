@@ -185,7 +185,7 @@
                                 <li style="padding-top: 0rem;padding-bottom: 0rem;"
                                     class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-bottom-left">
                                     <h3 class="am-list-item-hd">
-                                        <a href="http://www.douban.com/online/11614662/"
+                                        <a href="javascript:;"
                                            style="margin-left:5%;">讲师信息</a>
                                     </h3>
                                     <hr data-am-widget="divider" style="margin:0.5rem auto;"
@@ -247,13 +247,13 @@
                                 <li
                                         class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-bottom-left">
                                     <h3 class="am-list-item-hd">
-                                        <a href="http://www.douban.com/online/11614662/"
+                                        <a href="javascript:;"
                                            style="margin-left:5%;">课程简介</a>
                                     </h3>
                                     <hr data-am-widget="divider" style="margin:0.5rem auto;"
                                         class="am-divider am-divider-dotted" />
                                     <div class="am-u-sm-4">
-                                        <a href="http://www.douban.com/online/11614662/" class="">
+                                        <a href="javascript:;" class="">
                                             <img style="width:100%;height:95px;" src="http://bdpak.cn:8080/home/courseImg/${course.courseImg}"
                                                  alt="我很囧，你保重....晒晒旅行中的那些囧！" />
                                         </a>
@@ -329,7 +329,7 @@
                                <c:forEach items="${videoList}" var="video">
                                 <li class="am-g am-list-item-dated" style="margin-bottom:8px">
                                     <div class="am-list-item-hd lesson-catalog-list" style="display: inline-block; width: 95%">
-                                        <a  href="javaScript:playVideo('${video.videoPath}')" style="display:inline-block;color: rgba(0,0,0,.7);">
+                                        <a  href="javaScript:playVideo('${video.videoPath}')" style="display:inline-block;">
                                             <i style="font-size:15px;margin-left:5px;" class="iconfont icon-bofang"></i>
                                             <span>${video.videoName}</span>
                                         </a>

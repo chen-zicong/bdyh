@@ -261,7 +261,7 @@ body, html {
 
                                     <div class=" am-u-sm-8 am-list-main">
                                         <h3 class="am-list-item-hd">
-                                            <a href="${pageContext.request.contextPath}/course/courseDetails/${userCourse.course.courseId}">${userCourse.course.courseName}</a>
+                                            <a href="javascript:;">${userCourse.course.courseName}</a>
                                         </h3>
                                         <div class="am-list-item-text">${userCourse.course.courseDesc}</div>
                                         <div class="am-list-item-text">
