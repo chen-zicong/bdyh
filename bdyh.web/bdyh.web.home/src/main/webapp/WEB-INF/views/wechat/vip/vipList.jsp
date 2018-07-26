@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="http://bdpak.cn:8080/home/assets/css/amazeui.min.css" />
 <link rel="stylesheet" type="text/css" href="http://bdpak.cn:8080/home/address-master/dist/amazeui.address.css" />
 <link rel="stylesheet" href="http://bdpak.cn:8080/home/wechat/wechat-icon/iconfont.css" />
+	<link rel="stylesheet" href="http://bdpak.cn:8080/home/wechat/wechat-icon/iconfont1.css" />
 <style>
 /* 清除浏览器差异，保持样式统一 */
 {
@@ -348,26 +349,26 @@ body, html {
 		<!-- foot navbar start -->
 		<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default">
 			<ul class="am-navbar-nav am-cf am-avg-sm-4">
-			    <li>
-			      <a href="${pageContext.request.contextPath}/index"  style="margin-top:5px;">
-			          <i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-zhuye" ></i>
-			          <span class="am-navbar-label">首页</span>
-			      </a>
-			    </li>
+				<li>
+					<a href="${pageContext.request.contextPath}/index"  style="margin-top:5px;">
+						<i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-zhuye" ></i>
+						<span class="am-navbar-label">首页</span>
+					</a>
+				</li>
 
-			    <li>
-			      <a href="${pageContext.request.contextPath}/course/myCourse"  style="margin-top:5px;">
-			          <i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-wodekecheng" ></i>
-			          <span class="am-navbar-label">我的课程</span>
-			      </a>
-			    </li>
-			    
-			    <li>
-			      <a href="${pageContext.request.contextPath}/user/userCenter" style="margin-top:5px;">
-			          <i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-gerenzhongxinxia"></i>
-			          <span class="am-navbar-label">个人中心</span>
-			      </a>
-			    </li>
+				<li>
+					<a href="${pageContext.request.contextPath}/course/myCourse"  style="margin-top:5px;">
+						<i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-shu" ></i>
+						<span class="am-navbar-label">我的课程</span>
+					</a>
+				</li>
+
+				<li>
+					<a href="${pageContext.request.contextPath}/user/userCenter" style="margin-top:5px;">
+						<i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-geren"></i>
+						<span class="am-navbar-label">个人中心</span>
+					</a>
+				</li>
 			</ul>
 		</div>
 		<!-- foot navbar end-->

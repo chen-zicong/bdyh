@@ -17,6 +17,9 @@
 	<link rel="stylesheet" href="http://bdpak.cn:8080/home/assets/css/amazeui.min.css" />
 	<link rel="stylesheet" type="text/css" href="http://bdpak.cn:8080/home/address-master/dist/amazeui.address.css" />
 	<link rel="stylesheet" href="http://bdpak.cn:8080/home/wechat/wechat-icon/iconfont.css" />
+	<link rel="stylesheet" href="http://bdpak.cn:8080/home/wechat/wechat-icon/iconfont1.css" />
+	<link rel="stylesheet" href="http://bdpak.cn:8080/home/wechat/wechat-icon/iconfont1.css" />
+	<script src="http://bdpak.cn:8080/home/wechat/wechat-icon/iconfont1.js"></script>
 	<style>
 	/* 清除浏览器差异，保持样式统一 */
 	{
@@ -121,6 +124,14 @@
 			-webkit-font-smoothing: antialiased;
 			-moz-osx-font-smoothing: grayscale;
 		}
+
+
+		.icon{
+			width: 1em; height: 1em;
+			vertical-align: -0.15em;
+			fill: currentColor;
+			overflow: hidden;
+		}
 	</style>
 </head>
 <body>
@@ -190,49 +201,65 @@
 			<ul class="bdyh_circle_nav_list am-avg-sm-4">
 		        <li>
 		        	<a href="${pageContext.request.contextPath}/routeW/vip" >
-			        	<i style="color:#efea6b;" class="iconfont icon-VIPfuwu"></i>
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-VIP"></use>
+						</svg>
 			        	<span>VIP服务</span>
 		        	</a>
 		        </li>
 		        <li>
 			        <a href="${pageContext.request.contextPath}/course/myCourse" >
-				        <i style="color:#55ea83;" class="iconfont icon-wode_kecheng"></i>
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-kecheng"></use>
+						</svg>
 				        <span>我的课程</span>
 			        </a>       	
 		        </li>
 		        <li>
 		        	<a href="${pageContext.request.contextPath}/course/myTrack">
-			        	<i  style="color:blue;" class="iconfont icon-wodezuji"></i>
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-Footprint"></use>
+						</svg>
 			        	<span>我的足迹</span>
 		        	</a>
 		        </li>
 		        <li>
 			        <a href="${pageContext.request.contextPath}/course/collectCourse">
-				        <i style="color:#6C7B8B;" class="iconfont icon-kecheng"></i>
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-shoucang"></use>
+						</svg>
 				        <span>收藏课程</span>
 			        </a>
 		        </li>
 		        <li>
 		        	<a href="${pageContext.request.contextPath}/teacher/collectTeacher">
-			        	<i style="color:#55ea83;" class="iconfont icon-jiangshirenzheng"></i>
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-laoshitouxiang"></use>
+						</svg>
 			        	<span>收藏讲师</span>
 		        	</a>
 		        </li>
 		        <li>
 		        	<a id="up-img-touch"  href="#">
-			        	<i  style="color:#00BFFF;" class="iconfont icon-wentijieda"></i>
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-changyongwentijieda"></use>
+						</svg>
 			        	<span>问题解答</span>
 		        	</a>
 		        </li>
 		        <li>
 		        	<a href="https://m.sohu.com/ch/25/22">
-			        	<i style="color:#00BFFF;" class="iconfont icon-zhengcechaxun"></i>
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-jiaoyu"></use>
+						</svg>
 			        	<span>教育政策</span>
 		        	</a>
 		        </li>
 		        <li>
 			        <a href="${pageContext.request.contextPath}/opinion/writeOpinion">
-				        <i style="color:#ADFF2F;" class="iconfont icon-yijianfankui"></i>
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-yijianfankui"></use>
+						</svg>
 				        <span>意见反馈</span>
 			        </a>
 		        </li>
@@ -242,26 +269,26 @@
 		<!-- foot navbar start -->
 		<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default">
 			<ul class="am-navbar-nav am-cf am-avg-sm-4">
-			    <li>
-			      <a href="${pageContext.request.contextPath}/index"  style="margin-top:5px;">
-			          <i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-zhuye" ></i>
-			          <span class="am-navbar-label">首页</span>
-			      </a>
-			    </li>
+				<li>
+					<a href="${pageContext.request.contextPath}/index"  style="margin-top:5px;">
+						<i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-zhuye" ></i>
+						<span class="am-navbar-label">首页</span>
+					</a>
+				</li>
 
-			    <li>
-			      <a href="${pageContext.request.contextPath}/course/myCourse"  style="margin-top:5px;">
-			          <i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-wodekecheng" ></i>
-			          <span class="am-navbar-label">我的课程</span>
-			      </a>
-			    </li>
-			    
-			    <li>
-			      <a href="${pageContext.request.contextPath}/user/userCenter" style="margin-top:5px;">
-			          <i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-gerenzhongxinxia"></i>
-			          <span class="am-navbar-label">个人中心</span>
-			      </a>
-			    </li>
+				<li>
+					<a href="${pageContext.request.contextPath}/course/myCourse"  style="margin-top:5px;">
+						<i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-shu" ></i>
+						<span class="am-navbar-label">我的课程</span>
+					</a>
+				</li>
+
+				<li>
+					<a href="${pageContext.request.contextPath}/user/userCenter" style="margin-top:5px;">
+						<i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-geren"></i>
+						<span class="am-navbar-label">个人中心</span>
+					</a>
+				</li>
 			</ul>
 		</div>
 		<!-- foot navbar end-->
