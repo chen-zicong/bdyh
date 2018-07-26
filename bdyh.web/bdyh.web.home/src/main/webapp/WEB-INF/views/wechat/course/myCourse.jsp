@@ -36,12 +36,12 @@ body, html {
 
 /* 头部标题栏背景色覆盖重写 */
 .am-header-default {
-	background-color: #41d1e0;
+	background-color: #78b3e9;
 }
 
 /*底部工具栏背景色覆盖重写 */
 .am-navbar-default .am-navbar-nav {
-	background-color: #41d1e0;
+	background-color: #78b3e9;
 }
 /*底部工具栏高度覆盖重写 */
 .am-navbar {
