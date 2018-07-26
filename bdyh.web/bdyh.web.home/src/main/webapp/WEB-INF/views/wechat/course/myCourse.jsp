@@ -110,7 +110,7 @@ body, html {
 
 /* 选项卡选中时颜色覆盖重写 */
 .am-tabs-default .am-tabs-nav>.am-active a {
-    background-color: #8fe0e4;
+    background-color: #92bce9;
     color: #fff;
 }
 /*按钮样式*/

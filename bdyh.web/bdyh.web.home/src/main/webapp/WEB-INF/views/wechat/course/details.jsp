@@ -201,8 +201,8 @@
 			<!--选项栏 -->
 			<div data-am-widget="tabs" class="am-tabs am-tabs-d2" style="margin-top:0px;">
 				<ul class="am-tabs-nav am-cf">
-					<li class="am-active"><a href="[data-tab-panel-0]">详细情况</a></li>
-					<li class=""><a href="[data-tab-panel-1]">目录</a></li>
+					<li class=""><a href="[data-tab-panel-0]">详细情况</a></li>
+					<li class="am-active"><a href="[data-tab-panel-1]">目录</a></li>
 				</ul>
 				<div class="am-tabs-bd">
 					<div data-tab-panel-0 class="am-tab-panel am-active">

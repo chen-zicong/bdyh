@@ -35,12 +35,12 @@ body, html {
 
 /* 头部标题栏背景色覆盖重写 */
 .am-header-default {
-	background-color: #41d1e0;
+	background-color: #78b3e9;
 }
 
 /*底部工具栏背景色覆盖重写 */
 .am-navbar-default .am-navbar-nav {
-	background-color: #41d1e0;
+	background-color: #78b3e9;
 }
 /*底部工具栏高度覆盖重写 */
 .am-navbar {
@@ -125,7 +125,7 @@ body, html {
 }
 /*选项卡选中时颜色覆盖重写 */
 .am-tabs-default .am-tabs-nav>.am-active a {
-	background-color: #8fe0e4;
+	background-color: #92bce9;
 	color: #fff;
 }
 
