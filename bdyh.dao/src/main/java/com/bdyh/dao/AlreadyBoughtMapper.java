@@ -26,6 +26,4 @@ public interface AlreadyBoughtMapper {
 
     int updateByExample(@Param("record") AlreadyBoughtKey record, @Param("example") AlreadyBoughtExample example);
 
-
-
 }

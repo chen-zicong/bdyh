@@ -98,30 +98,33 @@
         <table class="table table-border table-bordered table-hover table-bg table-sort">
             <thead>
             <tr class="text-c">
-                <th>老师ID</th>
-                <th>老师姓名</th>
-                <th>老师个人收益</th>
-                <%--拿的是这个老师的分成--%>
-                <th>代理商分成</th>
+                <th>代理商ID</th>
+                <th>代理商姓名</th>
+                <th>代理商等级</th>
+                <th>代理商收益</th>
+                <th>收益查看</th>
+
             </tr>
             </thead>
             <tbody>
 
             <c:forEach items="${arr}" var="clazz">
-                <tr class="text-c">
-                        <%--老师ID--%>
+                    <%--代理商ID--%>
                     <td>${clazz}</td>
-                        <%--name--%>
+                    <%--代理商name--%>
                     <td>${clazz}</td>
-                        <%--老师个人收益--%>
+                    <%--代理商ID--%>
                     <td>${clazz}</td>
-                    <td>
-                            <%-- &lt;%&ndash; <span class="label label-success radius"><a href="${pageContext.request.contextPath}/subject/subjectList/${clazz}">查看所有科目</a></span> &ndash;%&gt;
-                             <span class="label label-success radius"><a style="text-decoration:none" class="ml-5" onClick="member_edit('查看所有科目','${pageContext.request.contextPath}/subject/subjectList/${clazz}','${clazz}')" href="javascript:;" title="编辑">查看所有科目</a></span>--%>
-                        <a style="text-decoration:none" class="ml-5"  href="${pageContext.request.contextPath}/statistics/teacherEcharts?teacher_id=${clazz}" title="编辑"><span class="btn btn-success radius">查看详情</span></a>
+                    <%--代理商等级--%>
+                    <td>${clazz}</td>
+                    <%--代理商--%>
 
+                    <td>
+                    <%-- &lt;%&ndash; <span class="label label-success radius"><a href="${pageContext.request.contextPath}/subject/subjectList/${clazz}">查看所有科目</a></span> &ndash;%&gt;
+                     <span class="label label-success radius"><a style="text-decoration:none" class="ml-5" onClick="member_edit('查看所有科目','${pageContext.request.contextPath}/subject/subjectList/${clazz}','${clazz}')" href="javascript:;" title="编辑">查看所有科目</a></span>--%>
+                    <%--需要跳转到代理商的Echarts的图表--%>
+                    <a style="text-decoration:none" class="ml-5"  href="${pageContext.request.contextPath}/statistics/teacherEcharts?teacher_id=${clazz}" title="编辑"><span class="btn btn-success radius">查看详情</span></a>
                     </td>
-                    <td>${clazz}</td>
                 </tr>
             </c:forEach>
             </tbody>

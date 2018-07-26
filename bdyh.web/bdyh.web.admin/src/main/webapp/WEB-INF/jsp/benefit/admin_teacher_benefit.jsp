@@ -100,8 +100,8 @@
             <tr class="text-c">
                 <th>老师ID</th>
                 <th>老师姓名</th>
-                <th>老师个人收益</th>
-                <%--拿的是这个老师的分成--%>
+                <th>老师收益</th>
+                <th>收益查看</th>
                 <th>代理商分成</th>
             </tr>
             </thead>
@@ -113,15 +113,17 @@
                     <td>${clazz}</td>
                         <%--name--%>
                     <td>${clazz}</td>
-                        <%--老师个人收益--%>
+                        <%--老师的总收益--%>
                     <td>${clazz}</td>
+                        <%--总收益查看--%>
                     <td>
                             <%-- &lt;%&ndash; <span class="label label-success radius"><a href="${pageContext.request.contextPath}/subject/subjectList/${clazz}">查看所有科目</a></span> &ndash;%&gt;
                              <span class="label label-success radius"><a style="text-decoration:none" class="ml-5" onClick="member_edit('查看所有科目','${pageContext.request.contextPath}/subject/subjectList/${clazz}','${clazz}')" href="javascript:;" title="编辑">查看所有科目</a></span>--%>
                         <a style="text-decoration:none" class="ml-5"  href="${pageContext.request.contextPath}/statistics/teacherEcharts?teacher_id=${clazz}" title="编辑"><span class="btn btn-success radius">查看详情</span></a>
-
                     </td>
+                    <%--代理商收益--%>
                     <td>${clazz}</td>
+
                 </tr>
             </c:forEach>
             </tbody>

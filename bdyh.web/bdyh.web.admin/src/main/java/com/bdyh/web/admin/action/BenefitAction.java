@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
 @Controller
 @RequestMapping(value="benefit")
 public class BenefitAction {
@@ -29,7 +27,7 @@ public class BenefitAction {
 		System.out.println("=======");
 		model.addAttribute("income", income);
 
-		return "benefit/benefit";
+		return "benefit/benefit_teacher_echarts";
 	}
 	
 	/**
