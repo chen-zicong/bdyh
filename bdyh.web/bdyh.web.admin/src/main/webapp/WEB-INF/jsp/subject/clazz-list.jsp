@@ -39,13 +39,13 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${clazzList }" var="clazz">
+				<c:forEach items="${clazzList }" var="item">
 					<tr class="text-c">
-						<td>${clazz.clazzId }</td>
-						<td>${clazz.clazz }</td>
+						<td>${item.clazzId }</td>
+						<td>${item.clazz }</td>
 						<td>
 							<%-- <span class="label label-success radius"><a href="${pageContext.request.contextPath}/subject/subjectList/${clazz.clazzId }">查看所有科目</a></span> --%>
-							<span class="label label-success radius"><a style="text-decoration:none" class="ml-5" onClick="member_edit('查看所有科目','${pageContext.request.contextPath}/subject/subjectList/${clazz.clazzId }','${clazz.clazzId }')" href="javascript:;" title="编辑">查看所有科目</a></span>
+							<span class="label label-success radius"><a style="text-decoration:none" class="ml-5" onClick="member_edit('查看所有科目','${pageContext.request.contextPath}/subject/subjectList/${item.clazzId }','${item.clazzId }')" href="javascript:;" title="编辑">查看所有科目</a></span>
 						</td>
 
 					</tr>

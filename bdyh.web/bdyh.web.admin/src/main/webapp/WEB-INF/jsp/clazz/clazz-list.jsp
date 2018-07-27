@@ -51,29 +51,29 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${clazzList }" var="clazz">
+            <c:forEach items="${clazzList }" var="item">
                 <tr class="text-c">
-                    <td>${clazz.clazzId }</td>
-                    <td>${clazz.clazz }</td>
+                    <td>${item.clazzId }</td>
+                    <td>${item.clazz }</td>
                     <td class="td-status">
 
-                            <c:if test="${clazz.status eq 1 }">
+                            <c:if test="${item.status eq 1 }">
                                 <span class="label label-success radius">已发布</span>
                             </c:if>
-                            <c:if test="${clazz.status eq 0 }">
+                            <c:if test="${item.status eq 0 }">
                                 <span class="label label-defaunt radius">已下架</span>
                             </c:if>
 
                     </td>
-                        <c:if test="${clazz.status eq 1 }">
+                        <c:if test="${item.status eq 1 }">
                             <td class="td-manage">
-                                <a style="text-decoration:none" onClick="clazz_stop(this,'${clazz.clazzId }')"
+                                <a style="text-decoration:none" onClick="clazz_stop(this,'${item.clazzId }')"
                                    href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>
                             </td>
                         </c:if>
-                        <c:if test="${clazz.status eq 0 }">
+                        <c:if test="${item.status eq 0 }">
                             <td class="td-manage">
-                                <a style="text-decoration:none" onClick="clazz_start(this,'${clazz.clazzId }')"
+                                <a style="text-decoration:none" onClick="clazz_start(this,'${item.clazzId }')"
                                    href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>
                             </td>
                         </c:if>

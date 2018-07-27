@@ -1,5 +1,6 @@
 package com.bdyh.web.admin.action;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,7 +155,7 @@ public class StatisticsAction {
 
     /*管理员获取所有老师的收益*/
     @RequestMapping("teacherIncomeStatisticsForAdmin")
-    public APIResponse teacherStatisticsByAdmin(Model model) {
+    public String teacherStatisticsByAdmin(Model model) {
 
         List<Agent> agents = agentService.findAllAgent();
         List<AgentStatistics> agentStatistics = new ArrayList<>();
@@ -164,12 +165,11 @@ public class StatisticsAction {
         }
         model.addAttribute("incomes", agentStatistics);
 
-        return null;
+        return "benefit/admin_teacher_benefit";
     }
 
     /*管理员获取所有代理商的收益信息*/
     @RequestMapping("agentAllBenefit")
-    @ResponseBody
     public String agentAllBenefit(Model model) {
         List<Agent> agents = agentService.findAllAgent();
         List<AdminStatistics> adminStatistics = new ArrayList<>();
@@ -178,7 +178,7 @@ public class StatisticsAction {
             adminStatistics.add(agentIncome);
         }
         model.addAttribute("agentIncome", adminStatistics);
-        return "";
+        return "benefit/admin_agent_benefit";
     }
 
 
@@ -206,6 +206,33 @@ public class StatisticsAction {
     }
 
 
+    /*老师调用查看自己的表*/
+    @RequestMapping("teacherMyEcharts")
+    public String teacherMyEcharts( Model model) {
+        Teacher userTeacher = (Teacher) AdminUtil.getShiroSessionByKey("userTeacher");
+        model.addAttribute("teacherId", userTeacher.getTeacherId());
+        return "benefit/teacher_benefit_echarts";
+    }
+
+    /*代理商调用，查看自己的图表*/
+    @RequestMapping("agentMyEcharts")
+    public String agentMyEcharts(Model model){
+        Agent  agent = (Agent)AdminUtil.getShiroSessionByKey("userAgent");
+        model.addAttribute("agentId",agent.getAgentId());
+        BigDecimal agentAllIncome = benefitService.findAgentAllIncome(agent.getAgentId());
+        model.addAttribute("allIncome",agentAllIncome);
+        return "benefit/benefit_agent_echarts";
+    }
+
+
+    @RequestMapping("agentEcharts")
+    public String agentEcharts(Model model,Integer agentId){
+
+        model.addAttribute("agentId",agentId);
+        BigDecimal agentAllIncome = benefitService.findAgentAllIncome(agentId);
+        model.addAttribute("allIncome",agentAllIncome);
+        return "benefit/benefit_agent_echarts";
+    }
     /**
      * 老师查看全部收入
      *

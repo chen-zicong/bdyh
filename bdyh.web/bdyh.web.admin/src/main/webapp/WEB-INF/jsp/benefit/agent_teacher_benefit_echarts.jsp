@@ -19,13 +19,13 @@
 <script src="http://echarts.baidu.com/dist/echarts.min.js"></script>
 <%--<script src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>--%>
 <script>
-    var teacherID=<%=request.getParameter("teacherID")%>
+    var teacherID="${teacherId}";
     var myChart = echarts.init(document.getElementById('main'));
     $.ajax({
         url : '${pageContext.request.contextPath}/statistics/teacherIncomeByTime',
         type : "get",
         dataType : "json",
-        data :{teacherId:5},
+        data :{teacherId:teacherID},
         cache : false,
         async : false,
         success :function (data) {

@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class AgentIncome {
     private Date date;
-    private BigDecimal agent_benefit;
+    private BigDecimal agentBenefit;
 
     public Date getDate() {
         return date;
@@ -15,11 +15,11 @@ public class AgentIncome {
         this.date = date;
     }
 
-    public BigDecimal getAgent_benefit() {
-        return agent_benefit;
+    public BigDecimal getAgentBenefit() {
+        return agentBenefit;
     }
 
-    public void setAgent_benefit(BigDecimal agent_benefit) {
-        this.agent_benefit = agent_benefit;
+    public void setAgentBenefit(BigDecimal agentBenefit) {
+        this.agentBenefit = agentBenefit;
     }
 }

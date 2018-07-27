@@ -19,19 +19,20 @@
 <%--<script src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>--%>
 <script src="http://echarts.baidu.com/dist/echarts.min.js"></script>
 <script>
-    var teacherId=<%=session.getAttribute("teacherId")%>
+    var teacherId="${teacherId}";
+
     var myChart = echarts.init(document.getElementById('main'));
     $.ajax({
         url : '${pageContext.request.contextPath}/statistics/teacherIncomeByTime',
         type : "get",
         dataType : "json",
-        data :{teacherId:5},
+        data :{teacherId:teacherId},
         cache : false,
         async : false,
         success :function (data) {
             myChart.setOption(option = {
                 title: {
-                    text: '你的收益统计'
+                    text: '总收益 ${income} ￥'
                 },
                 tooltip: {
                     trigger: 'axis'

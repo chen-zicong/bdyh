@@ -109,24 +109,23 @@
             </thead>
             <tbody>
 
-            <c:forEach items="${incomes}" var="clazz">
+            <c:forEach items="${agentIncome}" var="item">
                     <%--代理商ID--%>
-                    <td>${clazz.teacherId}</td>
+                    <td>${item.agentId}</td>
                     <%--代理商name--%>
-                    <td>${clazz.teacherName}</td>
+                    <td>${item.agentName}</td>
                     <%--代理商ID--%>
-                    <td>${clazz.teacherBenefit}</td>
+                    <td>${item.agentLevel}</td>
                     <%--代理商等级--%>
-                    <td>${clazz.teacherBenefit}</td>
+                    <td>${item.agentBenefit}</td>
                     <%--代理商--%>
 
                     <td>
                     <%-- &lt;%&ndash; <span class="label label-success radius"><a href="${pageContext.request.contextPath}/subject/subjectList/${clazz}">查看所有科目</a></span> &ndash;%&gt;
                      <span class="label label-success radius"><a style="text-decoration:none" class="ml-5" onClick="member_edit('查看所有科目','${pageContext.request.contextPath}/subject/subjectList/${clazz}','${clazz}')" href="javascript:;" title="编辑">查看所有科目</a></span>--%>
                     <%--需要跳转到代理商的Echarts的图表--%>
-                    <a style="text-decoration:none" class="ml-5"  href="${pageContext.request.contextPath}/statistics/teacherEcharts?teacher_id=${clazz}" title="编辑"><span class="btn btn-success radius">查看详情</span></a>
+                    <a style="text-decoration:none" class="ml-5" href="${pageContext.request.contextPath}/statistics/agentEcharts?agentId=${item.agentId}" title="编辑"><span class="btn btn-success radius">查看详情</span></a>
                     </td>
-                </tr>
             </c:forEach>
             </tbody>
         </table>

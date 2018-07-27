@@ -3,6 +3,7 @@ package com.bdyh.service;
 import com.bdyh.common.APIResponse;
 import com.bdyh.entity.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface BenefitService {
@@ -16,5 +17,6 @@ public interface BenefitService {
 
     List<List<Object>> agentIncomeByTime(Integer agentId);
     public AdminStatistics findAgentIncome(Agent agent);
+    public BigDecimal findAgentAllIncome(Integer agentId);
 
 }

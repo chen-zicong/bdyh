@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -64,6 +65,17 @@ public class BenefitServiceImpl implements BenefitService {
             income.add(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(teacherIncome.getDate()));
             list.add(income);
         }
+        //没数据2个或者2个以上的数据echarts会报错，弄点假的
+        if (list.size() <=1) {
+            int i = 2;
+            while (i != 0) {
+                List<Object> income = new ArrayList<>();
+                income.add(0.0);
+                income.add(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
+                list.add(income);
+                i--;
+            }
+        }
         return list;
 
 
@@ -76,9 +88,20 @@ public class BenefitServiceImpl implements BenefitService {
         List<AgentIncome> incomes = benefitMapper.findAgentIncomeByTime(agentId);
         for (AgentIncome agentIncome : incomes) {
             List<Object> income = new ArrayList<>();
-            income.add(agentIncome.getAgent_benefit().floatValue());
+            income.add(agentIncome.getAgentBenefit().floatValue());
             income.add(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(agentIncome.getDate()));
             list.add(income);
+        }
+        //没数据echarts会报错，弄点假的
+        if (list.size() <=1) {
+            int i = 2;
+            while (i != 0) {
+                List<Object> income = new ArrayList<>();
+                income.add(0.0);
+                income.add(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
+                list.add(income);
+                i--;
+            }
         }
         return list;
     }
@@ -107,4 +130,9 @@ public class BenefitServiceImpl implements BenefitService {
 
 
     }
+
+
+     public BigDecimal findAgentAllIncome(Integer agentId){
+         return  benefitMapper.findAgentIncome(agentId);
+     }
 }
