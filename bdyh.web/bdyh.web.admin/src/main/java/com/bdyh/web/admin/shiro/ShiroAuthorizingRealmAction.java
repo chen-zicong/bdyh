@@ -44,7 +44,7 @@ public class ShiroAuthorizingRealmAction extends AuthorizingRealm{
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		// TODO Auto-generated method stub
-		/*Admin adminInfo = (Admin) principals.getPrimaryPrincipal(); // 获取用户名
+		/*AdminStatistics adminInfo = (AdminStatistics) principals.getPrimaryPrincipal(); // 获取用户名
 		Map<String, Set<String>> resourceMap=adminService.selectResourceMapByRoleId(adminInfo.getAdRoleId());
 		Set<String> privilegeSet=null;
 		if(resourceMap!=null){
@@ -66,7 +66,7 @@ public class ShiroAuthorizingRealmAction extends AuthorizingRealm{
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken authcToken) throws AuthenticationException {
 		// TODO Auto-generated method stub
-		/*Admin user = tokenToUser((UsernamePasswordToken) authcToken);
+		/*AdminStatistics user = tokenToUser((UsernamePasswordToken) authcToken);
     	user=adminService.selectByAccount(user.getAdAccount());*/
 		CustomLoginToken customToken=(CustomLoginToken)authcToken;
 		String password=null;

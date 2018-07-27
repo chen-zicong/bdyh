@@ -167,15 +167,35 @@ public class StatisticsAction {
         return null;
     }
 
+    /*管理员获取所有代理商的收益信息*/
+    @RequestMapping("agentAllBenefit")
+    @ResponseBody
+    public String agentAllBenefit(Model model) {
+        List<Agent> agents = agentService.findAllAgent();
+        List<AdminStatistics> adminStatistics = new ArrayList<>();
+        for (Agent agent : agents) {
+           AdminStatistics agentIncome = benefitService.findAgentIncome(agent);
+            adminStatistics.add(agentIncome);
+        }
+        model.addAttribute("agentIncome", adminStatistics);
+        return "";
+    }
+
+
     //获取老师每个时间段获取的收入的JSON数据
     @RequestMapping("teacherIncomeByTime")
     @ResponseBody
     public List<List<Object>> teacherIncomeByTime(Integer teacherId) {
-
         List<List<Object>> teacherByMonth = benefitService.findTeacherByMonth(teacherId);
-
         return teacherByMonth;
 
+    }
+
+    //获取代理商每个时间段获取的收入的JSON数据
+    @RequestMapping("agentIncomeByTime")
+    @ResponseBody
+    public List<List<Object>> agentIncomeByTime(Integer agentId) {
+        return benefitService.agentIncomeByTime(agentId);
     }
 
     /*根据老师ID 跳转到查看他收入的图表*/
