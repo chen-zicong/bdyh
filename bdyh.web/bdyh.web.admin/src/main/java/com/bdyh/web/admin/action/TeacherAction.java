@@ -109,7 +109,8 @@ public class TeacherAction {
     public String teacherAddPage(Model model) {
         Teacher teacher = (Teacher)AdminUtil.getShiroSessionByKey("userTeacher");
         model.addAttribute("teacher",teacher);
-        List<Subject> all = subjectService.findAll();
+        //查找所有的科目名称给老师选
+        List<String> all = subjectService.findAll();
         model.addAttribute("subjects",all);
         return "teacher/teacher-add";
     }

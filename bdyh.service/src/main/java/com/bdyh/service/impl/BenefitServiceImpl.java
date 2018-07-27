@@ -29,23 +29,26 @@ public class BenefitServiceImpl implements BenefitService {
         List<Teacher> teachers = teacherMapper.findTeacherByAgentId(agent.getAgentId());
         List<AgentStatistics> statisticsList = new ArrayList<>();
         if (teachers.size() > 0) {
-            getStatistics(teachers, statisticsList);
+            getStatistics(teachers, statisticsList,agent);
         }
 
 
         return statisticsList;
     }
 
-    private void getStatistics(List<Teacher> teachers, List<AgentStatistics> statisticsList) {
+    private void getStatistics(List<Teacher> teachers, List<AgentStatistics> statisticsList,Agent agent) {
         for (Teacher teacher : teachers) {
             AgentStatistics statistics = benefitMapper.findStatisticsByTeacherId(teacher.getTeacherId());
             if (statistics == null) {
                 statistics = new AgentStatistics();
                 statistics.setTeacherBenefit(new BigDecimal(BigInteger.ZERO));
                 statistics.setAgentBenefit(new BigDecimal(BigInteger.ZERO));
+
+
             }
             statistics.setTeacherName(teacher.getTeacherName());
             statistics.setTeacherId(teacher.getTeacherId());
+            statistics.setAgentName(agent.getUsername());
             statisticsList.add(statistics);
         }
     }
@@ -66,15 +69,11 @@ public class BenefitServiceImpl implements BenefitService {
     }
 
 
-    @Override
-    public List<AgentStatistics> findAllTeacher() {
 
-        List<Teacher> allTeacher = teacherMapper.findAllTeacher();
-        List<AgentStatistics> statisticsList = new ArrayList<>();
-        if (allTeacher.size() > 0) {
-            getStatistics(allTeacher, statisticsList);
-        }
-        return statisticsList;
 
-    }
+
+     public  float findTeacherAllIncome(Teacher teacher){
+         BigDecimal teacherAllIncome = benefitMapper.findTeacherAllIncome(teacher.getTeacherId());
+         return  teacherAllIncome.floatValue();
+     }
 }

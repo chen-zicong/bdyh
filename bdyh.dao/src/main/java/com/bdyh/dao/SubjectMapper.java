@@ -28,6 +28,6 @@ public interface SubjectMapper {
     int updateByPrimaryKeySelective(Subject record);
 
     int updateByPrimaryKey(Subject record);
-    @Select("select * from  subject ")
-    List<Subject> findAll();
+    @Select("select DISTINCT subject  from  subject ")
+    List<String> findAll();
 }

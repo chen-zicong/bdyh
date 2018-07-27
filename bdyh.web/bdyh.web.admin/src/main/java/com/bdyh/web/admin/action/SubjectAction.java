@@ -34,6 +34,8 @@ public class SubjectAction {
     @Autowired
     private ClazzService clazzService;
 
+
+    //返回所有的课程
     @RequestMapping(value = "clazzList")
     public String clazzList(Model model) {
         //TODO 从缓存里取数据

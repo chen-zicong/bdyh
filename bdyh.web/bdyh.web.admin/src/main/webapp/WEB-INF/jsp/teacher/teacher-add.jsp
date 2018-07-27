@@ -99,7 +99,7 @@
                 <span class="select-box">
                 <select id="doc-select-1" class="select" size="1" >
                     <c:forEach items="${subjects }" var="subject">
-                        <option name="major" value="${subject.subject}">${subject.subject}</option>
+                        <option name="major" value="${subject}">${subject}</option>
                     </c:forEach>
                 </select>
                     </span>

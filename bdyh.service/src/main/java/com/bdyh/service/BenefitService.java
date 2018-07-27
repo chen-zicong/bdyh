@@ -1,10 +1,7 @@
 package com.bdyh.service;
 
 import com.bdyh.common.APIResponse;
-import com.bdyh.entity.Agent;
-import com.bdyh.entity.AgentStatistics;
-import com.bdyh.entity.Benefit;
-import com.bdyh.entity.TeacherIncome;
+import com.bdyh.entity.*;
 
 import java.util.List;
 
@@ -13,5 +10,7 @@ public interface BenefitService {
 
     List<List<Object>> findTeacherByMonth(Integer teacherId);
 
-    List<AgentStatistics> findAllTeacher();
+
+
+    public float findTeacherAllIncome(Teacher teacher);
 }

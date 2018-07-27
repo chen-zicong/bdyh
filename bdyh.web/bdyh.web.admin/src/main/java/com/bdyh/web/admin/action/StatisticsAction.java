@@ -1,5 +1,6 @@
 package com.bdyh.web.admin.action;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -9,6 +10,7 @@ import com.bdyh.common.APIResponseX;
 import com.bdyh.common.AdminUtil;
 import com.bdyh.common.Util;
 import com.bdyh.entity.*;
+import com.bdyh.service.AgentService;
 import com.bdyh.service.BenefitService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -42,6 +44,9 @@ public class StatisticsAction {
 
     @Autowired
     private BenefitService benefitService;
+
+    @Autowired
+    private AgentService agentService;
 
 
     /*--------------------------------------------管理员----------------------------------------------------*/
@@ -138,28 +143,34 @@ public class StatisticsAction {
         return "teacher_statistics/benefit-course-list";
     }
 
-    /*霍获取老师和代理商的收益列表*/
+    /*获取老师和代理商的收益列表*/
     @RequestMapping("teacherIncomeStatistics")
-    @ResponseBody
-    public APIResponseX teacherIncomeStatistics() {
+    public String teacherIncomeStatistics(Model model) {
         Agent agent = (Agent) AdminUtil.getShiroSessionByKey("userAgent");
         List<AgentStatistics> teachersIncome = benefitService.findTeachersIncome(agent);
-//        PageHelper.startPage(pageNun, pageSize);
-//        PageInfo<AgentStatistics> agentStatisticsPageInfo = new PageInfo<>(teachersIncome);
-        return APIResponseX.success(teachersIncome,teachersIncome.size());
+        model.addAttribute("incomes", teachersIncome);
+        return "benefit/agentperson_benefit";
     }
 
     /*管理员获取所有老师的收益*/
-    public APIResponse teacherStatisticsByAdmin() {
-        UserAdmin userAdmin = (UserAdmin) AdminUtil.getShiroSessionByKey("userAdmin");
+    @RequestMapping("teacherIncomeStatisticsForAdmin")
+    public APIResponse teacherStatisticsByAdmin(Model model) {
+
+        List<Agent> agents = agentService.findAllAgent();
+        List<AgentStatistics> agentStatistics = new ArrayList<>();
+        for (Agent agent : agents) {
+            List<AgentStatistics> teachersIncome = benefitService.findTeachersIncome(agent);
+            agentStatistics.addAll(teachersIncome);
+        }
+        model.addAttribute("incomes", agentStatistics);
 
         return null;
     }
 
-
-    @RequestMapping("teacherIncomeByMonth")
+    //获取老师每个时间段获取的收入的JSON数据
+    @RequestMapping("teacherIncomeByTime")
     @ResponseBody
-    public  List<List<Object>>  teacherIncomeByMonth(Integer teacherId) {
+    public List<List<Object>> teacherIncomeByTime(Integer teacherId) {
 
         List<List<Object>> teacherByMonth = benefitService.findTeacherByMonth(teacherId);
 
@@ -169,8 +180,26 @@ public class StatisticsAction {
 
     /*根据老师ID 跳转到查看他收入的图表*/
     @RequestMapping("teacherEcharts")
-    public String teacherEcharts(Integer teacherId,Model model){
-        model.addAttribute("teacherId",teacherId);
-            return "benefit/benefit_teacher_echarts";
+    public String teacherEcharts(Integer teacherId, Model model) {
+        model.addAttribute("teacherId", teacherId);
+        return "benefit/benefit_teacher_echarts";
+    }
+
+
+    /**
+     * 老师查看全部收入
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping("teacherIncome")
+    public String teacher(Model model) {
+        Teacher teacherUser = (Teacher) AdminUtil.getShiroSessionByKey("teacherUser");
+        float teacherAllIncome = benefitService.findTeacherAllIncome(teacherUser);
+        model.addAttribute("Income", teacherAllIncome);
+        model.addAttribute("teacherId", teacherUser.getTeacherId());
+        //老师的收入查看界面
+        return "";
+
     }
 }
