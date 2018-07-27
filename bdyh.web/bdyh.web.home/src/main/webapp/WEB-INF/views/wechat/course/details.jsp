@@ -22,6 +22,7 @@
 		<link rel="stylesheet" href="http://bdpak.cn:8080/home/assets/css/amazeui.min.css" />
 		<link rel="stylesheet" type="text/css" href="http://bdpak.cn:8080/home/address-master/dist/amazeui.address.css" />
 		<link rel="stylesheet" href="http://bdpak.cn:8080/home/wechat/wechat-icon/iconfont.css" />
+			<link rel="stylesheet" href="http://bdpak.cn:8080/home/wechat/wechat-icon/iconfont1.css" />
 		<style>
 			/* 清除浏览器差异，保持样式统一 */
 			{
@@ -37,12 +38,12 @@
 
 			/* 头部标题栏背景色覆盖重写 */
 			.am-header-default {
-				background-color: #41d1e0;
+				background-color: #78b3e9;
 			}
 
 			/*底部工具栏背景色覆盖重写 */
 			.am-navbar-default .am-navbar-nav {
-				background-color: #41d1e0;
+				background-color: #78b3e9;
 			}
 			/*底部工具栏高度覆盖重写 */
 			.am-navbar {
@@ -201,11 +202,11 @@
 			<!--选项栏 -->
 			<div data-am-widget="tabs" class="am-tabs am-tabs-d2" style="margin-top:0px;">
 				<ul class="am-tabs-nav am-cf">
-					<li class="am-active"><a href="[data-tab-panel-0]">详细情况</a></li>
-					<li class=""><a href="[data-tab-panel-1]">目录</a></li>
+					<li class=""><a href="[data-tab-panel-0]">详细情况</a></li>
+					<li class="am-active"><a href="[data-tab-panel-1]">目录</a></li>
 				</ul>
 				<div class="am-tabs-bd">
-					<div data-tab-panel-0 class="am-tab-panel am-active">
+					<div data-tab-panel-0 class="am-tab-panel ">
 						<!--列表标题-->
 
 						<div data-am-widget="list_news"
@@ -348,7 +349,7 @@
 					</div>
 
 					<!--目录 -->
-					<div data-tab-panel-1 class="am-tab-panel">
+					<div data-tab-panel-1 class="am-tab-panel am-active">
 						<div data-am-widget="list_news" class="am-list-news am-list-news-default"
 							 style="background-color:#fff;">
 							<!--课程目录-->
@@ -732,7 +733,7 @@
 
                 }
             } else{                                                       /*重置全选，变为全删除*/
-                var Remalength=ListMenue()-1;
+                var Remalength=ListMenue();
                 if(Remalength>1){
                     for(var i=0;i<Remalength;i++){
                         var  videoId=$('.am-menu-sub').find('li').eq(i).find('#CourseId').text();

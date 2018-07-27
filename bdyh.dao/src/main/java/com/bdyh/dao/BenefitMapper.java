@@ -2,6 +2,7 @@ package com.bdyh.dao;
 
 import com.bdyh.entity.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -45,6 +46,10 @@ public interface BenefitMapper {
 
     @Select("select * from benefit where teacher_id= #{teacherId} ORDER By date ASC")
     List<TeacherIncome> findTeacherByMonth(@Param("teacherId") Integer teacherId);
+
+
+    @Select("select SUM(teacher_benefit) teacher_benefit from benefit where teacher_id = #{teacherId}")
+    BigDecimal findTeacherAllIncome(@Param("teacherId") Integer teacherId);
 
 
 }

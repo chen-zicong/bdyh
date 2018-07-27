@@ -15,6 +15,7 @@
 		<link rel="stylesheet" href="http://bdpak.cn:8080/home/assets/css/amazeui.min.css" />
 		<link rel="stylesheet" type="text/css" href="http://bdpak.cn:8080/home/address-master/dist/amazeui.address.css" />
 		<link rel="stylesheet" href="http://bdpak.cn:8080/home/wechat/wechat-icon/iconfont.css" />
+		<link rel="stylesheet" href="http://bdpak.cn:8080/home/wechat/wechat-icon/iconfont1.css" />
 		<script src="http://bdpak.cn:8080/home/wechat/wechat-icon/iconfont.js">
 
 		</script>
@@ -33,12 +34,12 @@
 		
 		/* 头部标题栏背景色覆盖重写 */
 		.am-header-default {
-			background-color: #41d1e0;
+			background-color: #78b3e9;
 		}
 		
 		/*底部工具栏背景色覆盖重写 */
 		.am-navbar-default .am-navbar-nav {
-			background-color: #41d1e0;
+			background-color: #78b3e9;
 		}
 		/*底部工具栏高度覆盖重写 */
 		.am-navbar {
@@ -380,14 +381,14 @@
 
 			    <li>
 			      <a href="${pageContext.request.contextPath}/course/myCourse"  style="margin-top:5px;">
-			          <i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-wodekecheng" ></i>
+			          <i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-shu" ></i>
 			          <span class="am-navbar-label">我的课程</span>
 			      </a>
 			    </li>
 			    
 			    <li>
 			      <a href="${pageContext.request.contextPath}/user/userCenter" style="margin-top:5px;">
-			          <i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-gerenzhongxinxia"></i>
+			          <i style="color:#FFFFFF;font-size:25px;" class="iconfont icon-geren"></i>
 			          <span class="am-navbar-label">个人中心</span>
 			      </a>
 			    </li>

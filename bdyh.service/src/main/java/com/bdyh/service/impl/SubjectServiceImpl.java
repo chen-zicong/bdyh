@@ -30,7 +30,7 @@ public class SubjectServiceImpl implements SubjectService {
         return subjectMapper.selectByExample(subjectExample);
     }
 
-    public List<Subject> findAll() {
+    public List<String> findAll() {
         return subjectMapper.findAll();
     }
 
