@@ -13,4 +13,8 @@ public interface BenefitService {
 
 
     public float findTeacherAllIncome(Teacher teacher);
+
+    List<List<Object>> agentIncomeByTime(Integer agentId);
+    public AdminStatistics findAgentIncome(Agent agent);
+
 }

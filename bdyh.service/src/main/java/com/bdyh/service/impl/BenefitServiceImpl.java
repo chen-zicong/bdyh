@@ -29,14 +29,14 @@ public class BenefitServiceImpl implements BenefitService {
         List<Teacher> teachers = teacherMapper.findTeacherByAgentId(agent.getAgentId());
         List<AgentStatistics> statisticsList = new ArrayList<>();
         if (teachers.size() > 0) {
-            getStatistics(teachers, statisticsList,agent);
+            getStatistics(teachers, statisticsList, agent);
         }
 
 
         return statisticsList;
     }
 
-    private void getStatistics(List<Teacher> teachers, List<AgentStatistics> statisticsList,Agent agent) {
+    private void getStatistics(List<Teacher> teachers, List<AgentStatistics> statisticsList, Agent agent) {
         for (Teacher teacher : teachers) {
             AgentStatistics statistics = benefitMapper.findStatisticsByTeacherId(teacher.getTeacherId());
             if (statistics == null) {
@@ -53,6 +53,7 @@ public class BenefitServiceImpl implements BenefitService {
         }
     }
 
+
     @Override
     public List<List<Object>> findTeacherByMonth(Integer teacherId) {
         List<List<Object>> list = new ArrayList<>();
@@ -68,12 +69,42 @@ public class BenefitServiceImpl implements BenefitService {
 
     }
 
+    //查询代理商的各个时间段的收入。
+    @Override
+    public List<List<Object>> agentIncomeByTime(Integer agentId) {
+        List<List<Object>> list = new ArrayList<>();
+        List<AgentIncome> incomes = benefitMapper.findAgentIncomeByTime(agentId);
+        for (AgentIncome agentIncome : incomes) {
+            List<Object> income = new ArrayList<>();
+            income.add(agentIncome.getAgent_benefit().floatValue());
+            income.add(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(agentIncome.getDate()));
+            list.add(income);
+        }
+        return list;
+    }
 
 
+    public float findTeacherAllIncome(Teacher teacher) {
+        BigDecimal teacherAllIncome = benefitMapper.findTeacherAllIncome(teacher.getTeacherId());
+        return teacherAllIncome.floatValue();
+    }
 
 
-     public  float findTeacherAllIncome(Teacher teacher){
-         BigDecimal teacherAllIncome = benefitMapper.findTeacherAllIncome(teacher.getTeacherId());
-         return  teacherAllIncome.floatValue();
-     }
+    /*查询代理商的收入的列表，包括一些信息。代理商等级等等*/
+    public AdminStatistics findAgentIncome(Agent agent) {
+        BigDecimal agentIncome = benefitMapper.findAgentIncome(agent.getAgentId());
+        AdminStatistics adminStatistics = new AdminStatistics();
+        if (agentIncome == null) {
+            adminStatistics.setAgentBenefit(BigDecimal.ZERO);
+        } else {
+            adminStatistics.setAgentBenefit(agentIncome);
+        }
+        adminStatistics.setAgentName(agent.getUsername());
+        adminStatistics.setAgentLevel(agent.getAgentLevel());
+        adminStatistics.setAgentId(agent.getAgentId());
+
+        return adminStatistics;
+
+
+    }
 }
