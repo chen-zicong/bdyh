@@ -86,12 +86,12 @@
 </div>--%>
 
 
-<%
+<%--<%
     /*最新的数组*/
     int[] arr = {1,2,3,4,5,6,7,8,9,10,11,12,13};//这个是选项数组
     request.setAttribute("arr", arr);//把他放到request作用域里面
 
-%>
+%>--%>
 <%--<<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 年级管理 <span class="c-gray en">&gt;</span> 年级列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>--%>
 <div class="page-container">
     <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><%--<a href="javascript:;" onclick="datadel()" class="btn btn-primary radius"><!-- <i class="Hui-iconfont">&#xe6e2;</i> --> 默认开通</a>--%> </span> <span class="r">共有数据：<strong>${8}</strong> 条</span> </div>
@@ -109,15 +109,15 @@
             </thead>
             <tbody>
 
-            <c:forEach items="${arr}" var="clazz">
+            <c:forEach items="${incomes}" var="clazz">
                     <%--代理商ID--%>
-                    <td>${clazz}</td>
+                    <td>${clazz.teacherId}</td>
                     <%--代理商name--%>
-                    <td>${clazz}</td>
+                    <td>${clazz.teacherName}</td>
                     <%--代理商ID--%>
-                    <td>${clazz}</td>
+                    <td>${clazz.teacherBenefit}</td>
                     <%--代理商等级--%>
-                    <td>${clazz}</td>
+                    <td>${clazz.teacherBenefit}</td>
                     <%--代理商--%>
 
                     <td>

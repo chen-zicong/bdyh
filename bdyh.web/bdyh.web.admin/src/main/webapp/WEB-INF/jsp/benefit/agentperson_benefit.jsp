@@ -56,41 +56,12 @@
     </script>
 </head>
 <body>
-<%--<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 年级管理 <span class="c-gray en">&gt;</span> 年级列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
-<div class="page-container">
-    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-primary radius"><!-- <i class="Hui-iconfont">&#xe6e2;</i> --> 默认开通</a> </span> <span class="r">共有数据：<strong>${clazzList.size() }</strong> 条</span> </div>
-    <div class="mt-20">
-        <table class="table table-border table-bordered table-hover table-bg table-sort">
-            <thead>
-            <tr class="text-c">
-                <th>年级ID</th>
-                <th>年级</th>
-                <th>科目状态</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${clazzList }" var="clazz">
-                <tr class="text-c">
-                    <td>${clazz.clazzId }</td>
-                    <td>${clazz.clazz }</td>
-                    <td>
-                            &lt;%&ndash; <span class="label label-success radius"><a href="${pageContext.request.contextPath}/subject/subjectList/${clazz.clazzId }">查看所有科目</a></span> &ndash;%&gt;
-                        <span class="label label-success radius"><a style="text-decoration:none" class="ml-5" onClick="member_edit('查看所有科目','${pageContext.request.contextPath}/subject/subjectList/${clazz.clazzId }','${clazz.clazzId }')" href="javascript:;" title="编辑">查看所有科目</a></span>
-                    </td>
 
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-    </div>
-</div>--%>
-
-
-<%
+<%--<%
     int[] arr = {1,2,3,4,5,6,7,8,9,10,11,12,13};//这个是选项数组
     request.setAttribute("arr", arr);//把他放到request作用域里面
 
-%>
+%>--%>
 <%--<<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 年级管理 <span class="c-gray en">&gt;</span> 年级列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>--%>
 <div class="page-container">
     <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><%--<a href="javascript:;" onclick="datadel()" class="btn btn-primary radius"><!-- <i class="Hui-iconfont">&#xe6e2;</i> --> 默认开通</a>--%> </span> <span class="r">共有数据：<strong>${8}</strong> 条</span> </div>
@@ -107,7 +78,7 @@
             </thead>
             <tbody>
 
-            <c:forEach items="${arr}" var="clazz">
+            <c:forEach items="${incomes}" var="clazz">
                 <tr class="text-c">
                         <%--老师ID--%>
                     <td>${clazz.teacherId}</td>
@@ -118,7 +89,7 @@
                     <td>
                             <%-- &lt;%&ndash; <span class="label label-success radius"><a href="${pageContext.request.contextPath}/subject/subjectList/${clazz}">查看所有科目</a></span> &ndash;%&gt;
                              <span class="label label-success radius"><a style="text-decoration:none" class="ml-5" onClick="member_edit('查看所有科目','${pageContext.request.contextPath}/subject/subjectList/${clazz}','${clazz}')" href="javascript:;" title="编辑">查看所有科目</a></span>--%>
-                        <a style="text-decoration:none" class="ml-5"  href="${pageContext.request.contextPath}/statistics/teacherEcharts?teacher_id=${clazz}" title="编辑"><span class="btn btn-success radius">查看详情</span></a>
+                        <a style="text-decoration:none" class="ml-5"  href="${pageContext.request.contextPath}/statistics/teacherEcharts?teacherId=${clazz.teacherId}" title="编辑"><span class="btn btn-success radius">查看详情</span></a>
                     </td>
                     <td>${clazz.agentBenefit}</td>
                 </tr>

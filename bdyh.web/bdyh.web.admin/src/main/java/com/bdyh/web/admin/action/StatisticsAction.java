@@ -202,7 +202,7 @@ public class StatisticsAction {
     @RequestMapping("teacherEcharts")
     public String teacherEcharts(Integer teacherId, Model model) {
         model.addAttribute("teacherId", teacherId);
-        return "benefit/benefit_teacher_echarts";
+        return "benefit/agent_teacher_benefit_echarts";
     }
 
 

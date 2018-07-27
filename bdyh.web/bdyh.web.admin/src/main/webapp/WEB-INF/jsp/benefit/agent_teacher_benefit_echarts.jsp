@@ -17,14 +17,15 @@
 
 <%--<script src="https://cdn.bootcss.com/echarts/3.8.5/echarts-en.common.js"></script>--%>
 <script src="http://echarts.baidu.com/dist/echarts.min.js"></script>
+<%--<script src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>--%>
 <script>
-    var teacherID=<%=request.getAttribute("teacherID")%>
+    var teacherID=<%=request.getParameter("teacherID")%>
     var myChart = echarts.init(document.getElementById('main'));
     $.ajax({
         url : '${pageContext.request.contextPath}/statistics/teacherIncomeByTime',
         type : "get",
         dataType : "json",
-        data :{teacherId:teacherID},
+        data :{teacherId:5},
         cache : false,
         async : false,
         success :function (data) {
