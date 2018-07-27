@@ -13,24 +13,24 @@
 <body>
 
 <div id="main" style="width: 100%;height:600px;"></div>
-<script type="text/javascript" src="http://bdpak.cn:8080/bdyhAdmin/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 <%--<script src="https://cdn.bootcss.com/echarts/3.8.5/echarts-en.common.js"></script>--%>
 <script src="http://echarts.baidu.com/dist/echarts.min.js"></script>
 <script>
-    var teacher_id=<%=request.getParameter("teacher_id")%>
+    var teacherID=<%=request.getAttribute("teacherID")%>
     var myChart = echarts.init(document.getElementById('main'));
     $.ajax({
-        url : '${pageContext.request.contextPath}/statistics/teacherIncomeByMonth',
+        url : '${pageContext.request.contextPath}/statistics/teacherIncomeByTime',
         type : "get",
         dataType : "json",
-        data :{teacherId:5},
+        data :{teacherId:teacherID},
         cache : false,
         async : false,
         success :function (data) {
             myChart.setOption(option = {
                 title: {
-                    text: 'Beijing AQI'
+                    text: '你的收益统计'
                 },
                 tooltip: {
                     trigger: 'axis'

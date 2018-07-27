@@ -110,18 +110,17 @@
             <c:forEach items="${arr}" var="clazz">
                 <tr class="text-c">
                         <%--老师ID--%>
-                    <td>${clazz}</td>
+                    <td>${clazz.teacherId}</td>
                         <%--name--%>
-                    <td>${clazz}</td>
+                    <td>${clazz.teacherName}</td>
                         <%--老师个人收益--%>
-                    <td>${clazz}</td>
+                    <td>${clazz.teacherBenefit}</td>
                     <td>
                             <%-- &lt;%&ndash; <span class="label label-success radius"><a href="${pageContext.request.contextPath}/subject/subjectList/${clazz}">查看所有科目</a></span> &ndash;%&gt;
                              <span class="label label-success radius"><a style="text-decoration:none" class="ml-5" onClick="member_edit('查看所有科目','${pageContext.request.contextPath}/subject/subjectList/${clazz}','${clazz}')" href="javascript:;" title="编辑">查看所有科目</a></span>--%>
                         <a style="text-decoration:none" class="ml-5"  href="${pageContext.request.contextPath}/statistics/teacherEcharts?teacher_id=${clazz}" title="编辑"><span class="btn btn-success radius">查看详情</span></a>
-
                     </td>
-                    <td>${clazz}</td>
+                    <td>${clazz.agentBenefit}</td>
                 </tr>
             </c:forEach>
             </tbody>

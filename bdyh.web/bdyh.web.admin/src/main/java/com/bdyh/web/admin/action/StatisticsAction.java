@@ -7,12 +7,8 @@ import javax.servlet.http.HttpSession;
 import com.bdyh.common.APIResponse;
 import com.bdyh.common.APIResponseX;
 import com.bdyh.common.AdminUtil;
-import com.bdyh.common.Util;
 import com.bdyh.entity.*;
 import com.bdyh.service.BenefitService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -171,6 +167,6 @@ public class StatisticsAction {
     @RequestMapping("teacherEcharts")
     public String teacherEcharts(Integer teacherId,Model model){
         model.addAttribute("teacherId",teacherId);
-            return "benefit/benefit_teacher_echarts";
+            return "benefit/teacher_benefit_echarts";
     }
 }

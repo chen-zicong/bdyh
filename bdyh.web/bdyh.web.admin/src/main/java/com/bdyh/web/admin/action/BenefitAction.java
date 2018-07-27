@@ -27,7 +27,7 @@ public class BenefitAction {
 		System.out.println("=======");
 		model.addAttribute("income", income);
 
-		return "benefit/benefit_teacher_echarts";
+		return "benefit/teacher_benefit_echarts";
 	}
 	
 	/**
