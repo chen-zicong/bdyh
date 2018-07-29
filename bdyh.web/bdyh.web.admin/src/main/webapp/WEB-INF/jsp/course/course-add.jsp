@@ -107,18 +107,18 @@ function courseAddSubmit(){
 				</span>
 			</div>
 		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">视频数量：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="请输入视频的个数哦" id="lessionNum" name="lessionNum">
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">课程价格：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="请输入课程价格" id="coursePrice" name="coursePrice">
-			</div>
-		</div>
+		<%--<div class="row cl">--%>
+			<%--<label class="form-label col-xs-4 col-sm-2">视频数量：</label>--%>
+			<%--<div class="formControls col-xs-8 col-sm-9">--%>
+				<%--<input type="text" class="input-text" value="" placeholder="请输入视频的个数哦" id="lessionNum" name="lessionNum">--%>
+			<%--</div>--%>
+		<%--</div>--%>
+		<%--<div class="row cl">--%>
+			<%--<label class="form-label col-xs-4 col-sm-2">课程价格：</label>--%>
+			<%--<div class="formControls col-xs-8 col-sm-9">--%>
+				<%--<input type="text" class="input-text" value="" placeholder="请输入课程价格" id="coursePrice" name="coursePrice">--%>
+			<%--</div>--%>
+		<%--</div>--%>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">课程介绍：</label>
 			<div class="formControls col-xs-8 col-sm-9">

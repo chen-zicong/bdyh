@@ -55,7 +55,7 @@ public class VideoAction {
 	 */
 	@PostMapping(value="uploadVideo/{courseId}")
 	public void uploadVideo(MultipartFile file,HttpServletRequest request,
-			HttpServletResponse response,@PathVariable("courseId") Integer courseId) throws IllegalStateException, IOException{
+			HttpServletResponse response,@PathVariable("courseId") Integer courseId,String videoName,float videoPrice) throws IllegalStateException, IOException{
 		
 		
 		//获取tomcat所在的目录

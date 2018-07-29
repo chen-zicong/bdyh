@@ -23,8 +23,29 @@
 <link href="http://bdpak.cn:8080/bdyhAdmin/admin/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<span style="float: right;font-size: 14px;color: red;margin-right:10%">温馨提示:视频格式统一为mp4格式</span>
+<h3></h3>
 <div class="page-container">
-	<form class="form form-horizontal" id="form-article-add" >
+	<form class="form form-horizontal" id="valid">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">课程价格：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="请输入课程价格" id="coursePrice" name="coursePrice">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">课程名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="请输入课程名称" id="courseName" name="courseName">
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;确定&nbsp;&nbsp;">
+			</div>
+		</div>
+	</form>
+	<form class="form form-horizontal" id="form-article-add" style="opacity: 0" >
 		<h3></h3>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">视频上传：</label>
@@ -63,36 +84,54 @@
 <script type="text/javascript" src="http://bdpak.cn:8080/bdyhAdmin/admin/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript" src="http://bdpak.cn:8080/bdyhAdmin/admin/lib/webuploader/0.1.5/webuploader.min.js"></script>
 <script type="text/javascript">
+    var videoPrice=0;
+    var videoName='';
+    $('#valid').validate({
+        rules: {
+            courseName: {
+                required: true
+            },
+            coursePrice: {
+                required: true
+            }
+        },
+        success: "valid",
+        submitHandler: function (form) {
+          $('#form-article-add').css('opacity','1');
+          $('.btn-primary').css('display','none');
+        }
+    });
 function article_save(){
 	alert("刷新父级的时候会自动关闭弹层。")
 	window.parent.location.reload();
 }
 
 $(function(){
+
 	$('.skin-minimal input').iCheck({
 		checkboxClass: 'icheckbox-blue',
 		radioClass: 'iradio-blue',
 		increaseArea: '20%'
 	});
-	
+
 	$list = $("#fileList"),
 	$btn = $("#btn-star"),
 	state = "pending",
 	uploader;
-	
+
 	var uploader = WebUploader.create({
-		
+
 		auto: true,
 		swf: 'lib/webuploader/0.1.5/Uploader.swf',
-	
+
 		// 文件接收服务端。
-		
+
 		server: '${pageContext.request.contextPath}/video/uploadVideo/${courseId}',
-	
+
 		// 选择文件的按钮。可选。
 		// 内部根据当前运行是创建，可能是input元素，也可能是flash.
 		pick: '#filePicker',
-	
+
 		// 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
 		resize: false,
 		// 只允许选择图片文件。
@@ -100,6 +139,7 @@ $(function(){
 			title: 'Images',
 			extensions: 'gif,jpg,jpeg,bmp,png',
 			mimeTypes: 'image/*'
+
 		}
 	});
 	uploader.on( 'fileQueued', function( file ) {
@@ -112,7 +152,7 @@ $(function(){
 		),
 		$img = $li.find('img');
 		$list.append( $li );
-	
+
 		// 创建缩略图
 		// 如果为非图片文件，可以不用调用此方法。
 		// thumbnailWidth x thumbnailHeight 为 100 x 100
@@ -121,7 +161,7 @@ $(function(){
 				$img.replaceWith('<span>不能预览</span>');
 				return;
 			}
-	
+
 			$img.attr( 'src', src );
 		}, thumbnailWidth, thumbnailHeight );
 	});
@@ -129,7 +169,7 @@ $(function(){
 	uploader.on( 'uploadProgress', function( file, percentage ) {
 		var $li = $( '#'+file.id ),
 			$percent = $li.find('.progress-box .sr-only');
-	
+
 		// 避免重复创建
 		if ( !$percent.length ) {
 			$percent = $('<div class="progress-box"><span class="progress-bar radius"><span class="sr-only" style="width:0%"></span></span></div>').appendTo( $li ).find('.sr-only');
@@ -137,17 +177,17 @@ $(function(){
 		$li.find(".state").text("上传中");
 		$percent.css( 'width', percentage * 100 + '%' );
 	});
-	
+
 	// 文件上传成功，给item添加成功class, 用样式标记上传成功。
 	uploader.on( 'uploadSuccess', function( file ) {
 		$( '#'+file.id ).addClass('upload-state-success').find(".state").text("已上传");
 	});
-	
+
 	// 文件上传失败，显示上传出错。
 	uploader.on( 'uploadError', function( file ) {
 		$( '#'+file.id ).addClass('upload-state-error').find(".state").text("上传出错");
 	});
-	
+
 	// 完成上传完了，成功或者失败，先删除进度条。
 	uploader.on( 'uploadComplete', function( file ) {
 		$( '#'+file.id ).find('.progress-box').fadeOut();
@@ -316,7 +356,7 @@ $(function(){
             alert( 'Web Uploader 不支持您的浏览器！');
             return;
         }
-		
+
         // 实例化
         uploader = WebUploader.create({
             pick: {
@@ -324,26 +364,27 @@ $(function(){
                 label: '点击选择视频'
             },
             formData: {
-                uid: 123
+                videoPrice: videoPrice
             },
             dnd: '#dndArea',
             paste: '#uploader',
             swf: 'lib/webuploader/0.1.5/Uploader.swf',
             chunked: false,
             chunkSize: 512 * 1024,
-            
+
             server: '${pageContext.request.contextPath}/video/uploadVideo/${courseId}',
+
             //server: 'lib/webuploader/0.1.5/server/fileupload.php',
             // runtimeOrder: 'flash',
 
-            // accept: {
-            //     title: 'Images',
-            //     extensions: 'gif,jpg,jpeg,bmp,png',
-            //     mimeTypes: 'image/*'
-            // },
-			
-            
-            
+            accept: {
+                title: '视频上传',
+                extensions: 'mp4',
+                mimeTypes: 'video/*,audio/*,application/*'
+            },
+
+
+
             // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
             disableGlobalDnd: true,
             fileNumLimit: 300,
@@ -710,7 +751,11 @@ $(function(){
         });
 
         uploader.onError = function( code ) {
-            alert( 'Eroor: ' + code );
+            if(code=='Q_TYPE_DENIED'){
+                alert("视频格式不正确，请上传mp4格式的视频！");
+			}else {
+                alert('Eroor: ' + code);
+            }
         };
 
         $upload.on('click', function() {
@@ -738,6 +783,17 @@ $(function(){
         $upload.addClass( 'state-' + state );
         updateTotalProgress();
     });
+
+    $('.uploadBtn').click(function () {
+        var price = $('#coursePrice').val();
+        var name = $('#courseName').val()
+
+        videoPrice = price;
+        videoName = name;
+        console.log(videoName);
+        console.log(videoPrice);
+    })
+
 
 })( jQuery );
 </script>
