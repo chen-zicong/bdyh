@@ -27,6 +27,7 @@ import com.bdyh.service.PictureService;
  * @author cxs
  */
 
+
 @Controller
 @RequestMapping(value="picture")
 public class PictureAction {
