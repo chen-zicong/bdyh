@@ -36,7 +36,7 @@
                         
                         <prop key="kaptcha.background.clear.to">white</prop>
                         <!-- 图片样式 -->
-                        <prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.ShadowGimpy</prop>
+                        <prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.WaterRipple </prop>
 					</props>
 				</constructor-arg>
 			</bean>

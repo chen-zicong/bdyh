@@ -14,7 +14,7 @@ import net.sf.json.JSONObject;
  * @author cxs
  */
 public class WechatTest {
-	public static void main2(String[] args) throws ParseException, IOException {
+	public static void main(String[] args) throws ParseException, IOException {
 		
 		AccessToken token=WechatUtil.getAccessToken();
 		/*
@@ -42,7 +42,7 @@ public class WechatTest {
 		
 	}
 
-	public static void main(String[] args) {
+	public static void main2(String[] args) {
 		try {
 			WechatUtil.initMenu();
 		} catch (UnsupportedEncodingException e) {

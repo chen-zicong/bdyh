@@ -63,6 +63,9 @@ public class SubjectAction {
     @RequestMapping(value = "subjectStart")
     @ResponseBody
     public APIResponse subjectStart(Integer subjectId) {
+        Subject subject = subjectService.findSubjectById(subjectId);
+        //开启这个年级的这个科目的同时， 所有的课变成待审核。
+        subjectService.startSubjectStatus(subject.getClazzId(), subject.getSubject());
         return subjectService.updateStatusById(subjectId, 1);
     }
 
@@ -75,6 +78,9 @@ public class SubjectAction {
     @RequestMapping(value = "subjectDown")
     @ResponseBody
     public APIResponse subjectDown(Integer subjectId) {
+        //关闭这个年级的这个科目的同时， 所有的课变成下架。
+        Subject subject = subjectService.findSubjectById(subjectId);
+        subjectService.downSubjectStatus(subject.getClazzId(), subject.getSubject());
         return subjectService.updateStatusById(subjectId, 0);
     }
 
@@ -90,9 +96,8 @@ public class SubjectAction {
 
     @RequestMapping("addSubjectPage/{clazzId}")
 
-    public String addSubjectPage(@PathVariable("clazzId") Integer clazzId,Model mode)
-    {
-        mode.addAttribute("clazzId",clazzId);
+    public String addSubjectPage(@PathVariable("clazzId") Integer clazzId, Model mode) {
+        mode.addAttribute("clazzId", clazzId);
         return "subject/subject-add";
     }
 }

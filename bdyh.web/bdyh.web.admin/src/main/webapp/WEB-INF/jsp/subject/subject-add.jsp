@@ -113,7 +113,6 @@
                 //这里使用异步提交是为了验证区域存不存在,验证成功后
                 var subjectname=$('#subjectname').val();
                 var  id="${clazzId}";
-                alert(id);
                 $.ajax({
                     url: "${pageContext.request.contextPath}/subject/addSubject",
                     type: "post",

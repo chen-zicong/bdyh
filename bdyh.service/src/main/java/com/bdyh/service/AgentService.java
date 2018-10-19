@@ -28,4 +28,5 @@ public interface AgentService {
 	APIResponse setDivide(Integer teacher,Agent agent,Integer divideNum);
 
 
+    int AgentBatchDeletion(List<Integer> agentIds);
 }

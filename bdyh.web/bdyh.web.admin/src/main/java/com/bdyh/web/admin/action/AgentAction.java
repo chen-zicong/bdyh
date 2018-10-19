@@ -34,7 +34,7 @@ public class AgentAction {
         Agent agent = (Agent) AdminUtil.getShiroSessionByKey("userAgent");
         List<Teacher> teachers = teacherService.findTeacherByAgent(agent.getAgentId());
         List<AgentDivide> divide = agentService.divide(teachers, agent);
-         model.addAttribute("divide",divide);
+        model.addAttribute("divide", divide);
         return "benefit/divide";
 
     }
@@ -43,8 +43,21 @@ public class AgentAction {
     @ResponseBody
     public APIResponse setDivide(int teacherId, int divideNum) {
         Agent agent = (Agent) AdminUtil.getShiroSessionByKey("userAgent");
-      return agentService.setDivide(teacherId, agent, divideNum);
+        return agentService.setDivide(teacherId, agent, divideNum);
 
 
+    }
+
+    //批量删除代理商
+    //因为代理商关联到老师，所以谨慎。
+    @RequestMapping("AgentBatchDeletion")
+    @ResponseBody
+    public APIResponse AgentBatchDeletion(List<Integer> agentIds) {
+        int i = agentService.AgentBatchDeletion(agentIds);
+        if (i > 0) {
+            return APIResponse.success();
+        } else {
+            return APIResponse.fail("删除失败");
+        }
     }
 }

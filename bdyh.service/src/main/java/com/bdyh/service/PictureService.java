@@ -18,4 +18,5 @@ public interface PictureService {
 
 	public List<HomePicture> findHomePictureRelease();
 
+    int batchDeletePicture(int [] pictureIds);
 }

@@ -3,7 +3,9 @@ package com.bdyh.service.impl;
 import java.util.List;
 
 import com.bdyh.common.APIResponse;
+import com.bdyh.dao.CourseMapper;
 import com.bdyh.dao.SubjectDao;
+import com.bdyh.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ public class SubjectServiceImpl implements SubjectService {
     private SubjectMapper subjectMapper;
     @Autowired
     private SubjectDao subjectDao;
+    @Autowired
+    private CourseMapper courseMapper;
 
 
     @Override
@@ -60,7 +64,7 @@ public class SubjectServiceImpl implements SubjectService {
      */
     @Override
     public APIResponse addSubject(Subject subject) {
-        Subject subject1 = subjectDao.selectBySubjectName(subject.getSubject());
+        Subject subject1 = subjectDao.selectBySubjectName(subject.getSubject(),subject.getClazzId());
         if (subject1 != null) {
             return APIResponse.fail("科目名重复");
         } else {
@@ -73,6 +77,14 @@ public class SubjectServiceImpl implements SubjectService {
             }
         }
 
+    }
+
+    public int startSubjectStatus(int clazzId, String subjectName){
+        return courseMapper.updateBySubject(clazzId,subjectName,1);
+    }
+
+    public int downSubjectStatus(int clazzId, String subjectName){
+      return   courseMapper.updateBySubject(clazzId,subjectName,0);
     }
 
 }

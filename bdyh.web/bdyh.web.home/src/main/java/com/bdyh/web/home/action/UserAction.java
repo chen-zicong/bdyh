@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.bdyh.entity.*;
+import com.bdyh.service.*;
 import org.apache.http.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,14 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
-import com.bdyh.entity.Course;
-import com.bdyh.entity.HomePicture;
-import com.bdyh.entity.UserWechat;
-import com.bdyh.entity.WeAccess;
-import com.bdyh.service.CourseService;
-import com.bdyh.service.PictureService;
-import com.bdyh.service.UserService;
-import com.bdyh.service.WeAccessService;
 import com.bdyh.web.wechat.utils.WechatUtil;
 
 import net.sf.json.JSONObject;
@@ -42,6 +36,9 @@ public class UserAction {
 	private UserService userService;
 	@Autowired
 	private CourseService courseService;
+
+	@Autowired
+	private ClazzService clazzService;
 	
 	/**
 	 * 
@@ -154,6 +151,10 @@ public class UserAction {
 				modelAndView.addObject("homePictureList", homePictureList);
 				//不使用freemarker生成html，使用jsp
 				modelAndView.addObject("courseList", courseList);
+
+				//取出已经开通的年级的列表。
+				List<Clazz> clazzList =clazzService.findClazzByStatus();
+				modelAndView.addObject("clazzList", clazzList);
 				
 			}else{
 				returnString="wechat/error";

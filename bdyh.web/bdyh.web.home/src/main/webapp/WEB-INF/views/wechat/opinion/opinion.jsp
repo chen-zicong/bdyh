@@ -131,10 +131,10 @@ body, html {
 			<div class="am-g am-margin-top">
 				<div class="am-u-sm-10 am-u-sm-offset-2">
 					<div class="am-form-group am-g">
-						<textarea id="opinion" style="width:80%" cols="22"  rows="5" placeholder="写点什么......">
-						</textarea>  
+						<textarea id="opinion" style="width:80%" cols="22"  rows="5" placeholder="写点什么......"></textarea>
 					</div>
 					<small >200字以内...</small>
+					<small>(为了方便反馈之后与你取得联系，请您备注一下的联系方式。)</small>
 				</div>
 			</div>
 			<div class="am-g">

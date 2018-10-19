@@ -80,4 +80,12 @@ public interface CourseService {
 
     public int addOrder(UserOrder userOrder);
 
+    public boolean checkIfItIsOpen(Integer courseLevel);
+
+    public int setCourseDown(int ClazzName);
+
+    public int setCourseUp(int clazzName);
+
+    int findByCourseName(String courseName);
+
 }

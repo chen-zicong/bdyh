@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Service;
 
 public interface CourseMapper {
@@ -34,4 +35,10 @@ public interface CourseMapper {
 
     @Select("select * from course where teacher_id = #{teacherId}")
     List<Course> selectAllCourseByTeacherId(@Param("teacherId") Integer teacherId);
+
+    @Update("update course set status = #{status} where  course_level = #{clazzId}")
+    int updateByClazz(@Param("clazzId") int clazzId, @Param("status") int status);
+    @Update("update course set status = #{status} where  course_level = #{clazzId} and course_type = #{subjectName}")
+    int updateBySubject(@Param("clazzId") int clazzId, @Param("subjectName") String subjectName ,@Param("status") int status);
+
 }

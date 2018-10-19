@@ -27,4 +27,6 @@ public interface HomePictureMapper {
     int updateByPrimaryKeySelective(HomePicture record);
 
     int updateByPrimaryKey(HomePicture record);
+
+    int deleteList(@Param("pictureIds") int [] pictureIds);
 }

@@ -67,7 +67,7 @@
 <!-- <div class="header"></div> -->
 <div class="loginWraper">
   <div id="loginform" class="loginBox">
-    <form id="loginForm" class="form form-horizontal" action="${pageContext.request.contextPath}/admin/login" method="post">
+    <form id="loginForm" class="form form-horizontal" acti	on="${pageContext.request.contextPath}/admin/login" method="post">
       <div class="row cl">
         <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe62d;</i></label>
         <div class="formControls col-xs-8">
@@ -112,9 +112,65 @@
       </div>
     </form>
   </div>
+  <div class="footer" style="height : 230px ; width: auto ; font-size : 15px;text-align:left; padding-left:40px"}>
+            <div class="row cl" style="margin : 0px 130px 0px 130px ">
+              <div class="col-xs-3 " >
+                <div class="footer_main--column">
+                  <b class="footer_main--column_title" style="font-size :20px">关于我们</b>
+                  <div class="footer_about">
+                      <p class="footer_about--text">
+                         公司主要从事卫星导航运营服务、地理信息、
+						 <br>
+						 数据平台研发与技术服务、位置应用系统集成、
+						 <br>
+						 遥感信息以及导航终端的研发、生产、销售和服务。
+                      </p>
+                     
+                    </div>
+                </div>
+              </div>
+
+              <div class="col-xs-3 ">
+                <div class="footer_main--column">
+                  <strong class="footer_main--column_title" style="font-size :20px">产品中心</strong>
+                  <ul class="footer_navigation">
+                    <li class="footer_navigation--item"><a href="#" class="footer_navigation--link">小科斗</a><i class="Hui-iconfont" style="float:right">&#xe63d;</i></li>
+                    <li class="footer_navigation--item"><a href="http://xkdschool.bdpak.com/Login/index" target="_blank" class="footer_navigation--link">校园平台</a><i class="Hui-iconfont" style="float:right">&#xe63d;</i></li>
+                    <li class="footer_navigation--item"><a href="http://xkdschool.bdpak.com/adminmgr" target="_blank" class="footer_navigation--link">云平台</a><i class="Hui-iconfont" style="float:right">&#xe63d;</i></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-xs-3 ">
+                <div class="footer_main--column">
+                  <strong class="footer_main--column_title" style="font-size :20px" >技术支持</strong>
+                  <ul class="footer_navigation">
+                    <li class="footer_navigation--item"><a href="#" class="footer_navigation--link">企业信息化白皮书</a><i class="Hui-iconfont" style="float:right">&#xe63d;</i></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-xs-3 ">
+                <div class="footer_main--column">
+                  <strong class="footer_main--column_title" style="font-size :20px" >联系详情</strong>
+                  <ul class="footer_contact_info">
+                    <li class="footer_contact_info--item"><i class="Hui-iconfont">&#xe6a3;</i><span>  服务专线：400 6133 663</span></li>
+                    <li class="footer_contact_info--item"><i class="Hui-iconfont">&#xe63b;</i><span>  bdpak.com</span></li>
+                    <li class="footer_contact_info--item"><i class="Hui-iconfont">&#xe625;</i><span>  广东省惠州市惠城区江北三新北路10号互联网公园3楼</span></li>
+                  </ul>
+                </div>
+              </div>
+			  <div class="col-xs-12" style="text-align:center; color:#ffffff;">Copyright 北斗宇航 粤ICP备16090529号-2 <a href="http://www.miitbeian.gov.cn" style="color:#ffffff;" target="_blank"></a></div>
+            </div>
+          </div>
+  
 </div>
-<div class="footer">Copyright 北斗宇航</div>
-<script type="text/javascript" src="http://bdpak.cn:8080/bdyhAdmin/admin/lib/jquery/1.9.1/jquery.min.js"></script> 
+<!--div class="footer"> Copyright 北斗宇航 粤ICP备16090529号-2</div-->
+
+
+
+
+<script type="text/javascript" src="http://bdpak.cn:8080/bdyhAdmin/admin/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="http://bdpak.cn:8080/bdyhAdmin/admin/static/h-ui/js/H-ui.min.js"></script>
 <script type="text/javascript">
 	if (top.location != self.location){     

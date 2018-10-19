@@ -2,6 +2,7 @@ package com.bdyh.service;
 
 import java.util.List;
 
+import com.bdyh.entity.City;
 import com.bdyh.entity.District;
 
 public interface DistrictService {
@@ -9,5 +10,7 @@ public interface DistrictService {
 	public District findDistrictByName(String districtName);
 
 	public List<District> findDistrictByCityId(Integer cityId);
+
+	int  findCityByProvince (Integer provinceId);
 
 }

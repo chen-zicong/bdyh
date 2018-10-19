@@ -8,6 +8,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,14 +51,13 @@ public class VideoAction {
      * 开始上传视频
      *
      * @param file
-     * @param request
-     * @param response
+
      * @param courseId
      * @throws IllegalStateException
      * @throws IOException
      */
-    @PostMapping(value = "uploadVideo/{courseId}")
-    public void uploadVideo(MultipartFile file, @PathVariable("courseId") Integer courseId, String videoName, float videoPrice) throws IllegalStateException, IOException {
+    @RequestMapping(value = "uploadVideo/{courseId}")
+    public void uploadVideo(MultipartFile file, @PathVariable("courseId") Integer courseId,  String videoName, Double videoPrice) throws IllegalStateException, IOException {
 
 
         //获取tomcat所在的目录
@@ -89,10 +89,10 @@ public class VideoAction {
 
 
         //开始上传
-        file.transferTo(video);
+     //   file.transferTo(video);
         System.out.println(video.getName());
         //设置访问权限
-        Runtime.getRuntime().exec("chmod 755 " + path + video.getName());
+     //   Runtime.getRuntime().exec("chmod 755 " + path + video.getName());
 
 
         //文件名是以源文件名+courseId,防止不同教师上传相同文件名的视频覆盖其他教师的视频
@@ -122,7 +122,7 @@ public class VideoAction {
         newVideo.setVideoName(videoName);
         newVideo.setVideoPath(video.getName());
         //设置单个视频的价格,应该是添加课程之后的总价/lessionNum
-        newVideo.setVideoPrice((double) videoPrice);
+        newVideo.setVideoPrice(videoPrice);
 
         videoService.saveVideo(newVideo);
         course.setLessionNum(course.getLessionNum()+1);

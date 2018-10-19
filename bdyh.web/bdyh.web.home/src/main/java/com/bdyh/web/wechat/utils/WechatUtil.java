@@ -45,14 +45,14 @@ public class WechatUtil {
 	/*public static final String APPID="wxcfb020429c66b6d4";
 	public static final String APPSECRET="83c5303391ca749e67e51946c663e7bc";*/
 	
-//	/*北斗宇航服务号*/
-//	public static final String APPID="wx889eda281d723087";
-//	public static final String APPSECRET="e2563e68c733b2c247da4441a9df39af";
+	/*北斗宇航服务号*/
+	public static final String APPID="wx889eda281d723087";
+	public static final String APPSECRET="b2775c3173c05c713b91710839d2f6da";
 
-	//陈梓聪测试号
-	public static final String APPID="wxdc9fecea689cd801";
-	public static final String APPSECRET="a1408ff1e5231e90ec60e3d9a3311106";
-	
+//	//陈梓聪测试号z
+//	public static final String APPID="wxdc9fecea689cd801";
+//	public static final String APPSECRET="a1408ff1e5231e90ec60e3d9a3311106";
+//
 	private static final String ACCESS_TOKEN_URL="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
 	private static final String UPLOAD_URL = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE";
 	private static final String CREATE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
@@ -61,8 +61,8 @@ public class WechatUtil {
 	
 	private static final String DELETE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=ACCESS_TOKEN";
 	
-	/*private static final String URL="http://cxs.nat300.top/bdyh.web.home/user/getUser";*/
-	private static final String URL="http://bdpak.cn/bdyh.web.home/user/getUser";
+	private static final String URL="http://9s3inc.natappfree.cc/home/user/getUser";
+	//private static final String URL="http://bdpak.cn/bdyh.web.home/user/getUser";
 	/**
 	 * get请求
 	 * @param url

@@ -51,6 +51,9 @@ public class CourseServiceImpl implements CourseService {
     private BenefitMapper benefitMapper;
 
 
+    @Autowired
+    private ClazzMapper clazzMapper;
+
     /*---------------------------------------------------------------------微信端模块--------------------------------------------------------------------*/
 
     /**
@@ -415,6 +418,33 @@ public class CourseServiceImpl implements CourseService {
         TeacherIncomeExample.Criteria criteria = teacherIncomeExample.createCriteria();
         Float income = incomeDao.selectIncomeByTeacherId(id);
         return income;
+    }
+
+
+    public boolean checkIfItIsOpen(Integer courseLevel) {
+        ClazzExample clazzExample = new ClazzExample();
+        ClazzExample.Criteria criteria = clazzExample.createCriteria();
+        criteria.andClazzIdEqualTo(courseLevel).andStatusEqualTo(1);
+        List<Clazz> clazzes = clazzMapper.selectByExample(clazzExample);
+        return clazzes.size() > 0;
+    }
+
+
+    public int setCourseDown(int clazzId) {
+        return courseMapper.updateByClazz(clazzId, 0);
+    }
+
+    public int setCourseUp(int clazzId) {
+        return courseMapper.updateByClazz(clazzId, 1);
+    }
+
+
+    public int findByCourseName(String courseName) {
+        ClazzExample clazzExample = new ClazzExample();
+        ClazzExample.Criteria criteria = clazzExample.createCriteria();
+        criteria.andClazzEqualTo(courseName);
+        List<Clazz> clazzes = clazzMapper.selectByExample(clazzExample);
+        return clazzes.get(0).getClazzId();
     }
     /*-----------------------------------------------------------------------后台模块------------------------------------------------------------------*/
 

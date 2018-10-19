@@ -8,6 +8,6 @@ import org.apache.ibatis.annotations.Update;
 public interface SubjectDao {
     @Update("update subject set Status  =#{status} where  subject_id = #{subjectId}")
     public int updateStatusById(@Param("subjectId") Integer subjectId, @Param("status") Integer status);
-    @Select("select * from subject where subject = #{subjectName}")
-    Subject selectBySubjectName(@Param("subjectName") String subjectName);
+    @Select("select * from subject where subject = #{subjectName} and clazz_id =#{clazzId}")
+    Subject selectBySubjectName(@Param("subjectName") String subjectName,@Param("clazzId") Integer clazzId);
 }

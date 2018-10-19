@@ -63,6 +63,12 @@ public class PictureServiceImpl implements PictureService {
 		criteria.andStatusEqualTo(1);
 		return homePictureMapper.selectByExample(homePictureExample);
 	}
-	
-	
+
+    @Override
+    public int batchDeletePicture(int [] pictureIds) {
+
+		return homePictureMapper.deleteList(pictureIds);
+    }
+
+
 }

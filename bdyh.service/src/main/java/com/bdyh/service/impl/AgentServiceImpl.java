@@ -134,4 +134,10 @@ public class AgentServiceImpl implements AgentService {
 
     }
 
+    @Override
+    public int AgentBatchDeletion(List<Integer> agentIds) {
+        int i = agentMapper.delectByList(agentIds);
+        return i;
+    }
+
 }

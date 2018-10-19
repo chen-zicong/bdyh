@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.bdyh.common.APIResponse;
 import com.bdyh.entity.HomePicture;
+import com.bdyh.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +33,9 @@ public class ClazzAction {
     @Autowired
     private ClazzService clazzService;
 
+    @Autowired
+    private CourseService courseService;
+
 
     @RequestMapping(value = "clazzList")
     public String clazzList(Model model) {
@@ -45,7 +49,11 @@ public class ClazzAction {
     public void clazzLayDown(Integer clazzId, HttpServletResponse response) {
         Clazz clazz = clazzService.findClazzById(clazzId);
         clazz.setStatus(0);
+        //改课程下架的时候把改课程下的所有课都设置为下架
+
         int i = clazzService.updateClazz(clazz);
+
+        courseService.setCourseDown(clazz.getClazzId());
         try {
             PrintWriter out = response.getWriter();
 
@@ -60,6 +68,8 @@ public class ClazzAction {
     public void clazzLayStart(Integer clazzId, HttpServletResponse response) {
         Clazz clazz = clazzService.findClazzById(clazzId);
         clazz.setStatus(1);
+        //上线的时候，把该课程的所有课都改成待审核。  重新上线这个年级的时候，所有的课都要重新审核。
+        courseService.setCourseUp(clazzId);
         int i = clazzService.updateClazz(clazz);
         try {
             PrintWriter out = response.getWriter();

@@ -149,6 +149,9 @@
 			.am-menu-slide1 .am-menu-nav>.am-parent>a:after{
 				content:none;
 			}
+			video::-webkit-media-controls{
+				display: none !important;
+			}
 		</style>
 	</head>
 	<body>
@@ -180,11 +183,29 @@
 		<!-- bdyh_news_content_main start -->
 		<div class="bdyh_news_content_main">
 			<!-- vedio play district -->
-			<div style="width:100%;">
-				<video id="example_video_1" class="video-js vjs-amazeui" controls
+			<div id="v1" style="width:100%; display: none">
+				<video id="example_video_1" class="video-js vjs-amazeui" controls="true"
 					   preload="none" width="100%" height="264"
-					   poster="http://bdpak.cn:8080/home/demo/slideshow5.jpg" data-setup="{}">
-					<source id="example_video_source" src="http://bdpak.cn:8080/home/video/${video[0].videoPath}" type='video/mp4' />
+					   poster="http://bdpak.cn:8080/home/demo/slideshow5.jpg" data-setup="{}" disabled="true">
+					<source id="example_video_source" src="" type='video/mp4' />
+					<!-- <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
+				  <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' /> -->
+					<track kind="captions" src="http://bdpak.cn:8080/home/video.js/demo.captions.vtt" srclang="en" label="English"></track>
+					Tracks need an ending tag thanks to IE9
+					<track kind="subtitles" src="http://bdpak.cn:8080/home/video.js/demo.captions.vtt" srclang="en" label="English"></track>
+					Tracks need an ending tag thanks to IE9
+					<p class="vjs-no-js">
+						To view this video please enable JavaScript, and consider
+						upgrading to a web browser that
+						<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+					</p>
+				</video>
+			</div>
+			<div  id="v2" style="width:100%;">
+				<video  class="video-js vjs-amazeui"
+					   preload="none" width="100%" height="264"
+					   poster="http://bdpak.cn:8080/home/demo/slideshow5.jpg" data-setup="{}" disabled="true">
+					<source id="" src="" type='video/mp4' />
 					<!-- <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
 				  <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' /> -->
 					<track kind="captions" src="http://bdpak.cn:8080/home/video.js/demo.captions.vtt" srclang="en" label="English"></track>
@@ -368,6 +389,16 @@
 
 											<div  class="am-list-item-hd lesson-catalog-list" style="display: inline-block; width: 95%">
 												<c:choose>
+												<c:when test="${video.videoPrice eq 0.0}">
+													<a id="Ccourse" href="javascript:playVideo('${video.videoPath}')" style="display:inline-block">
+														<i style="font-size:15px;margin-left:5px;" class="iconfont icon-bofang"></i>
+														<span>${video.videoName}</span>
+														<span style="color:green;">(免费)</span>
+														<span id="Permission" style="display:none">${video.paystatus}</span>
+														<span id="path" style="display:none;">${video.videoPath}</span>
+													</a>
+
+												</c:when>
                                                 <c:when test="${video.paystatus eq 1}">
 												<a id="Ccourse" href="javascript:playVideo('${video.videoPath}')" style="display:inline-block">
 													<i style="font-size:15px;margin-left:5px;" class="iconfont icon-bofang"></i>
@@ -443,11 +474,11 @@
 		<!-- bdyh_news_content_main end -->
 
 		<!--回顶部 -->
-		<div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
-			<a href="#top" title=""> <i
-					class="am-gotop-icon am-icon-hand-o-up"></i>
-			</a>
-		</div>
+		<%--<div data-am-widget="gotop" class="am-gotop am-gotop-fixed">--%>
+			<%--<a href="#top" title=""> <i--%>
+					<%--class="am-gotop-icon am-icon-hand-o-up"></i>--%>
+			<%--</a>--%>
+		<%--</div>--%>
 
 		<!-- foot navbar start -->
 		<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default">
@@ -591,7 +622,8 @@
         }
 
         function playVideo(obj) {
-
+            $('#v1').show();
+            $('#v2').css('display','none');
             /*使用nginx时候把${pageContext.request.contextPath}替换成http://localhost:8080/video/obj*/
             if(obj.toString().trim()!=null){
                 var path=obj.toString();
@@ -758,9 +790,8 @@
         function Buy() {
             if(IdList.length){
 
-            window.location.replace("${pageContext.request.contextPath}/routeW/createOrder?courseId="+courseid+"&videosId="+IdList);
+            window.location.replace("${pageContext.request.contextPath}/routeW/createOrder?courseId="+courseid+"&videosId="+IdList)
 
-				<%--window.location.href="${pageContext.request.contextPath}/order/createOrder?courseId="+courseid+"&videosId="+IdList;--%>
             }
 
         }

@@ -14,6 +14,8 @@ import com.bdyh.entity.*;
 import com.bdyh.service.*;
 import com.bdyh.wechat.pay.utils.WXPayUtil;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,6 +60,15 @@ public class CourseAction {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private ClazzService clazzService;
+
+    @Autowired
+    private CityService cityService;
+
+    @Autowired
+    private ProvinceService provinceService;
+
 
     /**
      * 查询所有推荐的课程
@@ -72,7 +83,9 @@ public class CourseAction {
         if (courseList.size() == 0) {
             //查询所有推荐课程并保存在缓存
             courseList = courseService.findAllRecommandCourse();
+            courseList = courseService.findAllRecommandCourse();
             redisCache.setCacheList("courseListRecommand", courseList);
+
         }
 		
 		/*Configuration configuration = freeMarkerConfigurer.getConfiguration();
@@ -268,6 +281,25 @@ public class CourseAction {
 			
 			redisCache.setCacheList("courseListLevel"+courseLevel, courseList);
 		}*/
+
+        Clazz clazz = clazzService.findClazzById(courseLevel);
+        model.addAttribute("nianji",clazz.getClazz());
+        boolean result = courseService.checkIfItIsOpen(courseLevel);
+        if (!result) {
+            return "wechat/course/clazz-warn";
+        }
+
+        //查询开放的年级和科目
+        List<ClazzVo> openClazzAndSubject = clazzService.findOpenClazzAndSubject();
+        JSONArray openClazzAndSubjectJson = JSONArray.fromObject(openClazzAndSubject);
+        model.addAttribute("openClazzAndSubject", openClazzAndSubjectJson);
+
+        //查询开放的区域
+        List<ProvinceVo> addressObj = provinceService.findOpenRegion();
+        JSONArray addressJson =  JSONArray.fromObject(addressObj);
+        model.addAttribute("addressJson", addressJson);
+
+
         courseList = courseService.findCourseByCourseLevel(courseLevel);
         model.addAttribute("courseList", courseList);
         return "wechat/course/list";
@@ -288,7 +320,7 @@ public class CourseAction {
         Course course = new Course();
 
         if (courseLevel != null && !"".equals(courseLevel)) {
-            int level = CourseLevelUtil.getCourseLevel(courseLevel);
+            int level = courseService.findByCourseName(courseLevel);
             course.setCourseLevel(level);
         }
 
@@ -304,7 +336,9 @@ public class CourseAction {
         District district = null;
         if (districtName != null && !"".equals(districtName)) {
             district = districtService.findDistrictByName(districtName);
-            course.setDistrictId(district.getDistrictId());
+            City city = cityService.findCityByName(districtName);
+
+            course.setDistrictId(city.getCityId());
         }
 
         List<Course> courseList = courseService.searchCourseExample(course);
@@ -326,7 +360,7 @@ public class CourseAction {
 //            //将查询结果存放至redis，key是userCourseList+openid
 //            //redisCache.setCacheList("userCourseList"+user.getOpenid(), userCourseList);
 //        }
-//
+//151
 //        //根据用户的openid取出属于用户的待付款的课程，不使用缓存,考虑做成当用户付款之后删除缓存数据的做法
 //        //TODO 修改加入缓存
 //        List<UserCourseVo> userCourseListUnPay = courseService.findUnPayCourseOfUser(user);
@@ -337,8 +371,8 @@ public class CourseAction {
         List<PayOrder> payOrders = orderService.findpayOrderByOpenId(user.getOpenid());
         List<UnPayOrder> unpayOrderByOpenId = orderService.findUnpayOrderByOpenId(user.getOpenid());
 
-        model.addAttribute("userCourseListUnPay",unpayOrderByOpenId );
-        model.addAttribute("userCourseListPayed",payOrders);
+        model.addAttribute("userCourseListUnPay", unpayOrderByOpenId);
+        model.addAttribute("userCourseListPayed", payOrders);
         return "wechat/course/myCourse";
     }
 
@@ -425,6 +459,19 @@ public class CourseAction {
 			redisCache.setCacheList("courseListLevel"+courseLevel, courseList);
 		}*/
         courseList = courseService.findAllAuditCourse();
+
+
+        //查询开放的年级和科目
+        List<ClazzVo> openClazzAndSubject = clazzService.findOpenClazzAndSubject();
+        JSONArray openClazzAndSubjectJson = JSONArray.fromObject(openClazzAndSubject);
+        model.addAttribute("openClazzAndSubject", openClazzAndSubjectJson);
+
+        //查询开放的区域
+        List<ProvinceVo> addressObj = provinceService.findOpenRegion();
+        JSONArray addressJson =  JSONArray.fromObject(addressObj);
+        model.addAttribute("addressJson", addressJson);
+
+
         model.addAttribute("courseList", courseList);
         return "wechat/course/list";
     }
@@ -466,13 +513,14 @@ public class CourseAction {
 
     /**
      * 从支付订单进入视频详情的接口，从这里进入只显示已支付的所有课程 。
+     *
      * @param orderId
      * @param model
      * @param session
      * @return
      */
     @RequestMapping("paidCourse")
-    public String Paid(String orderId, Model model,HttpSession session) {
+    public String Paid(String orderId, Model model, HttpSession session) {
         UserWechat user = (UserWechat) session.getAttribute("user");
         List<Integer> videosId = orderService.findOrderDetailByOrderId(orderId);
         UserOrder userOrder = orderService.findUserOrder(orderId);

@@ -2,8 +2,11 @@ package com.bdyh.dao;
 
 import com.bdyh.entity.Province;
 import com.bdyh.entity.ProvinceExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 public interface ProvinceMapper {
@@ -28,6 +31,10 @@ public interface ProvinceMapper {
     int updateByPrimaryKeySelective(Province record);
 
     int updateByPrimaryKey(Province record);
+
     @Update("update province set status=#{status} where province_id=#{provinceId}")
-    int updateProvinceStatus(@Param("provinceId") int provinceId,@Param("status") int status);
+    int updateProvinceStatus(@Param("provinceId") int provinceId, @Param("status") int status);
+
+    @Select("select * from province where status = 1")
+    List<Province> findOpenProvince();
 }

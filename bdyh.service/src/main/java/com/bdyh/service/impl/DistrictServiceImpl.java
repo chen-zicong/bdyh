@@ -2,6 +2,7 @@ package com.bdyh.service.impl;
 
 import java.util.List;
 
+import com.bdyh.entity.City;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +36,9 @@ public class DistrictServiceImpl implements DistrictService{
 		criteria.andCityIdEqualTo(cityId);
 		return districtMapper.selectByExample(districtExample);
 	}
-	
+
+	public int findCityByProvince (Integer provinceId){
+        District district = districtMapper.selectByPrimaryKey(provinceId);
+        return  district.getCityId();
+    }
 }

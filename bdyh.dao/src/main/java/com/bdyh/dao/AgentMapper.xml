@@ -114,7 +114,14 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.bdyh.entity.Agent" >
+    <delete id="delectByList" >
+     DELETE FROM agent where agent_id in (
+     <foreach collection="agentIds" item="item" index="index" separator=",">
+       #{item,jdbcType=INTEGER}
+     </foreach>
+     )
+    </delete>
+    <insert id="insert" parameterType="com.bdyh.entity.Agent" >
     insert into agent (agent_id, username, password, 
       nickname, sex, agent_img, 
       telephone, email, login_time, 

@@ -78,7 +78,7 @@
 			<tbody>
 				<c:forEach items="${courseList }" var="course">
 					<tr class="text-c">
-						<td><input name="" type="checkbox" value=""></td>
+						<td><input name="isCheckBox" type="checkbox" value="${course.courseId}"></td>
 						<td>${course.courseLevel }年级</td>
 						<td>${course.courseType }</td>
 						<th class="text-c"><a href="javascript:;" onClick="course_edit('查看该课程','${pageContext.request.contextPath}/course/courseVideo/${course.courseId }','10001')">${course.courseName }</a></th>
@@ -282,7 +282,42 @@ function course_edit(title,url,id){
 	});
 	layer.full(index);
 }
+function datadel() {
 
+    var chk_value =[];//定义一个数组
+    $('input[name="isCheckBox"]:checked').each(function(){//遍历每一个名字为interest的复选框，其中选中的执行函数
+
+        chk_value.push($(this).val());//将选中的值添加到数组chk_value中
+    });
+
+    if (chk_value.length <= 0) {
+        alert("请勾选")
+    } else {
+        layer.confirm("确定要删除这些课程吗？",function () {
+            $.ajax({
+
+                traditional: true,
+                type: "POST",
+                url: "${pageContext.request.contextPath}/course/batchDeleteCourse",
+                data:{
+                    coursesId : chk_value,
+                },
+                success: function (date) {
+
+                    if (date.code === "success") {
+                        alert("成功");
+
+                    } else {
+                        alert("失败")
+
+                    }
+                }
+
+            })
+        })
+
+    }
+}
 
 </script>
 </body>

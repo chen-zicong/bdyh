@@ -5,6 +5,7 @@ import com.bdyh.entity.ClazzExample;
 
 import java.util.List;
 
+import com.bdyh.entity.SubjectVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -33,4 +34,7 @@ public interface ClazzMapper {
 
     @Select("select * from clazz")
     List<Clazz> selectAll();
+
+    @Select("select * from clazz where status = 1")
+    List<Clazz> findOpenClazz();
 }

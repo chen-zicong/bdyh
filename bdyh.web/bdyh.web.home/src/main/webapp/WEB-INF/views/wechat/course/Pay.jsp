@@ -182,6 +182,7 @@
                             window.location.replace("${pageContext.request.contextPath}/course/paidCourse?orderId="+orderid);
                         } else if(res.err_msg == "get_brand_wcpay_request:cancel"){
                             alert("取消支付");
+                            window.location.replace("${pageContext.request.contextPath}/course/myCourse");
                         } else {
                             alert("支付失败");
                         }

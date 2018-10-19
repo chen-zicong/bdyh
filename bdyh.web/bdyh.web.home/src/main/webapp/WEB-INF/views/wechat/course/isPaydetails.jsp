@@ -148,11 +148,11 @@
     <!-- bdyh_news_content_main start -->
     <div class="bdyh_news_content_main">
         <!-- vedio play district -->
-        <div style="width:100%;">
+        <div  id="v1" style="width:100%;display: none">
             <video id="example_video_1" class="video-js vjs-amazeui" controls
                    preload="none" width="100%" height="264"
                    poster="http://bdpak.cn:8080/home/demo/slideshow5.jpg" data-setup="{}">
-                <source id="example_video_source" src="http://bdpak.cn:8080/home/video/${video[0].videoPath}" type='video/mp4' />
+                <source id="example_video_source" src="" type='video/mp4' />
                 <!-- <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
               <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' /> -->
                 <track kind="captions" src="http://bdpak.cn:8080/home/video.js/demo.captions.vtt" srclang="en" label="English"></track>
@@ -166,6 +166,27 @@
                 </p>
             </video>
         </div>
+
+        <div  id="v2" style="width:100%;">
+            <video  class="video-js vjs-amazeui" controls
+                   preload="none" width="100%" height="264"
+                   poster="http://bdpak.cn:8080/home/demo/slideshow5.jpg" data-setup="{}">
+                <source id="" src="" type='video/mp4' />
+                <!-- <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
+              <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' /> -->
+                <track kind="captions" src="http://bdpak.cn:8080/home/video.js/demo.captions.vtt" srclang="en" label="English"></track>
+                Tracks need an ending tag thanks to IE9
+                <track kind="subtitles" src="http://bdpak.cn:8080/home/video.js/demo.captions.vtt" srclang="en" label="English"></track>
+                Tracks need an ending tag thanks to IE9
+                <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider
+                    upgrading to a web browser that
+                    <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                </p>
+            </video>
+        </div>
+
+
 
         <!--选项栏 -->
         <div data-am-widget="tabs" class="am-tabs am-tabs-d2" style="margin-top:0px;">
@@ -348,11 +369,11 @@
     <!-- bdyh_news_content_main end -->
 
     <!--回顶部 -->
-    <div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
-        <a href="#top" title=""> <i
-                class="am-gotop-icon am-icon-hand-o-up"></i>
-        </a>
-    </div>
+    <%--<div data-am-widget="gotop" class="am-gotop am-gotop-fixed">--%>
+        <%--<a href="#top" title=""> <i--%>
+                <%--class="am-gotop-icon am-icon-hand-o-up"></i>--%>
+        <%--</a>--%>
+    <%--</div>--%>
 
     <!-- foot navbar start -->
     <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default">
@@ -497,7 +518,8 @@
     }
 
     function playVideo(obj) {
-
+        $('#v1').show();
+        $('#v2').css('display','none');
         /*使用nginx时候把${pageContext.request.contextPath}替换成http://localhost:8080/video/obj*/
         if(obj.toString().trim()!=null){
             var path=obj.toString();
